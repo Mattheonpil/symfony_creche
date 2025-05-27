@@ -22,6 +22,7 @@ class UserChild
     #[ORM\ManyToOne(inversedBy: 'userChildren')]
     private ?User $user = null;
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,4 +63,5 @@ class UserChild
 
         return $this;
     }
+
 }
