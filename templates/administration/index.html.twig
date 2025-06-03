@@ -1,0 +1,32 @@
+{# filepath: c:\wamp64\www\symfony_creche\templates\administration\index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+<div>
+    <h1>Tableau de bord - {{ date|date('d/m/Y') }}</h1>
+    
+    <div>
+        {# Card Enfants présents #}
+        <div>
+            <div
+                <div>
+                    <h5>Enfants présents</h5>
+                    <p>{{ present_children_count }}</p>
+                </div>
+            </div>
+        </div>
+
+        {# Card Repas #}
+        {# <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Repas prévus</h5>
+                    <p class="card-text display-4">{{ meals_count }}</p>
+                </div>
+            </div>
+        </div> #}
+    </div>
+</div>
+{% endblock %}

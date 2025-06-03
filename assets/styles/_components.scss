@@ -1,0 +1,11 @@
+.nav-button {
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    background : none;
+    span {
+        height: 6px;
+        width: 100%;
+        color: black;
+    }
+}

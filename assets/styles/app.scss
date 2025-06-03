@@ -1,0 +1,15 @@
+@import 'variables';
+@import 'mixins';
+@import 'functions';
+@import 'components';
+@import 'pages';
+
+body {
+    font-family: "Inter", sans-serif;
+
+}
+
+img {
+    width: 40px;
+    height: 40px;
+}

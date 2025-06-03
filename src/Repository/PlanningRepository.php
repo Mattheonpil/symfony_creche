@@ -40,4 +40,18 @@ class PlanningRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+
+public function findByDate(\DateTime $date): array
+{
+    return $this->createQueryBuilder('p')
+        ->where('p.date >= :start')
+        ->andWhere('p.date < :end')
+        ->setParameter('start', $date->format('Y-m-d').' 00:00:00')
+        ->setParameter('end', $date->format('Y-m-d').' 23:59:59')
+        ->getQuery()
+        ->getResult();
+}
+
+
 }

@@ -1,0 +1,50 @@
+// Menu----------------------------------------------------------
+
+.main-nav {
+    min-height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 2rem;
+}
+
+.nav-icon {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 2rem;
+    color: $orange;
+}
+
+.nav-logo1 {
+    background-color: rgba($orange, $alpha: 0.5);
+    border-radius: 50%;
+}
+
+.nav-logo2 {
+    display: inline-block;
+    margin-left: 0.5rem;
+}
+.main-menu {
+    display: flex;
+    .nav-menu {
+        // display: flex;
+
+        li {
+            display: inline-block;
+            min-width: 60px;
+            padding: 0.2rem 1rem;
+            a {
+                text-decoration: none;
+                color: $primary;
+                font-size: $size-default;
+                font-weight: $weight-1;
+            }
+        }
+    }
+}
+.nav-authentification {
+    display: flex;
+    align-items: center;
+}

@@ -19,10 +19,10 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         $roles = $token->getRoleNames();
 
         $targetPath = match (true) {
-            in_array('ROLE_ADMIN', $roles) => 'app_dashboard_admin',
-            in_array('ROLE_PARENT', $roles) => 'app_calendar_index',
-            in_array('ROLE_STAFF', $roles) => 'app_calendar_index',
-            default => 'app_calendar_index',
+            in_array('ROLE_ADMIN', $roles) => 'app_administration',
+            in_array('ROLE_PARENT', $roles) => 'app_user_index',
+            in_array('ROLE_STAFF', $roles) => 'app_user_index',
+            default => 'app_user_index',
         };
 
         return new RedirectResponse($this->urlGenerator->generate($targetPath));
