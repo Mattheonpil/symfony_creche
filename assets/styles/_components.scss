@@ -9,3 +9,86 @@
         color: black;
     }
 }
+
+.datetime-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    .date-container {
+        color: $primary;
+        .day-name {
+            font-size: $size-t2;
+        }
+        .day-number{
+            font-size: $size-t3;
+            font-weight: $weight-3;
+            color: $orange;
+            padding-left: 0.5rem;
+        }
+        .month {
+            font-size: $size-t2;
+        }
+        .year {
+            padding-left: 0.5rem;
+            font-size: $size-t2;
+            font-weight: $weight-2;
+        }
+    }
+
+    .time-container {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+        border-radius: 4px;
+        color: $primary;
+        .hours {
+            font-size: $size-t2;
+            font-weight: $weight-3;
+            
+        }
+
+        .separator {
+            font-size: $size-t2;
+            font-weight: $weight-3;
+            margin: 0 0.3rem;
+        }
+
+        .minutes {
+            font-size: $size-t3;
+            font-weight: $weight-3;
+            color: $orange;
+        }
+    }
+}
+
+.card-container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    border: 2px solid $orange;
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+.card {
+    width: 200px;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $green;
+    border-radius: 6px;
+    gap :1rem;
+    & img {
+        width: 40%;
+        aspect-ratio: 1/1;
+    }
+    & h3 {
+        font-size: $size-t4;
+        font-weight: $weight-2;
+        color: white;
+    }
+} 

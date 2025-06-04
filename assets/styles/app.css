@@ -3,6 +3,32 @@
   margin: 0;
 }
 
+.centrage-x {
+  display: flex;
+  justify-content: center;
+}
+
+.centrage-x-y {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.centrage-column {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  width: 90%;
+}
+
 .nav-button {
   display: flex;
   flex-direction: column;
@@ -15,12 +41,93 @@
   color: black;
 }
 
+.datetime-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.datetime-container .date-container {
+  color: rgb(108, 116, 124);
+}
+.datetime-container .date-container .day-name {
+  font-size: 2rem;
+}
+.datetime-container .date-container .day-number {
+  font-size: 3rem;
+  font-weight: 700;
+  color: rgb(248, 144, 99);
+  padding-left: 0.5rem;
+}
+.datetime-container .date-container .month {
+  font-size: 2rem;
+}
+.datetime-container .date-container .year {
+  padding-left: 0.5rem;
+  font-size: 2rem;
+  font-weight: 600;
+}
+.datetime-container .time-container {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 4px;
+  color: rgb(108, 116, 124);
+}
+.datetime-container .time-container .hours {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.datetime-container .time-container .separator {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0.3rem;
+}
+.datetime-container .time-container .minutes {
+  font-size: 3rem;
+  font-weight: 700;
+  color: rgb(248, 144, 99);
+}
+
+.card-container {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  border: 2px solid rgb(248, 144, 99);
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.card {
+  width: 200px;
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(73, 195, 0);
+  border-radius: 6px;
+  gap: 1rem;
+}
+.card img {
+  width: 40%;
+  aspect-ratio: 1/1;
+}
+.card h3 {
+  font-size: 4rem;
+  font-weight: 600;
+  color: white;
+}
+
 .main-nav {
   min-height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 2rem;
+  padding: 0 2rem;
+  box-shadow: 0 0 5px rgba(248, 144, 99, 0.5) inset;
+  margin-bottom: 2rem;
 }
 
 .nav-icon {
@@ -35,6 +142,8 @@
 .nav-logo1 {
   background-color: rgba(248, 144, 99, 0.5);
   border-radius: 50%;
+  width: 40px;
+  aspect-ratio: 1/1;
 }
 
 .nav-logo2 {
@@ -62,11 +171,35 @@
   align-items: center;
 }
 
-body {
-  font-family: "Inter", sans-serif;
+.sign_button > a {
+  color: rgb(108, 116, 124);
+  text-decoration: none;
 }
 
-img {
-  width: 40px;
-  height: 40px;
+.user-icon svg {
+  color: rgb(108, 116, 124);
+  width: 2rem;
+  height: 2rem;
+}
+
+.bienvenue {
+  color: rgb(108, 116, 124);
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 3rem;
+}
+.bienvenue span:first-child {
+  color: rgb(248, 144, 99);
+  font-weight: 500;
+  font-style: italic;
+  text-transform: capitalize;
+}
+.bienvenue span:last-child {
+  color: rgb(248, 144, 99);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+body {
+  font-family: "Inter", sans-serif;
 }/*# sourceMappingURL=app.css.map */

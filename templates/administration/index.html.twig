@@ -4,21 +4,44 @@
 {% block title %}Tableau de bord{% endblock %}
 
 {% block body %}
-<div>
-    <h1>Tableau de bord - {{ date|date('d/m/Y') }}</h1>
+<div class= "centrage-column">
     
-    <div>
+    <div class="bienvenue">
+    {% if app.user %}
+        <div>Bienvenue <span>{{ app.user.firstName }}</span> <span>{{ app.user.name }}</span></div>
+    {% else %}
+        <div>Bienvenue invité</div>
+    {% endif %}
+</div>
+    <div class="datetime-container">
+    <div class="date-container">
+        <span class="day-name">{{ date|date('l')|trans|capitalize }}</span>
+        <span class="day-number">{{ date|date('d') }}</span>
+        <span class="month">{{ date|date('F')|trans|capitalize }}</span>
+        <span class="year">{{ date|date('Y') }}</span>
+    </div>
+    <div class="time-container">
+        <span class="hours">{{ date|date('H') }}</span>
+        <span class="separator">:</span>
+        <span class="minutes">{{ date|date('i') }}</span>
+    </div>
+</div>
+    
+    <section class = "card-container">
         {# Card Enfants présents #}
-        <div>
-            <div
-                <div>
-                    <h5>Enfants présents</h5>
-                    <p>{{ present_children_count }}</p>
-                </div>
-            </div>
-        </div>
+        <card class="card">
+            <img src="{{ asset('assets/images/baby.svg')}}" alt="icon child">
+            
+            <h3>{{ present_children_count }}</h3>
+        </card>
 
         {# Card Repas #}
+        {# <card class="card">
+            <img src="{{ asset('assets/images/meal.svg')}}" alt="icon child">
+            <h3>{{ meals_count }}</h3>
+        </card> #}
+
+
         {# <div class="col-md-4 mb-4">
             <div class="card">
                 <div class="card-body">
@@ -27,6 +50,6 @@
                 </div>
             </div>
         </div> #}
-    </div>
-</div>
+    
+    </section>
 {% endblock %}

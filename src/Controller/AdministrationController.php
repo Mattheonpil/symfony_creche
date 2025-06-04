@@ -17,8 +17,11 @@ final class AdministrationController extends AbstractController
         
     ): Response
         // Récupérer la date du jour
-    {
-        $today = new \DateTime();
+    {   
+        // Définir explicitement le fuseau horaire pour PHP
+        date_default_timezone_set('Europe/Paris');
+        // Créer l'objet DateTime avec le fuseau horaire
+        $today = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
 
         // Nombre d'enfants présents aujourd'hui

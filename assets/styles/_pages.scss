@@ -5,7 +5,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 2rem;
+    padding: 0 2rem;
+    box-shadow: 0 0 5px rgba($orange, $alpha: 0.5) inset;
+    margin-bottom: 2rem;
 }
 
 .nav-icon {
@@ -20,6 +22,8 @@
 .nav-logo1 {
     background-color: rgba($orange, $alpha: 0.5);
     border-radius: 50%;
+    width: 40px;
+    aspect-ratio: 1/1;
 }
 
 .nav-logo2 {
@@ -47,4 +51,43 @@
 .nav-authentification {
     display: flex;
     align-items: center;
+}
+
+.sign_button > a {
+    color: $primary;
+    text-decoration: none;
+}
+.user-icon {
+    svg {
+        color: $primary;
+        width: 2rem;
+        height: 2rem;
+        
+    }
+}
+
+
+
+
+
+// ADMINISTRATION---------------------------------------------------------
+
+.bienvenue {
+    color: $primary;
+    font-size: $size-t2;
+    font-weight: $weight-2;
+    margin-bottom: 3rem;
+    
+    span:first-child {
+        color: $orange;
+        font-weight: $weight-1;
+        font-style: italic;
+        text-transform: capitalize;
+    }
+    
+    span:last-child {
+        color: $orange;
+        font-weight: $weight-2;
+        text-transform: uppercase;
+    }
 }
