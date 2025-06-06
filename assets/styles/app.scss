@@ -9,3 +9,21 @@ body {
     height: 2000px;
 }
 
+.time-input {
+    select {
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        
+        &:not(:has(option:checked[value=""])) {
+            // Style quand une valeur est sélectionnée
+            border-color: $primary;
+            background-color: rgba($primary, 0.1);
+        }
+        
+        option[value=""] {
+            color: #666;
+            font-style: italic;
+        }
+    }
+}

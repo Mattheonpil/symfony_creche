@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Planning{% endblock %}
+
+{% block body %}
+    <h1>Planning</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ planning.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ planning.date ? planning.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Start_time</th>
+                <td>{{ planning.startTime ? planning.startTime|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>End_time</th>
+                <td>{{ planning.endTime ? planning.endTime|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Meal</th>
+                <td>{{ planning.meal ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Actual_arrival</th>
+                <td>{{ planning.actualArrival ? planning.actualArrival|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Actual_departure</th>
+                <td>{{ planning.actualDeparture ? planning.actualDeparture|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Absence</th>
+                <td>{{ planning.absence ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Absence_justification</th>
+                <td>{{ planning.absenceJustification }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_planning_index') }}">back to list</a>
+
+    <a href="{{ path('app_planning_edit', {'id': planning.id}) }}">edit</a>
+
+    {{ include('planning/_delete_form.html.twig') }}
+{% endblock %}

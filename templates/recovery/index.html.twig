@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recovery index{% endblock %}
+
+{% block body %}
+    <h1>Recovery index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>First_name</th>
+                <th>Phone</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recovery in recoveries %}
+            <tr>
+                <td>{{ recovery.id }}</td>
+                <td>{{ recovery.name }}</td>
+                <td>{{ recovery.firstName }}</td>
+                <td>{{ recovery.phone }}</td>
+                <td>
+                    <a href="{{ path('app_recovery_show', {'id': recovery.id}) }}">show</a>
+                    <a href="{{ path('app_recovery_edit', {'id': recovery.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_recovery_new') }}">Create new</a>
+{% endblock %}

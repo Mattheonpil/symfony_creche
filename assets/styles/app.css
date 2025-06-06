@@ -243,4 +243,18 @@
 body {
   font-family: "Inter", sans-serif;
   height: 2000px;
+}
+
+.time-input select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.time-input select:not(:has(option:checked[value=""])) {
+  border-color: rgb(108, 116, 124);
+  background-color: rgba(108, 116, 124, 0.1);
+}
+.time-input select option[value=""] {
+  color: #666;
+  font-style: italic;
 }/*# sourceMappingURL=app.css.map */

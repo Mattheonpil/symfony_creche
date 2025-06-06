@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Recovery{% endblock %}
+
+{% block body %}
+    <h1>Create new Recovery</h1>
+
+    {{ include('recovery/_form.html.twig') }}
+
+    <a href="{{ path('app_recovery_index') }}">back to list</a>
+{% endblock %}
