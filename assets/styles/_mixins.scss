@@ -1,0 +1,22 @@
+// Gestion des media queries--------------------------
+
+@mixin mobile {
+	@media screen and (max-width: 420px){
+		@content;
+	}
+};
+@mixin tablet-m {
+	@media screen and (max-width: 768px){
+		@content;
+	}
+};
+@mixin tablet-l {
+	@media screen and (max-width: 1024px){
+		@content;
+	}
+};
+@mixin desktop {
+	@media screen and (max-width: 1400px){
+		@content;
+	}
+};

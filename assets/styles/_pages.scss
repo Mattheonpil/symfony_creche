@@ -1,16 +1,19 @@
 // Menu----------------------------------------------------------
 
 .main-nav {
+    position: fixed;
+    width: 100%;
     min-height: 80px;
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
     align-items: center;
-    padding: 0 2rem;
-    box-shadow: 0 0 5px rgba($orange, $alpha: 0.5) inset;
-    margin-bottom: 2rem;
+    // padding: 0 2rem;
+    box-shadow: 0 -1px 2px rgba($orange, $alpha: 0.5) inset;
+    
 }
 
 .nav-icon {
+    padding-left: 2rem;
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -32,6 +35,7 @@
 }
 .main-menu {
     display: flex;
+    margin-left: 2rem;
     .nav-menu {
         // display: flex;
 
@@ -44,20 +48,54 @@
                 color: $primary;
                 font-size: $size-default;
                 font-weight: $weight-1;
+                position: relative;
+
+                &:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    bottom: -3px;
+                    width: 100%;
+                    height: 1px;
+                    background: $orange;
+                    transform: scaleX(0);
+                    transform-origin: left;
+                    transition: transform 0.3s ease-out;
+                }
+                &:hover::after {
+                transform: scaleX(1);
+                    }
             }
         }
     }
 }
+
+.hamburger {
+    display: none;
+}
 .nav-authentification {
+    padding-right: 2rem;
     display: flex;
     align-items: center;
+    margin-left: auto;
 }
 
 .sign_button > a {
+    display: inline-block;
+    min-width: 110px;
+    margin: 0 5px;
     color: $primary;
     text-decoration: none;
+    text-align: center;
+    border: 1px solid $primary;
+    border-radius: 8px;
+    &:hover {
+        border: 1px solid $orange;
+        transition: 0.4s ease-out;
+    }
 }
 .user-icon {
+    display: none;
     svg {
         color: $primary;
         width: 2rem;
@@ -71,7 +109,10 @@
 
 
 // ADMINISTRATION---------------------------------------------------------
-
+.esquive-navbar {
+    position: relative;
+    // top: 160px;
+}
 .bienvenue {
     color: $primary;
     font-size: $size-t2;
