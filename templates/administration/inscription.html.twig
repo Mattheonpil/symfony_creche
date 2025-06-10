@@ -2,12 +2,68 @@
 
 {% block title %}Inscription d'un enfant{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .form-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 20px;
+        }
+        .form-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
+    <div class="form-container">
+        <h1 class="text-center mb-4">Inscription nouvel enfant</h1>
 
+        {{ form_start(form) }}
+            <div class="form-section">
+                <h2>Informations responsables</h2>
+                {{ form_widget(form.user) }}
+            </div>
 
-<div class="main">
-    <section class = "inscription-child">
-    </section>
+            <div class="form-section">
+                <h2>Informations sur les accompagnateurs</h2>
+                {{ form_widget(form.recovery) }}
+            </div>
 
-</div>
+            <div class="form-section">
+                <h2>Informations sur l'enfant</h2>
+                {{ form_widget(form.child) }}
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">Valider l'inscription</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            this.querySelector('button[type="submit"]').disabled = true;
+        });
+    </script>
 {% endblock %}

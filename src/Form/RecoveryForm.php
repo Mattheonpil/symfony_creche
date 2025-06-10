@@ -17,11 +17,11 @@ class RecoveryForm extends AbstractType
             ->add('name')
             ->add('first_name')
             ->add('phone')
-            ->add('child', EntityType::class, [
-                'class' => Child::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
+            // ->add('child', EntityType::class, [
+            //     'class' => Child::class,
+            //     'choice_label' => 'id',
+            //     'multiple' => true,
+            // ])
         ;
     }
 
@@ -29,6 +29,10 @@ class RecoveryForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Recovery::class,
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'csrf_token_id' => 'recovery_form',
+            'allow_extra_fields' => true,
         ]);
     }
 }

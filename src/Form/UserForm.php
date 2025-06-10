@@ -47,13 +47,28 @@ class UserForm extends AbstractType
             ->add('name')
             ->add('first_name')
             ->add('phone')
+            ->add('relation', ChoiceType::class, [
+                'mapped' => false,
+                'choices' => [
+                    'Père' => 'père',
+                    'Mère' => 'mère',
+                    'Tuteur légal' => 'tuteur',
+                    'Autre' => 'autre'
+                ],
+                'label' => 'Lien avec l\'enfant',
+                'required' => true
+            ]);
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
-    }
+        public function configureOptions(OptionsResolver $resolver): void
+            {
+                $resolver->setDefaults([
+                    'data_class' => User::class,
+                    'csrf_protection' => true,
+                    'csrf_field_name' => '_token',
+                    'csrf_token_id' => 'user_form',
+                    'allow_extra_fields' => true,
+                ]);
+            }
 }
