@@ -27,3 +27,22 @@ body {
         }
     }
 }
+
+.main-content {
+    position: relative;
+        width: 100%;
+
+
+    
+    .content-wrapper {
+        padding: 2rem;
+    }
+}
+
+:root {
+    --navbar-height: 80px; // Ajustez selon la hauteur de votre navbar
+}
+
+.padding-navbar {
+    padding-top: 80px !important;
+}

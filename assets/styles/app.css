@@ -257,4 +257,20 @@ body {
 .time-input select option[value=""] {
   color: #666;
   font-style: italic;
+}
+
+.main-content {
+  position: relative;
+  width: 100%;
+}
+.main-content .content-wrapper {
+  padding: 2rem;
+}
+
+:root {
+  --navbar-height: 80px;
+}
+
+.padding-navbar {
+  padding-top: 80px !important;
 }/*# sourceMappingURL=app.css.map */
