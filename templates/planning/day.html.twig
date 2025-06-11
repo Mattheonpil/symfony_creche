@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Planning du {{ date|date('d/m/Y') }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://unpkg.com/vis-timeline@latest/standalone/umd/vis-timeline-graph2d.min.js"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="timeline-container" 
+         data-date="{{ date|date('Y-m-d') }}" 
+         data-plannings="{{ plannings|map(p => {
+             'id': p.id,
+             'child': {
+                 'id': p.child.id,
+                 'firstName': p.child.firstName,
+                 'name': p.child.name
+             },
+             'startTime': p.startTime|date('H:i:s'),
+             'endTime': p.endTime|date('H:i:s')
+         })|json_encode|e('html_attr') }}">
+        <div class="date-navigation">
+            <a href="{{ path('app_planning_day', {date: date|date_modify('-1 day')|date('Y-m-d')}) }}" class="btn btn-secondary">
+                Jour précédent
+            </a>
+            <h1>Planning du {{ date|date('d/m/Y') }}</h1>
+            <a href="{{ path('app_planning_day', {date: date|date_modify('+1 day')|date('Y-m-d')}) }}" class="btn btn-secondary">
+                Jour suivant
+            </a>
+        </div>
+        <div id="timeline" style="height: 600px;"></div>
+    </div>
+{% endblock %}

@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use DateTime;
 use App\Entity\Planning;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Planning>
@@ -49,6 +50,26 @@ public function findByDate(\DateTime $date): array
         ->andWhere('p.date < :end')
         ->setParameter('start', $date->format('Y-m-d').' 00:00:00')
         ->setParameter('end', $date->format('Y-m-d').' 23:59:59')
+        ->getQuery()
+        ->getResult();
+}
+
+
+public function findDayPlanningsWithChildren(\DateTime $date): array
+{
+    $startOfDay = clone $date;
+    $startOfDay->setTime(0, 0, 0);
+    
+    $endOfDay = clone $date;
+    $endOfDay->setTime(23, 59, 59);
+
+    return $this->createQueryBuilder('p')
+        ->select('p', 'c')
+        ->join('p.child', 'c')
+        ->where('p.date BETWEEN :start AND :end')
+        ->setParameter('start', $startOfDay)
+        ->setParameter('end', $endOfDay)
+        ->orderBy('c.name', 'ASC')
         ->getQuery()
         ->getResult();
 }

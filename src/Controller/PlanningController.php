@@ -42,6 +42,25 @@ final class PlanningController extends AbstractController
         ]);
     }
 
+    #[Route('/day', name: 'app_planning_day', methods: ['GET'])]
+    public function planningDay(
+    Request $request,
+    PlanningRepository $planningRepository
+    ): Response {
+    // Get requested date or use today
+    $dateString = $request->query->get('date');
+    $date = $dateString ? new \DateTime($dateString) : new \DateTime();
+    $date->setTimezone(new \DateTimeZone('Europe/Paris'));
+
+    // Get plannings for the day
+    $plannings = $planningRepository->findDayPlanningsWithChildren($date);
+
+    return $this->render('planning/day.html.twig', [
+        'date' => $date,
+        'plannings' => $plannings,
+    ]);
+}
+
     #[Route('/{id}', name: 'app_planning_show', methods: ['GET'])]
     public function show(Planning $planning): Response
     {
@@ -78,4 +97,6 @@ final class PlanningController extends AbstractController
 
         return $this->redirectToRoute('app_planning_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }

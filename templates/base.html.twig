@@ -18,13 +18,14 @@
         {% block stylesheets %}
         {% endblock %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
+
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+        
     </head>
     <body>
         {% include "_partials/_navbar.html.twig" %}
         {% include "_partials/_custom_main-size.html.twig" %}
         <div class="padding-navbar" >{% block body %}{% endblock %}</div>
+        {% block javascripts %}{% endblock %}
     </body>
 </html>

@@ -25,4 +25,7 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'vis-timeline/standalone' => [
+        'version' => '7.7.4',
+    ],
 ];
