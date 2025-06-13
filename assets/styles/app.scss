@@ -47,27 +47,271 @@ body {
     padding-top: 80px !important;
 }
 
+.navig-jour {
+    color: rgb(79, 116, 93);
+    text-decoration: none;
+}
+.date-navigation {
+    background: rgb(151, 128, 128);
+}
 
+.planning-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 2rem auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px 2px rgba(0,0,0,0.1);
 
+    .date-navigation {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin-bottom: 2rem;
 
+        h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
 
-// style vis
-
-        .timeline-container {
-            padding: 2rem;
+        .navig-jour {
+            padding: 0.5rem 1rem;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin: 2rem;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: #e9ecef;
+            }
         }
-        .vis-item {
-            border-color: var(--primary-color);
-            background-color: var(--primary-color);
-            color: white;
+    }
+
+    .planning-grid {
+        position: relative;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        overflow-x: auto;
+        display: grid;
+        grid-template-columns: 200px repeat(13, minmax(80px, 1fr));
+
+        .timeline-header {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: subgrid;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+
+            .empty-cell {
+                border-right: 1px solid #dee2e6;
+            }
+
+            .hour-column {
+                padding: 0.5rem;
+                text-align: center;
+                border-right: 1px solid #dee2e6;
+
+                .hour-label {
+                    font-weight: 500;
+                    white-space: nowrap;
+                    font-size: 0.9rem;
+                }
+
+                .quarter-hours {
+                    display: flex;
+                    justify-content: center; // Changé pour centrer la ligne de demi-heure
+                    margin-top: 0.5rem;
+
+                    .quarter-hour {
+                        display: none; // Cache tous les quarts d'heure par défaut
+
+                        &:nth-child(3) { // Affiche uniquement le marqueur de la demi-heure (3e élément)
+                            display: block;
+                            width: 1px;
+                            height: 8px; // Hauteur augmentée pour meilleure visibilité
+                            background: #adb5bd; // Couleur plus foncée
+                        }
+                    }
+                }
+            }
         }
-        .date-navigation {
+
+        .child-row {
+            display: contents;
+
+            &:nth-child(odd) {
+                .child-info,
+                .presence-container {
+                    background-color: #ffd2d2;
+                }
+            }
+
+            &:nth-child(even) {
+                .child-info,
+                .presence-container {
+                    background-color: #eaf4ff;
+                }
+            }
+
+            .child-info {
+                padding: 1rem;
+                font-weight: 500;
+                position: sticky;
+                left: 0;
+                z-index: 1;
+                text-align: center;
+                display: flex; // Ajout pour flexbox
+                align-items: center; // Centre verticalement
+                justify-content: center; // Centre horizontalement
+                height: 50px; // Même hauteur que presence-container
+            }
+
+            .presence-container {
+                grid-column: 2 / -1;
+                position: relative;
+                // height: 60px;
+                padding: 0.5rem 0;
+                display: flex; // Ajout pour permettre le centrage vertical
+                align-items: center; // Centre verticalement les éléments enfants
+
+                .presence-bar {
+                    position: absolute;
+                    left: calc((var(--start-position) / 13) * 100%);
+                    width: calc((var(--duration) / 13) * 100%);
+                    min-width: 60px;
+                    height: 40px; // Hauteur fixe pour la barre
+                    background: #faa984;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 0.875rem;
+                    border-radius: 20px;
+                    top: 50%; // Position au milieu vertical
+                    transform: translateY(-50%); // Ajustement pour un centrage parfait
+                }
+            }
+        }
+
+        .no-plannings {
+            padding: 3rem;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+    }
+
+    .week-navigation {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+
+        .week-nav-button {
+            padding: 0.75rem 1.25rem;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s ease;
             display: flex;
-            gap: 1rem;
             align-items: center;
-            margin-bottom: 1rem;
+            gap: 0.5rem;
+
+            &:hover {
+                background: #e9ecef;
+            }
         }
+
+        .week-info {
+            flex: 1;
+            margin: 0 2rem;
+
+            .week-number {
+                text-align: center;
+                font-size: 1.1rem;
+                font-weight: 500;
+                margin-bottom: 1rem;
+            }
+
+            .weekdays {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+
+                .day-box {
+                    width: 100px;
+                    height: 100px;
+                    border: 1px solid #dee2e6;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-decoration: none;
+                    color: #333;
+                    transition: all 0.2s ease;
+                    background: white;
+
+                    &.current-day {
+                        border-color: #4caf50;
+                        background: #e8f5e9;
+                        transform: scale(1.05); // Légère augmentation de taille
+                        box-shadow: 0 0 15px rgba(255, 64, 129, 0.3); // Lueur rose
+                        z-index: 1;
+
+                        .day-number {
+                            color: #c2185b; // Rose foncé pour le numéro
+                        }
+
+                        .day-name {
+                            color: #880e4f; // Rose très foncé pour le nom
+                        }
+                    }
+
+                    &.selected-day {
+                        border-color: #4caf50;
+                        background: #e8f5e9;
+                        transform: scale(1.1);  // Augmente la taille de 10%
+                        z-index: 1;  // Assure que l'élément agrandi reste au-dessus des autres
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  // Ajoute une ombre pour renforcer l'effet
+                    }
+
+                    &.holiday {
+                        background: #fff3e0;
+                        border-color: #ff9800;
+
+                        .holiday-indicator {
+                            font-size: 0.75rem;
+                            color: #f57c00;
+                            margin-top: 0.25rem;
+                        }
+                    }
+
+                    .day-name {
+                        font-size: 0.875rem;
+                        color: #6c757d;
+                        margin-bottom: 0.25rem;
+                    }
+
+                    .day-number {
+                        font-size: 1.5rem;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+}

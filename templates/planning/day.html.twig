@@ -4,36 +4,100 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="https://unpkg.com/vis-timeline@latest/standalone/umd/vis-timeline-graph2d.min.js"></script>
 {% endblock %}
 
 {% block body %}
-    <div class="timeline-container" 
-         data-date="{{ date|date('Y-m-d') }}" 
-         data-plannings="{{ plannings|map(p => {
-             'id': p.id,
-             'child': {
-                 'id': p.child.id,
-                 'firstName': p.child.firstName,
-                 'name': p.child.name
-             },
-             'startTime': p.startTime|date('H:i:s'),
-             'endTime': p.endTime|date('H:i:s')
-         })|json_encode|e('html_attr') }}">
+    <div class="planning-container">
+        <div class="week-navigation">
+            <a href="{{ path('app_planning_day', {date: date|date_modify('-7 days')|date('Y-m-d')}) }}" class="week-nav-button">
+                <i class="fas fa-chevron-left"></i>
+                Semaine précédente
+            </a>
+
+            <div class="week-info">
+                <div class="week-number">
+                    {% if weekDays is not empty %}
+                        Semaine {{ weekDays[0].week }}
+                    {% else %}
+                        Semaine {{ date|date('W') }}
+                    {% endif %}
+                </div>
+                
+                <div class="weekdays">
+                    {% if weekDays is not empty %}
+                        {% for calendarDay in weekDays %}
+                            {% set isToday = calendarDay.date|date('Y-m-d') == "now"|date('Y-m-d') %}
+                            {% set isClosed = calendarDay.isClosed %}
+                            {% set isHoliday = isClosed and calendarDay.closureJustification == 'Jour Férié' %}
+                            {% set isSelected = calendarDay.date|date('Y-m-d') == date|date('Y-m-d') %}
+                            
+                            <a href="{{ path('app_planning_day', {date: calendarDay.date|date('Y-m-d')}) }}" 
+                               class="day-box {{ isToday ? 'current-day' }} {{ isHoliday ? 'holiday' }} {{ isSelected ? 'selected-day' }}">
+                                <div class="day-name">{{ calendarDay.day }}</div>
+                                <div class="day-number">{{ calendarDay.date|date('d') }}</div>
+                                {% if isHoliday %}
+                                    <div class="holiday-indicator">Férié</div>
+                                {% endif %}
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <div class="error-message">Aucun jour disponible pour cette semaine</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <a href="{{ path('app_planning_day', {date: date|date_modify('+7 days')|date('Y-m-d')}) }}" class="week-nav-button">
+                Semaine suivante
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+
         <div class="date-navigation">
-            <a href="{{ path('app_planning_day', {date: date|date_modify('-1 day')|date('Y-m-d')}) }}" class="btn btn-secondary">
+            <a href="{{ path('app_planning_day', {date: date|date_modify('-1 day')|date('Y-m-d')}) }}" class="navig-jour">
                 Jour précédent
             </a>
             <h1>Planning du {{ date|date('d/m/Y') }}</h1>
-            <a href="{{ path('app_planning_day', {date: date|date_modify('+1 day')|date('Y-m-d')}) }}" class="btn btn-secondary">
+            <a href="{{ path('app_planning_day', {date: date|date_modify('+1 day')|date('Y-m-d')}) }}" class="navig-jour">
                 Jour suivant
             </a>
         </div>
-        <div id="timeline" style="height: 600px;"></div>
+
+        <div class="planning-grid">
+            <div class="timeline-header">
+                <div class="empty-cell"></div>
+                {% for hour in 7..19 %}
+                    <div class="hour-column">
+                        <div class="hour-label">{{ hour }}h</div>
+                        <div class="quarter-hours">
+                            {% for minute in [0, 15, 30, 45] %}
+                                <div class="quarter-hour"></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if plannings|length > 0 %}
+                {% for planning in plannings %}
+                    <div class="child-row">
+                        <div class="child-info">
+                            {{ planning.child.firstName }} {{ planning.child.name }}
+                        </div>
+                        <div class="presence-container">
+                            {% set startHour = planning.startTime|date('G') %}
+                            {% set startMinute = planning.startTime|date('i') %}
+                            {% set endHour = planning.endTime|date('G') %}
+                            {% set endMinute = planning.endTime|date('i') %}
+                            
+                            <div class="presence-bar" 
+                                 style="--start-position: {{ (startHour - 7) + (startMinute/60) }}; 
+                                        --duration: {{ (endHour - startHour) + ((endMinute - startMinute)/60) }}">
+                                {{ planning.startTime|date('H:i') }} - {{ planning.endTime|date('H:i') }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

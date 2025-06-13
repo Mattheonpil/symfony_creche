@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Planning;
 use App\Form\PlanningForm;
 use App\Repository\PlanningRepository;
+use App\Repository\CalendarRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,22 +45,47 @@ final class PlanningController extends AbstractController
 
     #[Route('/day', name: 'app_planning_day', methods: ['GET'])]
     public function planningDay(
-    Request $request,
-    PlanningRepository $planningRepository
+        Request $request,
+        PlanningRepository $planningRepository,
+        CalendarRepository $calendarRepository
     ): Response {
-    // Get requested date or use today
-    $dateString = $request->query->get('date');
-    $date = $dateString ? new \DateTime($dateString) : new \DateTime();
-    $date->setTimezone(new \DateTimeZone('Europe/Paris'));
+        $dateString = $request->query->get('date');
+        $date = $dateString ? new \DateTime($dateString) : new \DateTime();
+        $date->setTimezone(new \DateTimeZone('Europe/Paris'));
 
-    // Get plannings for the day
-    $plannings = $planningRepository->findDayPlanningsWithChildren($date);
+        // Récupérer la semaine en cours
+        $weekStart = clone $date;
+        $weekStart->modify('monday this week');
+        $weekEnd = clone $weekStart;
+        $weekEnd->modify('+4 days');
 
-    return $this->render('planning/day.html.twig', [
-        'date' => $date,
-        'plannings' => $plannings,
-    ]);
-}
+        // Debug pour vérifier les dates
+        dump([
+            'date_recherchee' => $date->format('Y-m-d'),
+            'debut_semaine' => $weekStart->format('Y-m-d'),
+            'fin_semaine' => $weekEnd->format('Y-m-d')
+        ]);
+
+        // Récupérer les jours de la semaine du calendrier
+        $weekDays = $calendarRepository->createQueryBuilder('c')
+            ->where('c.date >= :start')
+            ->andWhere('c.date <= :end')
+            ->andWhere('c.is_weekend = true')
+            ->setParameter('start', $weekStart)
+            ->setParameter('end', $weekEnd)
+            ->orderBy('c.date', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        // Debug pour vérifier les jours récupérés
+        dump(['nombre_jours' => count($weekDays)]);
+
+        return $this->render('planning/day.html.twig', [
+            'date' => $date,
+            'weekDays' => $weekDays,
+            'plannings' => $planningRepository->findDayPlanningsWithChildren($date),
+        ]);
+    }
 
     #[Route('/{id}', name: 'app_planning_show', methods: ['GET'])]
     public function show(Planning $planning): Response

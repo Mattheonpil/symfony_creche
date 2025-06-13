@@ -57,19 +57,16 @@ public function findByDate(\DateTime $date): array
 
 public function findDayPlanningsWithChildren(\DateTime $date): array
 {
-    $startOfDay = clone $date;
-    $startOfDay->setTime(0, 0, 0);
-    
-    $endOfDay = clone $date;
-    $endOfDay->setTime(23, 59, 59);
-
     return $this->createQueryBuilder('p')
         ->select('p', 'c')
         ->join('p.child', 'c')
-        ->where('p.date BETWEEN :start AND :end')
-        ->setParameter('start', $startOfDay)
-        ->setParameter('end', $endOfDay)
-        ->orderBy('c.name', 'ASC')
+        ->where('p.date = :date')
+        // Changez cette ligne pour inclure les présences
+        // ->andWhere('p.absence = :absence')
+        ->setParameter('date', $date->format('Y-m-d'))
+        // ->setParameter('absence', false)  // Changez en true pour voir les absences
+        ->orderBy('p.start_time', 'ASC')
+        ->addOrderBy('c.first_name', 'ASC')
         ->getQuery()
         ->getResult();
 }
