@@ -66,7 +66,7 @@ body {
     .date-navigation {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         padding: 1rem;
         background: #f8f9fa;
         border-radius: 8px;
@@ -75,21 +75,41 @@ body {
         h1 {
             margin: 0;
             font-size: 1.5rem;
-            color: #333;
-        }
-
-        .navig-jour {
-            padding: 0.5rem 1rem;
-            background: white;
-            border-radius: 4px;
-            color: #333;
-            text-decoration: none;
-            transition: all 0.3s ease;
-
-            &:hover {
-                background: #e9ecef;
+            color: $black;
+            & span {
+               color: $primary; 
+            }
+            .day-name {
+                font-size: 2rem;
+                font-weight: 400;
+            }
+            .day-number {
+                color: rgb(248, 144, 99);
+                font-size: 2.5rem;
+                font-weight: 700;
+            }
+            .month {
+                font-size: 2rem;
+                font-weight: 400;
+            }
+            .year {
+                font-size: 2rem;
+                color: rgb(248, 144, 99);
             }
         }
+
+        // .navig-jour {
+        //     padding: 0.5rem 1rem;
+        //     background: white;
+        //     border-radius: 4px;
+        //     color: #333;
+        //     text-decoration: none;
+        //     transition: all 0.3s ease;
+
+        //     &:hover {
+        //         background: #e9ecef;
+        //     }
+        // }
     }
 
     .planning-grid {
@@ -212,38 +232,47 @@ body {
     .week-navigation {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         padding: 1.5rem;
         background: #f8f9fa;
         border-radius: 8px;
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
 
         .week-nav-button {
-            padding: 0.75rem 1.25rem;
-            background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            color: #333;
             text-decoration: none;
             transition: all 0.2s ease;
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            align-items: flex-start; // Aligne en haut pour pouvoir décaler avec margin-top
+            margin-top: 4rem;
+            
+            &:first-child {
+                margin-right: 2rem;
+            }
+            &:last-child {
+                margin-right: 2rem;
+            }
+            .nav-icon {
+                width: 80px; // Taille plus raisonnable pour les chevrons
+                height: 80px; // Maintient le ratio carré
+                fill: $primary;
+                transition: fill 0.3s ease;
 
-            &:hover {
-                background: #e9ecef;
+                &:hover {
+                    fill: $orange;
+                }
             }
         }
 
         .week-info {
-            flex: 1;
-            margin: 0 2rem;
+            // flex: 1;
+            margin: 0 3rem;
+            
 
             .week-number {
                 text-align: center;
-                font-size: 1.1rem;
+                font-size: 1.5rem;
                 font-weight: 500;
-                margin-bottom: 1rem;
+                margin-bottom: 2rem;
             }
 
             .weekdays {
@@ -252,8 +281,8 @@ body {
                 gap: 1rem;
 
                 .day-box {
-                    width: 100px;
-                    height: 100px;
+                    width: 150px;
+                    aspect-ratio: 1/1;
                     border: 1px solid #dee2e6;
                     border-radius: 8px;
                     display: flex;
@@ -264,20 +293,23 @@ body {
                     color: #333;
                     transition: all 0.2s ease;
                     background: white;
+                        &:hover {
+                            border: 1px solid $orange;
+                        }
 
                     &.current-day {
                         border-color: #4caf50;
-                        background: #e8f5e9;
-                        transform: scale(1.05); // Légère augmentation de taille
+                        background: white;
+                        transform: scale(1.05); 
                         box-shadow: 0 0 15px rgba(255, 64, 129, 0.3); // Lueur rose
                         z-index: 1;
 
                         .day-number {
-                            color: #c2185b; // Rose foncé pour le numéro
+                            color: #c2185b; 
                         }
 
                         .day-name {
-                            color: #880e4f; // Rose très foncé pour le nom
+                            color: #880e4f;
                         }
                     }
 
@@ -297,6 +329,22 @@ body {
                             font-size: 0.75rem;
                             color: #f57c00;
                             margin-top: 0.25rem;
+                        }
+                    }
+
+                    &.closed-day {
+                        background: #ffebee; // Fond rouge clair
+                        border-color: #ef5350; // Bordure rouge
+
+                        .closure-indicator {
+                            font-size: 0.75rem;
+                            color: #c62828; // Rouge foncé
+                            margin-top: 0.5rem;
+                            text-align: center;
+                            font-weight: 500;
+                            padding: 0.25rem 0.5rem;
+                            background: rgba(239, 83, 80, 0.1);
+                            border-radius: 4px;
                         }
                     }
 

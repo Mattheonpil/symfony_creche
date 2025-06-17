@@ -44,6 +44,12 @@ class Planning
     #[ORM\ManyToOne(inversedBy: 'plannings')]
     private ?Child $child = null;
 
+    public function __construct()
+    {
+        $this->meal = false;    // Par défaut, pas de repas (0)
+        $this->absence = false; // Par défaut, pas d'absence
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -167,5 +173,22 @@ class Planning
         $this->child = $child;
 
         return $this;
+    }
+
+    public function updateMealStatus(): void
+    {
+        if ($this->start_time && $this->end_time) {
+            $startHour = (int)$this->start_time->format('H');
+            $endHour = (int)$this->end_time->format('H');
+            
+            // Si l'enfant est présent entre 12h et 14h
+            if ($startHour <= 14 && $endHour >= 12) {
+                $this->meal = true;  // 1 = repas prévu
+            } else {
+                $this->meal = false; // 0 = pas de repas
+            }
+        } else {
+            $this->meal = false; // Par défaut, pas de repas
+        }
     }
 }

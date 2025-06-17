@@ -45,11 +45,16 @@ class PlanningRepository extends ServiceEntityRepository
 
 public function findByDate(\DateTime $date): array
 {
+    $currentTime = new \DateTime();
+    $currentHour = $currentTime->format('H:i');
+
     return $this->createQueryBuilder('p')
-        ->where('p.date >= :start')
-        ->andWhere('p.date < :end')
-        ->setParameter('start', $date->format('Y-m-d').' 00:00:00')
-        ->setParameter('end', $date->format('Y-m-d').' 23:59:59')
+        ->where('p.date = :date')
+        ->andWhere('p.absence = false')
+        ->andWhere('p.start_time <= :currentTime')
+        ->andWhere('p.end_time >= :currentTime')
+        ->setParameter('date', $date->format('Y-m-d'))
+        ->setParameter('currentTime', $currentHour)
         ->getQuery()
         ->getResult();
 }
@@ -67,6 +72,46 @@ public function findDayPlanningsWithChildren(\DateTime $date): array
         // ->setParameter('absence', false)  // Changez en true pour voir les absences
         ->orderBy('p.start_time', 'ASC')
         ->addOrderBy('c.first_name', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
+
+public function countChildrenByDate(\DateTime $date): int
+{
+    return $this->createQueryBuilder('p')
+        ->select('COUNT(DISTINCT p.child)')
+        ->where('p.date = :date')
+        ->andWhere('p.absence = false')
+        ->setParameter('date', $date->format('Y-m-d'))
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
+public function countMealsByDate(\DateTime $date): int
+{
+    return $this->createQueryBuilder('p')
+        ->select('COUNT(p.id)')
+        ->where('p.date = :date')
+        ->andWhere('p.absence = :isPresent')  // Plus explicite
+        ->andWhere('p.start_time <= :endLunch')
+        ->andWhere('p.end_time >= :startLunch')
+        ->setParameter('date', $date->format('Y-m-d'))
+        ->setParameter('isPresent', false)     // false = 0 = présent
+        ->setParameter('endLunch', '14:00')
+        ->setParameter('startLunch', '12:00')
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
+public function findChildrenByDate(\DateTime $date): array
+{
+    return $this->createQueryBuilder('p')
+        ->select('p', 'c')
+        ->join('p.child', 'c')
+        ->where('p.date = :date')
+        ->andWhere('p.absence = false')
+        ->setParameter('date', $date->format('Y-m-d'))
+        ->orderBy('c.first_name', 'ASC')
         ->getQuery()
         ->getResult();
 }

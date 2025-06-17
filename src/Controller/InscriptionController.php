@@ -62,13 +62,6 @@ final class InscriptionController extends AbstractController
     
                 $entityManager->flush();
 
-                // Créer la relation recoverysChilds
-                // $recoverysChilds = new recoverysChilds();
-                // $recoverysChilds->setChild($child);
-                // $recoverysChilds->setrecovery($recovery);
-                // $recoverysChilds->setLien($form->get('recovery')->get('lien')->getData());
-                // $entityManager->persist($recoverysChilds);
-
                 // Gérer l'utilisateur
                 $plainPassword = $form->get('user')->get('plainPassword')->getData();
                 $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));

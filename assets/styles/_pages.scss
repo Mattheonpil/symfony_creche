@@ -132,3 +132,111 @@
         text-transform: uppercase;
     }
 }
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+
+    .card {
+        background: $green;
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            display: block; // Assurez-vous que l'image est bien visible
+        }
+
+        img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            display: block;
+        }
+
+        h3 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: $white;
+        }
+    }
+}
+
+.datetime-container {
+    margin-bottom: 2rem;
+    text-align: center;
+
+    .date-container {
+        margin-bottom: 1rem;
+        
+        .day-name {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+        
+        .day-number {
+            font-size: 2rem;
+            font-weight: 600;
+            color: $orange;
+            margin-right: 0.5rem;
+        }
+        
+        .month {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+        
+        .year {
+            font-size: 1.5rem;
+            color: $orange;
+        }
+    }
+
+    .time-container {
+        font-size: 2rem;
+        font-weight: 500;
+        
+        .separator {
+            animation: blink 1s infinite;
+        }
+    }
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+
+
+// Start------INSCRIPTION NOUVEL ENFANT-------inscription.html.twig
+
+ 
+        .form-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 20px;
+        }
+        .form-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+// End------INSCRIPTION NOUVEL ENFANT-------inscription.html.twig

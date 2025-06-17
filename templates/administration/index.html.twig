@@ -27,29 +27,23 @@
     </div>
 </div>
     
-    <section class = "card-container">
+    <section class="card-container">
         {# Card Enfants présents #}
         <card class="card">
-            <img src="{{ asset('assets/images/baby.svg')}}" alt="icon child">
-            
+            <img src="{{ asset('assets/images/baby.svg') }}" alt="icon child">
             <h3>{{ present_children_count }}</h3>
         </card>
 
         {# Card Repas #}
-        {# <card class="card">
-            <img src="{{ asset('assets/images/meal.svg')}}" alt="icon child">
-            <h3>{{ meals_count }}</h3>
-        </card> #}
+        <card class="card">
+            <img src="{{ asset('assets/images/meal.svg') }}" alt="icon meal">
+            <h3>{{ mealsCount|default(0) }}</h3>
+        </card>
 
-
-        {# <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Repas prévus</h5>
-                    <p class="card-text display-4">{{ meals_count }}</p>
-                </div>
-            </div>
-        </div> #}
-    
+        {# Card Enfants prévus #}
+        <card class="card">
+            <img src="{{ asset('assets/images/child-care.svg') }}" alt="icon calendar">
+            <h3>{{ childrenCount|default(0) }}</h3>
+        </card>
     </section>
 {% endblock %}

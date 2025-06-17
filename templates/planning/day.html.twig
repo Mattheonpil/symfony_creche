@@ -8,10 +8,28 @@
 
 {% block body %}
     <div class="planning-container">
+            <div class="date-navigation">
+            {# <a href="{{ path('app_planning_day', {date: date|date_modify('-1 day')|date('Y-m-d')}) }}" class="navig-jour">
+                Jour précédent
+            </a> #}
+            {# <h1>Planning du {{ date|format_datetime('full', 'none', locale='fr') }}</h1> #}
+            <h1 class="planning-title">
+                <span class="date-display">
+                    <span class="day-name">{{ date|format_datetime(pattern="EEEE", locale="fr")|capitalize }}</span>
+                    <span class="day-number">{{ date|date('d') }}</span>
+                    <span class="month">{{ date|format_datetime(pattern="MMMM", locale="fr")|capitalize }}</span>
+                    <span class="year">{{ date|date('Y') }}</span>
+                </span>
+            </h1>
+            {# <a href="{{ path('app_planning_day', {date: date|date_modify('+1 day')|date('Y-m-d')}) }}" class="navig-jour">
+                Jour suivant
+            </a> #}
+        </div>
         <div class="week-navigation">
             <a href="{{ path('app_planning_day', {date: date|date_modify('-7 days')|date('Y-m-d')}) }}" class="week-nav-button">
-                <i class="fas fa-chevron-left"></i>
-                Semaine précédente
+                <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                    <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
+                </svg>
             </a>
 
             <div class="week-info">
@@ -27,40 +45,31 @@
                     {% if weekDays is not empty %}
                         {% for calendarDay in weekDays %}
                             {% set isToday = calendarDay.date|date('Y-m-d') == "now"|date('Y-m-d') %}
-                            {% set isClosed = calendarDay.isClosed %}
-                            {% set isHoliday = isClosed and calendarDay.closureJustification == 'Jour Férié' %}
+                            {% set isClosed = calendarDay.isClosed == false %}
+                            {% set closureReason = isClosed ? calendarDay.closureJustification : null %}
                             {% set isSelected = calendarDay.date|date('Y-m-d') == date|date('Y-m-d') %}
                             
                             <a href="{{ path('app_planning_day', {date: calendarDay.date|date('Y-m-d')}) }}" 
-                               class="day-box {{ isToday ? 'current-day' }} {{ isHoliday ? 'holiday' }} {{ isSelected ? 'selected-day' }}">
+                               class="day-box {{ isToday ? 'current-day' }} {{ isClosed ? 'closed-day' }} {{ isSelected ? 'selected-day' }}">
                                 <div class="day-name">{{ calendarDay.day }}</div>
                                 <div class="day-number">{{ calendarDay.date|date('d') }}</div>
-                                {% if isHoliday %}
-                                    <div class="holiday-indicator">Férié</div>
+                                {% if isClosed and closureReason %}
+                                    <div class="closure-indicator">{{ closureReason }}</div>
                                 {% endif %}
                             </a>
                         {% endfor %}
-                    {% else %}
-                        <div class="error-message">Aucun jour disponible pour cette semaine</div>
                     {% endif %}
                 </div>
             </div>
 
             <a href="{{ path('app_planning_day', {date: date|date_modify('+7 days')|date('Y-m-d')}) }}" class="week-nav-button">
-                Semaine suivante
-                <i class="fas fa-chevron-right"></i>
+                <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                    <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
+                </svg>
             </a>
         </div>
 
-        <div class="date-navigation">
-            <a href="{{ path('app_planning_day', {date: date|date_modify('-1 day')|date('Y-m-d')}) }}" class="navig-jour">
-                Jour précédent
-            </a>
-            <h1>Planning du {{ date|date('d/m/Y') }}</h1>
-            <a href="{{ path('app_planning_day', {date: date|date_modify('+1 day')|date('Y-m-d')}) }}" class="navig-jour">
-                Jour suivant
-            </a>
-        </div>
+
 
         <div class="planning-grid">
             <div class="timeline-header">

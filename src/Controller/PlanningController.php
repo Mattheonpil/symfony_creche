@@ -31,6 +31,7 @@ final class PlanningController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $planning->updateMealStatus();
             $entityManager->persist($planning);
             $entityManager->flush();
 
@@ -46,8 +47,8 @@ final class PlanningController extends AbstractController
     #[Route('/day', name: 'app_planning_day', methods: ['GET'])]
     public function planningDay(
         Request $request,
-        PlanningRepository $planningRepository,
-        CalendarRepository $calendarRepository
+        CalendarRepository $calendarRepository,
+        PlanningRepository $planningRepository
     ): Response {
         $dateString = $request->query->get('date');
         $date = $dateString ? new \DateTime($dateString) : new \DateTime();
@@ -59,14 +60,7 @@ final class PlanningController extends AbstractController
         $weekEnd = clone $weekStart;
         $weekEnd->modify('+4 days');
 
-        // Debug pour vérifier les dates
-        dump([
-            'date_recherchee' => $date->format('Y-m-d'),
-            'debut_semaine' => $weekStart->format('Y-m-d'),
-            'fin_semaine' => $weekEnd->format('Y-m-d')
-        ]);
-
-        // Récupérer les jours de la semaine du calendrier
+        // Modification de la requête pour la logique inversée
         $weekDays = $calendarRepository->createQueryBuilder('c')
             ->where('c.date >= :start')
             ->andWhere('c.date <= :end')
@@ -76,9 +70,6 @@ final class PlanningController extends AbstractController
             ->orderBy('c.date', 'ASC')
             ->getQuery()
             ->getResult();
-
-        // Debug pour vérifier les jours récupérés
-        dump(['nombre_jours' => count($weekDays)]);
 
         return $this->render('planning/day.html.twig', [
             'date' => $date,
@@ -102,6 +93,7 @@ final class PlanningController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $planning->updateMealStatus();
             $entityManager->flush();
 
             return $this->redirectToRoute('app_planning_index', [], Response::HTTP_SEE_OTHER);
