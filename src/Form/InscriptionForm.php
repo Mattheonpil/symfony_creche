@@ -19,7 +19,8 @@ class InscriptionForm extends AbstractType
                 'data' => $options['user']
             ])
             ->add('recovery', RecoveryForm::class, [
-                'label' => false,
+                'label' => 'Autre responsable',
+                'required' => false,
                 'data' => $options['recovery']
             ])
             ->add('child', ChildForm::class, [

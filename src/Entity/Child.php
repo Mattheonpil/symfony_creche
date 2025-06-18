@@ -49,11 +49,7 @@ class Child
     #[ORM\OneToMany(targetEntity: Planning::class, mappedBy: 'child')]
     private Collection $plannings;
 
-    /**
-     * @var Collection<int, Recovery>
-     */
-    #[ORM\ManyToMany(targetEntity: Recovery::class, mappedBy: 'child')]
-    private Collection $recoveries;
+
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTime $lundi_a = null;
@@ -88,11 +84,18 @@ class Child
     #[ORM\Column(length: 40)]
     private ?string $genre = null;
 
+    /**
+     * @var Collection<int, RecoveryChild>
+     */
+    #[ORM\OneToMany(targetEntity: RecoveryChild::class, mappedBy: 'child')]
+    private Collection $recoveryChildren;
+
     public function __construct()
     {
         $this->userChildren = new ArrayCollection();
         $this->plannings = new ArrayCollection();
         $this->recoveries = new ArrayCollection();
+        $this->recoveryChildren = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -399,6 +402,36 @@ class Child
     public function setGenre(string $genre): static
     {
         $this->genre = $genre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RecoveryChild>
+     */
+    public function getRecoveryChildren(): Collection
+    {
+        return $this->recoveryChildren;
+    }
+
+    public function addRecoveryChild(RecoveryChild $recoveryChild): static
+    {
+        if (!$this->recoveryChildren->contains($recoveryChild)) {
+            $this->recoveryChildren->add($recoveryChild);
+            $recoveryChild->setChild($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecoveryChild(RecoveryChild $recoveryChild): static
+    {
+        if ($this->recoveryChildren->removeElement($recoveryChild)) {
+            // set the owning side to null (unless already changed)
+            if ($recoveryChild->getChild() === $this) {
+                $recoveryChild->setChild(null);
+            }
+        }
 
         return $this;
     }

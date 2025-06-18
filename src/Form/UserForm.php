@@ -17,33 +17,6 @@ class UserForm extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'Utilisateur' => 'ROLE_USER',
-                    'Administrateur' => 'ROLE_ADMIN',
-                    'Parents'=> "ROLE_PARENT",
-                    'Staff'=> "ROLE_STAFF"
-                ],
-                'multiple' => true,
-                'expanded' => true
-            ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-            ])
             ->add('name')
             ->add('first_name')
             ->add('phone')
@@ -55,20 +28,33 @@ class UserForm extends AbstractType
                     'Tuteur légal' => 'tuteur',
                     'Autre' => 'autre'
                 ],
-                'label' => 'Lien avec l\'enfant',
-                'required' => true
+                'label' => 'Lien avec l\'enfant'
             ]);
-        ;
+
+        // Ajouter le champ password uniquement en création
+        if (!$options['edit_mode']) {
+            $builder->add('plainPassword', PasswordType::class, [
+                'mapped' => false,
+                'attr' => ['autocomplete' => 'new-password'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un mot de passe',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Le mot de passe doit contenir au moins {{ limit }} caractères',
+                        'max' => 4096,
+                    ]),
+                ],
+            ]);
+        }
     }
 
-        public function configureOptions(OptionsResolver $resolver): void
-            {
-                $resolver->setDefaults([
-                    'data_class' => User::class,
-                    'csrf_protection' => true,
-                    'csrf_field_name' => '_token',
-                    'csrf_token_id' => 'user_form',
-                    'allow_extra_fields' => true,
-                ]);
-            }
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => User::class,
+            'edit_mode' => false
+        ]);
+    }
 }

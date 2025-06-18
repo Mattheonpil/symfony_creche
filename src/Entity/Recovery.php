@@ -25,14 +25,20 @@ class Recovery
     private ?string $phone = null;
 
     /**
-     * @var Collection<int, Child>
+     * @var Collection<int, RecoveryChild>
      */
-    #[ORM\ManyToMany(targetEntity: Child::class, inversedBy: 'recoveries')]
-    private Collection $child;
+    #[ORM\OneToMany(targetEntity: RecoveryChild::class, mappedBy: 'recovery')]
+    private Collection $recoveryChildren;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $email = null;
+
+
 
     public function __construct()
     {
         $this->child = new ArrayCollection();
+        $this->recoveryChildren = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,6 +102,48 @@ class Recovery
     public function removeChild(Child $child): static
     {
         $this->child->removeElement($child);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RecoveryChild>
+     */
+    public function getRecoveryChildren(): Collection
+    {
+        return $this->recoveryChildren;
+    }
+
+    public function addRecoveryChild(RecoveryChild $recoveryChild): static
+    {
+        if (!$this->recoveryChildren->contains($recoveryChild)) {
+            $this->recoveryChildren->add($recoveryChild);
+            $recoveryChild->setRecovery($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecoveryChild(RecoveryChild $recoveryChild): static
+    {
+        if ($this->recoveryChildren->removeElement($recoveryChild)) {
+            // set the owning side to null (unless already changed)
+            if ($recoveryChild->getRecovery() === $this) {
+                $recoveryChild->setRecovery(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): static
+    {
+        $this->email = $email;
 
         return $this;
     }

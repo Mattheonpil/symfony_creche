@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'enfant{% endblock %}
+
+{% block body %}
+    <div class="form-container">
+        <h1>Modifier les informations de l'enfant</h1>
+        
+        {{ form_start(form, {'attr': {'class': 'edit-form'}}) }}
+        <div class="form-section">
+            <h2>Informations générales</h2>
+            {{ form_row(form.first_name) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.birth_date) }}
+            {{ form_row(form.genre) }}
+            {{ form_row(form.allergy) }}
+            {{ form_row(form.medical_specificity) }}
+        </div>
+
+        <div class="form-section">
+            <h2>Planning hebdomadaire</h2>
+            <div class="planning-grid">
+                <div class="day-column">
+                    <h3>Lundi</h3>
+                    {{ form_row(form.lundi_a) }}
+                    {{ form_row(form.lundi_d) }}
+                </div>
+                <div class="day-column">
+                    <h3>Mardi</h3>
+                    {{ form_row(form.mardi_a) }}
+                    {{ form_row(form.mardi_d) }}
+                </div>
+                <div class="day-column">
+                    <h3>Mercredi</h3>
+                    {{ form_row(form.mercredi_a) }}
+                    {{ form_row(form.mercredi_d) }}
+                </div>
+                <div class="day-column">
+                    <h3>Jeudi</h3>
+                    {{ form_row(form.jeudi_a) }}
+                    {{ form_row(form.jeudi_d) }}
+                </div>
+                <div class="day-column">
+                    <h3>Vendredi</h3>
+                    {{ form_row(form.vendredi_a) }}
+                    {{ form_row(form.vendredi_d) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <a href="{{ path('app_inscription_show', {'childId': child.id}) }}" class="btn btn-secondary">Annuler</a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .planning-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .day-column {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+    </style>
+{% endblock %}

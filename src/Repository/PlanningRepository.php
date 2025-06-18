@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use DateTime;
+use App\Entity\Child;
 use App\Entity\Planning;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -92,7 +93,7 @@ public function countMealsByDate(\DateTime $date): int
     return $this->createQueryBuilder('p')
         ->select('COUNT(p.id)')
         ->where('p.date = :date')
-        ->andWhere('p.absence = :isPresent')  // Plus explicite
+        ->andWhere('p.absence = :isPresent') 
         ->andWhere('p.start_time <= :endLunch')
         ->andWhere('p.end_time >= :startLunch')
         ->setParameter('date', $date->format('Y-m-d'))
@@ -116,5 +117,34 @@ public function findChildrenByDate(\DateTime $date): array
         ->getResult();
 }
 
+public function deletePlanningBetweenDates(Child $child, \DateTime $dateDebut, \DateTime $dateFin): void
+{
+    $this->createQueryBuilder('p')
+        ->delete()
+        ->where('p.child = :child')
+        ->andWhere('p.date BETWEEN :dateDebut AND :dateFin')
+        ->setParameter('child', $child)
+        ->setParameter('dateDebut', $dateDebut->format('Y-m-d'))
+        ->setParameter('dateFin', $dateFin->format('Y-m-d'))
+        ->getQuery()
+        ->execute();
+}
 
+public function findLastPlanningDate(Child $child): ?\DateTime
+{
+    $result = $this->createQueryBuilder('p')
+        ->select('p.date')
+        ->where('p.child = :child')
+        ->setParameter('child', $child)
+        ->orderBy('p.date', 'DESC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
+
+    if (!$result) {
+        return null;
+    }
+
+    return $result['date'] instanceof \DateTime ? $result['date'] : null;
+}
 }

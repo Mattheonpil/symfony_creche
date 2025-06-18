@@ -4,10 +4,13 @@ namespace App\Form;
 
 use App\Entity\Child;
 use App\Entity\Recovery;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class RecoveryForm extends AbstractType
 {
@@ -17,11 +20,25 @@ class RecoveryForm extends AbstractType
             ->add('name')
             ->add('first_name')
             ->add('phone')
-            // ->add('child', EntityType::class, [
-            //     'class' => Child::class,
-            //     'choice_label' => 'id',
-            //     'multiple' => true,
-            // ])
+            ->add('email')
+                        ->add('email', EmailType::class, [
+                'required' => false,
+                'help' => 'Optionnel sauf pour les responsables légaux'
+            ])
+            ->add('relation', ChoiceType::class, [
+                'choices' => [
+                    'Père' => 'père',
+                    'Mère' => 'mère',
+                    'Grand-parent' => 'grand-parent',
+                    'Autre' => 'autre'
+                ],
+                'mapped' => false
+            ])
+            ->add('is_legal_guardian', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Responsable légal',
+                'mapped' => false
+            ])
         ;
     }
 

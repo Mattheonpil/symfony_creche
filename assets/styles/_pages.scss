@@ -240,3 +240,32 @@
         }
 
 // End------INSCRIPTION NOUVEL ENFANT-------inscription.html.twig
+// Start------SHOW INSCRIPTION NOUVEL ENFANT-------show_inscription.html.twig
+
+
+        .recap-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .section-content {
+            padding: 1rem 0;
+        }
+
+        .planning-recap {
+            margin-top: 1.5rem;
+        }
+
+// End------SHOW INSCRIPTION NOUVEL ENFANT-------show_inscription.html.twig
