@@ -23,10 +23,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 80px;
 }
 
 .container {
   width: 90%;
+}
+
+.main-content-wrapper {
+  padding-top: 80px;
+  min-height: calc(100vh - 80px);
 }
 
 .nav-button {
@@ -118,6 +124,207 @@
   font-size: 4rem;
   font-weight: 600;
   color: white;
+}
+
+.form-wrapper {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+.form-wrapper h1 {
+  color: rgb(108, 116, 124);
+  margin-bottom: 2rem;
+}
+.form-section {
+  margin-bottom: 2rem;
+  padding: 2rem;
+  border-radius: 8px;
+}
+.form-section .form-rows-container, .form-section .child-info {
+  width: 40%;
+  margin: 0 auto;
+}
+.form-section .form-rows-container .email-help-wrap, .form-section .child-info .email-help-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.form-section .form-rows-container .email-help-wrap .help-text, .form-section .child-info .email-help-wrap .help-text {
+  flex-basis: 100%;
+  font-size: 0.9rem;
+  padding-top: 0.3rem;
+}
+.form-section .form-rows-container #inscription_form_child_genre, .form-section .child-info #inscription_form_child_genre {
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+.form-section .form-rows-container div, .form-section .child-info div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  color: rgb(108, 116, 124);
+}
+.form-section .form-rows-container div input, .form-section .child-info div input {
+  outline: none;
+  border: 1px solid rgb(108, 116, 124);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+.form-section .form-rows-container div input:hover, .form-section .child-info div input:hover {
+  border: 1px solid rgb(248, 144, 99);
+  background-color: rgba(248, 144, 99, 0.02);
+}
+.form-section .form-rows-container div input:focus, .form-section .child-info div input:focus {
+  border: 1px solid rgb(248, 144, 99);
+  background-color: rgba(248, 144, 99, 0.02);
+}
+.form-section .form-rows-container div select, .form-section .child-info div select {
+  outline: none;
+  border: 1px solid rgb(108, 116, 124);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  color: rgb(108, 116, 124);
+}
+.form-section .form-rows-container div select:hover, .form-section .child-info div select:hover {
+  border: 1px solid rgb(248, 144, 99);
+  background-color: rgba(248, 144, 99, 0.02);
+}
+.form-section .form-rows-container div select:focus, .form-section .child-info div select:focus {
+  border: 1px solid rgb(248, 144, 99);
+  background-color: rgba(248, 144, 99, 0.02);
+}
+.form-section .form-rows-container div textarea, .form-section .child-info div textarea {
+  outline: none;
+  border: 1px solid rgb(108, 116, 124);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  color: rgb(108, 116, 124);
+}
+.form-section .form-rows-container div textarea:hover, .form-section .child-info div textarea:hover {
+  border: 1px solid rgb(248, 144, 99);
+  background-color: rgba(248, 144, 99, 0.02);
+}
+.form-section .form-rows-container div textarea:focus, .form-section .child-info div textarea:focus {
+  border: 1px solid rgb(248, 144, 99);
+  background-color: rgba(248, 144, 99, 0.02);
+}
+.form-section .form-rows-container div label, .form-section .child-info div label {
+  align-content: center;
+  font-weight: 600;
+}
+.form-section--user, .recap-section--user {
+  border: 1px solid rgb(248, 144, 99);
+  box-shadow: 0 2px 4px rgba(248, 144, 99, 0.2);
+}
+.form-section--child, .recap-section--child {
+  border: 1px solid rgb(0, 74, 154);
+  box-shadow: 0 2px 4px rgba(0, 74, 154, 0.2);
+}
+.form-section--planning, .recap-section--planning {
+  border: 1px solid rgb(123, 218, 67);
+  box-shadow: 0 2px 4px rgba(123, 218, 67, 0.2);
+}
+.form-section h2 {
+  color: rgb(108, 116, 124);
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+.form-section .planning-dates {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+.form-group label {
+  min-width: 200px;
+  color: rgb(108, 116, 124);
+  font-weight: 500;
+}
+.form-group input, .form-group select, .form-group textarea {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid rgb(108, 116, 124);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+.form-group input:hover, .form-group select:hover, .form-group textarea:hover {
+  border-color: rgb(248, 144, 99);
+  background-color: rgb(233, 236, 239);
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: rgb(248, 144, 99);
+  box-shadow: 0 0 0 2px rgba(248, 144, 99, 0.1);
+}
+
+.form-button {
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.form-button--submit {
+  background-color: rgb(73, 195, 0);
+  color: white;
+  border: none;
+}
+.form-button--submit:hover {
+  background-color: rgb(53.9076923077, 144, 0);
+}
+.form-button--cancel {
+  background-color: transparent;
+  border: 1px solid rgb(108, 116, 124);
+  color: rgb(108, 116, 124);
+}
+.form-button--cancel:hover {
+  border-color: rgb(248, 144, 99);
+  color: rgb(248, 144, 99);
+}
+.form-button--edit {
+  background-color: rgb(43, 146, 255);
+  color: white;
+  border: none;
+}
+.form-button--edit:hover {
+  background-color: rgb(0, 120.0047169811, 247);
+}
+.form-button--delete {
+  background-color: rgb(255, 51, 54);
+  color: white;
+  border: none;
+}
+.form-button--delete:hover {
+  background-color: rgb(255, 0, 3.75);
+}
+
+.recap-wrapper {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+.recap-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: white;
+}
+.main-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .main-nav {
@@ -259,21 +466,19 @@
 .card-container .card .card-icon {
   width: 48px;
   height: 48px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   display: block;
 }
 .card-container .card img {
   width: 48px;
   height: 48px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   display: block;
 }
 .card-container .card h3 {
   font-size: 2.5rem;
   font-weight: 600;
-  color: rgb(108, 116, 124);
+  color: white;
 }
 
 .datetime-container {
@@ -314,6 +519,204 @@
     opacity: 0;
   }
 }
+.form-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 20px;
+}
+
+.form-section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.recap-section {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #eee;
+}
+
+.section-content {
+  padding: 1rem 0;
+}
+
+.planning-recap {
+  margin-top: 1.5rem;
+}
+
+.planning-hours-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr 1fr 120px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(123, 218, 67, 0.08);
+  row-gap: 0.5rem;
+  margin-bottom: 2rem;
+  align-items: stretch;
+}
+.planning-hours-grid .header-group {
+  grid-column: 2/span 2;
+  display: flex;
+  border: 2px solid rgb(73, 195, 0);
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgb(233, 236, 239);
+  height: 100%;
+  justify-content: space-around;
+  box-sizing: border-box;
+}
+.planning-hours-grid .header {
+  font-weight: bold;
+  background: rgb(233, 236, 239);
+  color: rgb(108, 116, 124);
+  text-align: center;
+  padding: 0.75em 1em;
+}
+.planning-hours-grid .header:first-child {
+  border-radius: 8px 0 0 8px;
+}
+.planning-hours-grid .header:nth-child(4) {
+  border-radius: 0 8px 8px 0;
+}
+.planning-hours-grid .day-label {
+  display: flex;
+  font-weight: bold;
+  background: rgb(233, 236, 239);
+  color: rgb(108, 116, 124);
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.planning-hours-grid .input-group {
+  grid-column: 2/span 2;
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgb(73, 195, 0);
+  height: 100%;
+  justify-content: space-around;
+  box-sizing: border-box;
+}
+.planning-hours-grid .input-group.filled {
+  background: rgb(82.5461538462, 220.5, 0) !important;
+  animation: highlight 0.5s;
+}
+.planning-hours-grid .input-group.filled .input-cell,
+.planning-hours-grid .input-group.filled select,
+.planning-hours-grid .input-group.filled .time-input {
+  background: rgb(82.5461538462, 220.5, 0) !important;
+  color: white !important;
+  font-weight: 700;
+}
+@keyframes highlight {
+  from {
+    box-shadow: 0 0 10px 2px rgb(73, 195, 0);
+  }
+  to {
+    box-shadow: none;
+  }
+}
+.planning-hours-grid .input-cell {
+  padding: 0.5em 1em;
+  text-align: center;
+  background: rgb(73, 195, 0);
+  border-radius: 0 8px 8px 0;
+}
+.planning-hours-grid .time-input {
+  border-radius: 8px;
+  border: 1px solid white;
+  padding: 0.2rem;
+}
+.planning-hours-grid .time-input select {
+  background-color: rgb(73, 195, 0) !important;
+  color: white !important;
+  border: none;
+  font-weight: 600;
+}
+.planning-hours-grid .time-input select:focus {
+  outline: none;
+  color: white;
+}
+.planning-hours-grid .total-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(233, 236, 239);
+  border-radius: 0 8px 8px 0;
+}
+.planning-hours-grid .total-cell span.has-value {
+  font-weight: 700;
+  color: rgb(123, 218, 67);
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  background: white;
+  border: 2px solid rgb(123, 218, 67);
+}
+.planning-hours-grid .week-total-label {
+  grid-column: 1/4;
+  text-align: right;
+  font-weight: bold;
+  padding: 0.75em 1em;
+  background: rgb(233, 236, 239);
+  border-radius: 0 0 0 8px;
+  color: rgb(108, 116, 124);
+}
+.planning-hours-grid .week-total-value {
+  grid-column: 4/5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.5rem 0.8rem;
+  background: rgb(233, 236, 239);
+  border-radius: 0 0 8px 0;
+  color: rgb(108, 116, 124);
+}
+.planning-hours-grid .week-total-value span.has-value {
+  font-weight: 700;
+  color: rgb(123, 218, 67);
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  background: white;
+  border: 2px solid rgb(123, 218, 67);
+}
+@media (max-width: 700px) {
+  .planning-hours-grid {
+    grid-template-columns: 1fr;
+  }
+  .planning-hours-grid .header, .planning-hours-grid .day-label, .planning-hours-grid .input-cell, .planning-hours-grid .total-cell, .planning-hours-grid .week-total-label, .planning-hours-grid .week-total-value {
+    grid-column: 1/-1 !important;
+    border-radius: 8px;
+    margin-bottom: 0.5em;
+  }
+  .planning-hours-grid .header {
+    display: none;
+  }
+  .planning-hours-grid .day-label {
+    margin-top: 1em;
+  }
+}
+
 body {
   font-family: "Inter", sans-serif;
   height: 2000px;
@@ -450,30 +853,35 @@ body {
 }
 .planning-container .planning-grid .child-row:nth-child(odd) .child-info,
 .planning-container .planning-grid .child-row:nth-child(odd) .presence-container {
-  background-color: #ffd2d2;
+  background-color: #ecf1f5;
 }
 .planning-container .planning-grid .child-row:nth-child(even) .child-info,
 .planning-container .planning-grid .child-row:nth-child(even) .presence-container {
-  background-color: #eaf4ff;
+  background-color: #f8f9fa;
 }
 .planning-container .planning-grid .child-row .child-info {
-  padding: 1rem;
   font-weight: 500;
   position: sticky;
   left: 0;
   z-index: 1;
   text-align: center;
+  padding: 0 1.5rem 0 0.5rem;
+  color: rgb(108, 116, 124);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: 50px;
+}
+.planning-container .planning-grid .child-row .child-info .gear-icon {
+  width: 2em; /* ou 32px, 24px, etc. */
+  height: 2em; /* idem */
+  color: rgb(108, 116, 124);
+  vertical-align: middle;
 }
 .planning-container .planning-grid .child-row .presence-container {
   grid-column: 2/-1;
   position: relative;
   padding: 0.5rem 0;
-  display: flex;
-  align-items: center;
 }
 .planning-container .planning-grid .child-row .presence-container .presence-bar {
   position: absolute;
@@ -481,7 +889,6 @@ body {
   width: calc(var(--duration) / 13 * 100%);
   min-width: 60px;
   height: 40px;
-  background: #faa984;
   color: white;
   display: flex;
   align-items: center;
@@ -610,4 +1017,29 @@ body {
 .planning-container .week-navigation .week-info .weekdays .day-box .day-number {
   font-size: 1.5rem;
   font-weight: 500;
-}/*# sourceMappingURL=app.css.map */
+}
+
+.editor-row {
+  grid-column: 1/-1;
+  background: #f8f9fa;
+  padding: 1em;
+  border-bottom: 1px solid #eee;
+}
+
+.planning-container .planning-grid .child-row .presence-container .presence-bar.green {
+  background: rgb(73, 195, 0);
+}
+
+.planning-container .planning-grid .child-row .presence-container .presence-bar.orange {
+  background: rgb(248, 144, 99);
+}
+
+.planning-container .planning-grid .child-row .presence-container .presence-bar.red {
+  background: rgb(255, 51, 54);
+}
+
+.planning-container .planning-grid .child-row .presence-container .presence-bar.primary {
+  background: rgb(108, 116, 124);
+}
+
+/*# sourceMappingURL=app.css.map */

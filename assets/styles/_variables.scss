@@ -62,8 +62,13 @@ $weight-3 : 700;
     display: flex;
     flex-direction: column;
     align-items: center;
-    // padding-top: 80px;
+    padding-top: 80px;
 }
 .container {
     width: 90%;
+}
+
+.main-content-wrapper {
+    padding-top: 80px;
+    min-height: calc(100vh - 80px);
 }

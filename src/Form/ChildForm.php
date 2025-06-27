@@ -14,6 +14,16 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ChildForm extends AbstractType
 {
+     public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Child::class,
+            'attr' => ['class' => 'form-rows-container'],
+            'edit_mode' => false
+        ]);
+    }
+
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -36,11 +46,22 @@ class ChildForm extends AbstractType
             'required' => true,
             'label' => 'Genre'
             ])
-        ->add('registration_date', null, [
-            'label' => 'Date d\'inscription'
+        ->add('registration_date', DateType::class, [
+            'label' => 'Date d\'inscription',
+            'widget' => 'single_text',
+            'html5' => true,
+            'input' => 'datetime',
+            'format' => 'yyyy-MM-dd',
+            'input_format' => 'Y-m-d'
         ])
-        ->add('unsubscription_date', null, [
-            'label' => 'Date de désinscription'
+        ->add('unsubscription_date', DateType::class, [
+            'label' => 'Date de désinscription',
+            'widget' => 'single_text',
+            'html5' => true,
+            'input' => 'datetime',
+            'format' => 'yyyy-MM-dd',
+            'input_format' => 'Y-m-d',
+            'required' => false
         ])
         ->add('allergy', null, [
             'label' => 'Allergies'
@@ -52,7 +73,7 @@ class ChildForm extends AbstractType
             'widget' => 'choice',
             'minutes' => [0, 15, 30, 45],
             'hours' => range(7, 19),
-            'label' => 'Lundi - Arrivée',
+            'label' => false,
             'placeholder' => [
             'hour' => 'HH',
             'minute' => 'MM'
@@ -66,7 +87,7 @@ class ChildForm extends AbstractType
             'widget' => 'choice',
             'minutes' => [0, 15, 30, 45],
             'hours' => range(7, 19),
-            'label' => 'Lundi - Départ',
+            'label' => false,
             'placeholder' => [
             'hour' => 'HH',
             'minute' => 'MM'
@@ -80,7 +101,7 @@ class ChildForm extends AbstractType
             'widget' => 'choice',
             'minutes' => [0, 15, 30, 45],
             'hours' => range(7, 19),
-            'label' => 'Mardi - Arrivée',
+            'label' => false,
             'placeholder' => [
             'hour' => 'HH',
             'minute' => 'MM'
@@ -94,7 +115,7 @@ class ChildForm extends AbstractType
                 'widget' => 'choice',
                 'minutes' => [0, 15, 30, 45],
                 'hours' => range(7, 19),
-                'label' => 'Mardi - Départ',
+                'label' => false,
                 'placeholder' => [
                 'hour' => 'HH',
                 'minute' => 'MM'
@@ -108,7 +129,7 @@ class ChildForm extends AbstractType
                 'widget' => 'choice',
                 'minutes' => [0, 15, 30, 45],
                 'hours' => range(7, 19),
-                'label' => 'Mercredi - Départ',
+                'label' => false,
                 'placeholder' => [
                 'hour' => 'HH',
                 'minute' => 'MM'
@@ -122,7 +143,7 @@ class ChildForm extends AbstractType
                 'widget' => 'choice',
                 'minutes' => [0, 15, 30, 45],
                 'hours' => range(7, 19),
-                'label' => 'Mercredi - Arrivée',
+                'label' => false,
                 'placeholder' => [
                 'hour' => 'HH',
                 'minute' => 'MM'
@@ -136,7 +157,7 @@ class ChildForm extends AbstractType
                 'widget' => 'choice',
                 'minutes' => [0, 15, 30, 45],
                 'hours' => range(7, 19),
-                'label' => 'Jeudi - Départ',
+                'label' => false,
                 'placeholder' => [
                 'hour' => 'HH',
                 'minute' => 'MM'
@@ -150,7 +171,7 @@ class ChildForm extends AbstractType
                 'widget' => 'choice',
                 'minutes' => [0, 15, 30, 45],
                 'hours' => range(7, 19),
-                'label' => 'Jeudi - Arrivée',
+                'label' => false,
                 'placeholder' => [
                 'hour' => 'HH',
                 'minute' => 'MM'
@@ -164,7 +185,7 @@ class ChildForm extends AbstractType
                 'widget' => 'choice',
                 'minutes' => [0, 15, 30, 45],
                 'hours' => range(7, 19),
-                'label' => 'Vendredi - Arrivée',
+                'label' => false,
                 'placeholder' => [
                 'hour' => 'HH',
                 'minute' => 'MM'
@@ -178,7 +199,7 @@ class ChildForm extends AbstractType
                 'widget' => 'choice',
                 'minutes' => [0, 15, 30, 45],
                 'hours' => range(7, 19),
-                'label' => 'Vendredi - Départ',
+                'label' => false,
                 'placeholder' => [
                 'hour' => 'HH',
                 'minute' => 'MM'
@@ -213,14 +234,5 @@ class ChildForm extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Child::class,
-            'csrf_protection' => true,
-            'csrf_field_name' => '_token',
-            'csrf_token_id' => 'child_form',
-            'allow_extra_fields' => true,            
-        ]);
-    }
+
 }

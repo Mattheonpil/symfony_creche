@@ -4,31 +4,150 @@
 
 {% block stylesheets %}
     {{ parent() }}
-
 {% endblock %}
 
 {% block body %}
-    <div class="form-container">
-        <h1 class="text-center mb-4">Inscription nouvel enfant</h1>
+    <div class="form-wrapper">
+        <h1 class="text-center mb-4">Inscription d'un nouvel enfant</h1>
 
         {{ form_start(form) }}
-            <div class="form-section">
+            <div class="form-section form-section--user">
                 <h2>Informations responsables</h2>
                 {{ form_widget(form.user) }}
             </div>
 
-            <div class="form-section">
+            <div class="form-section form-section--user">
                 <h2>Informations sur les accompagnateurs</h2>
-                {{ form_widget(form.recovery) }}
+                <div class="form-rows-container">
+                    {{ form_row(form.recovery.name) }}
+                    {{ form_row(form.recovery.first_name) }}
+                    {{ form_row(form.recovery.phone) }}
+                    {{ form_row(form.recovery.is_legal_guardian) }}
+                    {{ form_row(form.recovery.email) }}
+                    {{ form_row(form.recovery.relation) }}
+                </div>
             </div>
 
-            <div class="form-section">
+            <div class="form-section form-section--child">
                 <h2>Informations sur l'enfant</h2>
-                {{ form_widget(form.child) }}
+                <div class="child-info">
+                    {{ form_row(form.child.name) }}
+                    {{ form_row(form.child.first_name) }}
+                    {{ form_row(form.child.birth_date) }}
+                    {{ form_row(form.child.genre) }}
+                    {{ form_row(form.child.allergy) }}
+                    {{ form_row(form.child.medical_specificity) }}
+                    {{ form_row(form.child.registration_date ) }}
+                    {{ form_row(form.child.unsubscription_date) }}
+                </div>
+
+                <div class="form-section form-section--planning"
+                     data-controller="planning-hours">
+                    <h2>Planning</h2>
+                    <div class="planning-dates">
+                        {{ form_row(form.child.date_debut) }}
+                        {{ form_row(form.child.date_fin) }}
+                    </div>
+                    
+                    <div class="planning-hours-grid">
+                        <!-- Ligne d'en-tête -->
+                        <div class="header">Jour</div>
+                        <div class="header-group">
+                            <div class="header">Heure d'arrivée</div>
+                            <div class="header">Heure de départ</div>
+                        </div>
+                        <div class="header">Récap jour</div>
+
+                        <!-- Lundi -->
+                        <div class="day-label">Lun</div>
+                        <div class="input-group" data-controller="planning-feedback" data-planning-feedback-target="inputGroup">
+                            <div class="input-cell">
+                                {{ form_row(form.child.lundi_a, {
+                                    'attr': {
+                                        'data-planning-hours-target': 'lundiA',
+                                        'data-action': 'change->planning-hours#updateAll',
+                                        'data-planning-feedback-target': 'select'
+                                    }
+                                }) }}
+                            </div>
+                            <div class="input-cell">
+                                {{ form_row(form.child.lundi_d, {
+                                    'attr': {
+                                        'data-planning-hours-target': 'lundiD',
+                                        'data-action': 'change->planning-hours#updateAll',
+                                        'data-planning-feedback-target': 'select'
+                                    }
+                                }) }}
+                            </div>
+                        </div>
+                        <div class="total-cell">
+                            <span data-planning-hours-target="dayTotal"></span>
+                        </div>
+
+                        <!-- Répète pour chaque jour -->
+                        <div class="day-label">Mar</div>
+                        <div class="input-group" data-controller="planning-feedback" data-planning-feedback-target="inputGroup">
+                            <div class="input-cell">
+                                {{ form_row(form.child.mardi_a, {'attr': {'data-planning-hours-target': 'mardiA', 'data-action': 'change->planning-hours#updateAll', 'data-planning-feedback-target': 'select'}}) }}
+                            </div>
+                            <div class="input-cell">
+                                {{ form_row(form.child.mardi_d, {'attr': {'data-planning-hours-target': 'mardiD', 'data-action': 'change->planning-hours#updateAll', 'data-planning-feedback-target': 'select'}}) }}
+                            </div>
+                        </div>
+                        <div class="total-cell">
+                            <span data-planning-hours-target="dayTotal"></span>
+                        </div>
+
+                        <div class="day-label">Mer</div>
+                        <div class="input-group" data-controller="planning-feedback" data-planning-feedback-target="inputGroup">
+                            <div class="input-cell">
+                                {{ form_row(form.child.mercredi_a, {'attr': {'data-planning-hours-target': 'mercrediA', 'data-action': 'change->planning-hours#updateAll', 'data-planning-feedback-target': 'select'}}) }}
+                            </div>
+                            <div class="input-cell">
+                                {{ form_row(form.child.mercredi_d, {'attr': {'data-planning-hours-target': 'mercrediD', 'data-action': 'change->planning-hours#updateAll', 'data-planning-feedback-target': 'select'}}) }}
+                            </div>
+                        </div>
+                        <div class="total-cell">
+                            <span data-planning-hours-target="dayTotal"></span>
+                        </div>
+
+                        <div class="day-label">Jeu</div>
+                        <div class="input-group" data-controller="planning-feedback" data-planning-feedback-target="inputGroup">
+                            <div class="input-cell">
+                                {{ form_row(form.child.jeudi_a, {'attr': {'data-planning-hours-target': 'jeudiA', 'data-action': 'change->planning-hours#updateAll', 'data-planning-feedback-target': 'select'}}) }}
+                            </div>
+                            <div class="input-cell">
+                                {{ form_row(form.child.jeudi_d, {'attr': {'data-planning-hours-target': 'jeudiD', 'data-action': 'change->planning-hours#updateAll', 'data-planning-feedback-target': 'select'}}) }}
+                            </div>
+                        </div>
+                        <div class="total-cell">
+                            <span data-planning-hours-target="dayTotal"></span>
+                        </div>
+
+                        <div class="day-label">Ven</div>
+                        <div class="input-group" data-controller="planning-feedback" data-planning-feedback-target="inputGroup">
+                            <div class="input-cell">
+                                {{ form_row(form.child.vendredi_a, {'attr': {'data-planning-hours-target': 'vendrediA', 'data-action': 'change->planning-hours#updateAll', 'data-planning-feedback-target': 'select'}}) }}
+                            </div>
+                            <div class="input-cell">
+                                {{ form_row(form.child.vendredi_d, {'attr': {'data-planning-hours-target': 'vendrediD', 'data-action': 'change->planning-hours#updateAll', 'data-planning-feedback-target': 'select'}}) }}
+                            </div>
+                        </div>
+                        <div class="total-cell">
+                            <span data-planning-hours-target="dayTotal"></span>
+                        </div>
+
+                        <!-- Total semaine -->
+                        <div class="week-total-label">Total semaine :</div>
+                        <div class="week-total-value">
+                            <span data-planning-hours-target="weekTotal"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="text-center mt-4">
-                <button type="submit" class="btn btn-primary btn-lg">Valider l'inscription</button>
+                <button type="submit" class="form-button form-button--submit">Valider l'inscription</button>
             </div>
         {{ form_end(form) }}
     </div>

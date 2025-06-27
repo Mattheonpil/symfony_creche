@@ -16,17 +16,32 @@
 
         
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('assets/styles/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
         {% endblock %}
-
-
-        {% block importmap %}{{ importmap('app') }}{% endblock %}
-        
+        <style>
+            .main-content-wrapper {
+                padding-top: 80px; /* Fallback to prevent content flicker */
+            }
+        </style>
     </head>
     <body>
         {% include "_partials/_navbar.html.twig" %}
-        {% include "_partials/_custom_main-size.html.twig" %}
-        <div class="padding-navbar" >{% block body %}{% endblock %}</div>
-        {% block javascripts %}{% endblock %}
+        <div class="main-content-wrapper">
+            {% block body %}{% endblock %}
+        </div>
+        {% block javascripts %}
+            {{ importmap('app') }}
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const navbar = document.querySelector('.main-nav');
+                    const mainContent = document.querySelector('.main-content-wrapper');
+
+                    if (navbar && mainContent) {
+                        const navbarHeight = navbar.offsetHeight;
+                        mainContent.style.paddingTop = navbarHeight + 'px';
+                    }
+                });
+            </script>
+        {% endblock %}
     </body>
 </html>

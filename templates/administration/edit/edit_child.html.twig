@@ -17,34 +17,109 @@
             {{ form_row(form.medical_specificity) }}
         </div>
 
-        <div class="form-section">
+        <div class="form-section form-section--planning"
+             data-controller="planning-hours">
             <h2>Planning hebdomadaire</h2>
-            <div class="planning-grid">
-                <div class="day-column">
+            <div class="planning-hours">
+                <div class="day-group">
                     <h3>Lundi</h3>
-                    {{ form_row(form.lundi_a) }}
-                    {{ form_row(form.lundi_d) }}
+                    {{ form_row(form.lundi_a, {
+                        'attr': {
+                            'data-planning-hours-target': 'lundiA',
+                            'data-action': 'change->planning-hours#updateAll'
+                        }
+                    }) }}
+                    {{ form_row(form.lundi_d, {
+                        'attr': {
+                            'data-planning-hours-target': 'lundiD',
+                            'data-action': 'change->planning-hours#updateAll'
+                        }
+                    }) }}
+                    <div>
+                        <span>Heures ce jour :</span>
+                        <span data-planning-hours-target="dayTotal"></span>
+                    </div>
                 </div>
-                <div class="day-column">
+                <div class="day-group">
                     <h3>Mardi</h3>
-                    {{ form_row(form.mardi_a) }}
-                    {{ form_row(form.mardi_d) }}
+                    {{ form_row(form.mardi_a, {
+                        'attr': {
+                            'data-planning-hours-target': 'mardiA',
+                            'data-action': 'change->planning-hours#updateAll'
+                        }
+                    }) }}
+                    {{ form_row(form.mardi_d, {
+                        'attr': {
+                            'data-planning-hours-target': 'mardiD',
+                            'data-action': 'change->planning-hours#updateAll'
+                        }
+                    }) }}
+                    <div>
+                        <span>Heures ce jour :</span>
+                        <span data-planning-hours-target="dayTotal"></span>
+                    </div>
                 </div>
-                <div class="day-column">
+                <div class="day-group">
                     <h3>Mercredi</h3>
-                    {{ form_row(form.mercredi_a) }}
-                    {{ form_row(form.mercredi_d) }}
+                    {{ form_row(form.mercredi_a, {
+                        'attr': {
+                            'data-planning-hours-target': 'mercrediA',
+                            'data-action': 'change->planning-hours#updateAll'
+                        }
+                    }) }}
+                    {{ form_row(form.mercredi_d, {
+                        'attr': {
+                            'data-planning-hours-target': 'mercrediD',
+                            'data-action': 'change->planning-hours#updateAll'
+                        }
+                    }) }}
+                    <div>
+                        <span>Heures ce jour :</span>
+                        <span data-planning-hours-target="dayTotal"></span>
+                    </div>
                 </div>
-                <div class="day-column">
+                <div class="day-group">
                     <h3>Jeudi</h3>
-                    {{ form_row(form.jeudi_a) }}
-                    {{ form_row(form.jeudi_d) }}
+                    {{ form_row(form.jeudi_a, {
+                        'attr': {
+                            'data-planning-hours-target': 'jeudiA',
+                            'data-action': 'change->planning-hours#updateAll'
+                        }
+                    }) }}
+                    {{ form_row(form.jeudi_d, {
+                        'attr': {
+                            'data-planning-hours-target': 'jeudiD',
+                            'data-action': 'change->planning-hours#updateAll'
+                        }
+                    }) }}
+                    <div>
+                        <span>Heures ce jour :</span>
+                        <span data-planning-hours-target="dayTotal"></span>
+                    </div>
                 </div>
-                <div class="day-column">
+                <div class="day-group">
                     <h3>Vendredi</h3>
-                    {{ form_row(form.vendredi_a) }}
-                    {{ form_row(form.vendredi_d) }}
+                    {{ form_row(form.vendredi_a, {
+                        'attr': {
+                            'data-planning-hours-target': 'vendrediA',
+                            'data-action': 'change->planning-hours#updateAll'
+                        }
+                    }) }}
+                    {{ form_row(form.vendredi_d, {
+                        'attr': {
+                            'data-planning-hours-target': 'vendrediD',
+                            'data-action': 'change->planning-hours#updateAll'
+                        }
+                    }) }}
+                    <div>
+                        <span>Heures ce jour :</span>
+                        <span data-planning-hours-target="dayTotal"></span>
+                    </div>
                 </div>
+            </div>
+            <div class="week-total">
+                <strong>Total semaine :</strong>
+                <span data-planning-hours-target="weekTotal"></span>
             </div>
         </div>
 
@@ -59,17 +134,25 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
-        .planning-grid {
+        .planning-hours {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 1rem;
             margin-top: 1rem;
         }
         
-        .day-column {
+        .day-group {
             background: #f8f9fa;
             padding: 1rem;
             border-radius: 4px;
+        }
+        
+        .week-total {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #e9ecef;
+            border-radius: 4px;
+            text-align: center;
         }
     </style>
 {% endblock %}

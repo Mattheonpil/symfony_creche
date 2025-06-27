@@ -13,7 +13,7 @@
                 Jour précédent
             </a> #}
             {# <h1>Planning du {{ date|format_datetime('full', 'none', locale='fr') }}</h1> #}
-            <h1 class="planning-title">
+            <h1>
                 <span class="date-display">
                     <span class="day-name">{{ date|format_datetime(pattern="EEEE", locale="fr")|capitalize }}</span>
                     <span class="day-number">{{ date|date('d') }}</span>
@@ -71,7 +71,7 @@
 
 
 
-        <div class="planning-grid">
+        <div class="planning-grid" data-controller="planning-editor">
             <div class="timeline-header">
                 <div class="empty-cell"></div>
                 {% for hour in 7..19 %}
@@ -85,28 +85,56 @@
                     </div>
                 {% endfor %}
             </div>
+            {% for planning in plannings %}
+                <div class="child-row">
+                    <div class="child-info">
+                        <div class="child-name">{{ planning.child.firstName }} {{ planning.child.name }}</div>
+                        <a href="#"
+                           data-action="planning-editor#toggle"
+                           data-planning-editor-id-value="{{ planning.id }}">
+                            <twig:ux:icon name="garden:tray-gear-26" class="gear-icon" />
+                        </a>
+                    </div>
+                    <div class="presence-container">
+                        {% set barColor = 'primary' %}
+                        {% set planningDateTime = planning.date|date('Y-m-d') ~ ' ' ~ planning.startTime|date('H:i') %}
+                        {% set nowDateTime = date('now')|date('Y-m-d H:i') %}
 
-            {% if plannings|length > 0 %}
-                {% for planning in plannings %}
-                    <div class="child-row">
-                        <div class="child-info">
-                            {{ planning.child.firstName }} {{ planning.child.name }}
-                        </div>
-                        <div class="presence-container">
-                            {% set startHour = planning.startTime|date('G') %}
-                            {% set startMinute = planning.startTime|date('i') %}
-                            {% set endHour = planning.endTime|date('G') %}
-                            {% set endMinute = planning.endTime|date('i') %}
-                            
-                            <div class="presence-bar" 
-                                 style="--start-position: {{ (startHour - 7) + (startMinute/60) }}; 
-                                        --duration: {{ (endHour - startHour) + ((endMinute - startMinute)/60) }}">
+                        {% if planning.absence %}
+                            {% set barColor = 'red' %}
+                        {% elseif planning.date|date('Y-m-d') > date('now')|date('Y-m-d') %}
+                            {# Jour futur : toujours primary #}
+                            {% set barColor = 'primary' %}
+                        {% elseif planning.date|date('Y-m-d') < date('now')|date('Y-m-d') %}
+                            {# Jour passé : logique identique à aujourd'hui #}
+                            {% if not planning.actualArrival %}
+                                {% set barColor = 'orange' %}
+                            {% else %}
+                                {% set barColor = 'green' %}
+                            {% endif %}
+                        {% else %}
+                            {# Jour courant #}
+                            {% if nowDateTime < planningDateTime %}
+                                {% set barColor = 'primary' %}
+                            {% elseif not planning.actualArrival %}
+                                {% set barColor = 'orange' %}
+                            {% else %}
+                                {% set barColor = 'green' %}
+                            {% endif %}
+                        {% endif %}
+                        <a href="{{ path('app_planning_child', {id: planning.child.id}) }}" class="presence-link">
+                            <div class="presence-bar {{ barColor }}"
+                                 style="--start-position: {{ (planning.startTime|date('G') - 7) + (planning.startTime|date('i')/60) }}; 
+                                        --duration: {{ (planning.endTime|date('G') - planning.startTime|date('G')) + ((planning.endTime|date('i') - planning.startTime|date('i'))/60) }}">
                                 {{ planning.startTime|date('H:i') }} - {{ planning.endTime|date('H:i') }}
                             </div>
-                        </div>
+                        </a>
                     </div>
-                {% endfor %}
-            {% endif %}
+                </div>
+                <div class="editor-row" data-planning-editor-target="editor" data-planning-id="{{ planning.id }}" style="display: none; grid-column: 1 / -1;">
+                    {# Formulaire d'édition à insérer ici par JS #}
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

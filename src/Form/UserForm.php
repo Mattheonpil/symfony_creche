@@ -13,13 +13,22 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UserForm extends AbstractType
 {
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => User::class,
+            'attr' => ['class' => 'form-rows-container'],
+            'edit_mode' => false
+        ]);
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
-            ->add('name')
             ->add('first_name')
+            ->add('name')
             ->add('phone')
+            ->add('email')
             ->add('relation', ChoiceType::class, [
                 'mapped' => false,
                 'choices' => [
@@ -50,11 +59,5 @@ class UserForm extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-            'edit_mode' => false
-        ]);
-    }
+
 }

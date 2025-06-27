@@ -1,4 +1,10 @@
 {
+  "devDependencies": {
+    "sass": "^1.77.4"
+  },
+  "scripts": {
+    "dev": "sass --watch assets/styles/app.scss:assets/styles/app.css"
+  },
   "dependencies": {
     "vis-timeline": "^7.7.4"
   }

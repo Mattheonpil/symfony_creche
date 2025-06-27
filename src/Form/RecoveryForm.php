@@ -14,6 +14,17 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class RecoveryForm extends AbstractType
 {
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Recovery::class,
+            'attr' => ['class' => 'form-rows-container'],
+            'edit_mode' => false
+        ]);
+    }
+
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -21,9 +32,10 @@ class RecoveryForm extends AbstractType
             ->add('first_name')
             ->add('phone')
             ->add('email')
-                        ->add('email', EmailType::class, [
+            ->add('email', EmailType::class, [
                 'required' => false,
-                'help' => 'Optionnel sauf pour les responsables légaux'
+                'help' => '* Optionnel sauf pour les responsables légaux',
+                'row_attr' => ['class' => 'email-help-wrap']
             ])
             ->add('relation', ChoiceType::class, [
                 'choices' => [
@@ -42,14 +54,14 @@ class RecoveryForm extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Recovery::class,
-            'csrf_protection' => true,
-            'csrf_field_name' => '_token',
-            'csrf_token_id' => 'recovery_form',
-            'allow_extra_fields' => true,
-        ]);
-    }
+    // public function configureOptions(OptionsResolver $resolver): void
+    // {
+    //     $resolver->setDefaults([
+    //         'data_class' => Recovery::class,
+    //         'csrf_protection' => true,
+    //         'csrf_field_name' => '_token',
+    //         'csrf_token_id' => 'recovery_form',
+    //         'allow_extra_fields' => true,
+    //     ]);
+    // }
 }

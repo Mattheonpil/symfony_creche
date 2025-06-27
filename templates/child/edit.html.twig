@@ -3,11 +3,136 @@
 {% block title %}Edit Child{% endblock %}
 
 {% block body %}
-    <h1>Edit Child</h1>
+    <div class="form-wrapper">
+        <h1>Edit Child</h1>
 
-    {{ include('child/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ form_start(form, {'attr': {'class': 'edit-form'}}) }}
+        <div class="form-section form-section--child">
+            <h2>Informations sur l'enfant</h2>
+            <div class="child-info">
+                {{ form_row(form.name) }}
+                {{ form_row(form.first_name) }}
+                {{ form_row(form.birth_date) }}
+                {{ form_row(form.genre) }}
+                {{ form_row(form.allergy) }}
+                {{ form_row(form.medical_specificity) }}
+                {{ form_row(form.registration_date) }}
+                {{ form_row(form.unsubscription_date) }}
+            </div>
 
-    <a href="{{ path('app_child_index') }}">back to list</a>
-
-    {{ include('child/_delete_form.html.twig') }}
+            <div class="form-section form-section--planning"
+                 data-controller="planning-hours">
+                <h2>Planning</h2>
+                
+                <div class="planning-hours">
+                    <div class="day-group">
+                        <h3>Lundi</h3>
+                        {{ form_row(form.lundi_a, {
+                            'attr': {
+                                'data-planning-hours-target': 'lundiA',
+                                'data-action': 'change->planning-hours#updateAll'
+                            }
+                        }) }}
+                        {{ form_row(form.lundi_d, {
+                            'attr': {
+                                'data-planning-hours-target': 'lundiD',
+                                'data-action': 'change->planning-hours#updateAll'
+                            }
+                        }) }}
+                        <div>
+                            <span>Heures ce jour :</span>
+                            <span data-planning-hours-target="dayTotal"></span>
+                        </div>
+                    </div>
+                    <div class="day-group">
+                        <h3>Mardi</h3>
+                        {{ form_row(form.mardi_a, {
+                            'attr': {
+                                'data-planning-hours-target': 'mardiA',
+                                'data-action': 'change->planning-hours#updateAll'
+                            }
+                        }) }}
+                        {{ form_row(form.mardi_d, {
+                            'attr': {
+                                'data-planning-hours-target': 'mardiD',
+                                'data-action': 'change->planning-hours#updateAll'
+                            }
+                        }) }}
+                        <div>
+                            <span>Heures ce jour :</span>
+                            <span data-planning-hours-target="dayTotal"></span>
+                        </div>
+                    </div>
+                    <div class="day-group">
+                        <h3>Mercredi</h3>
+                        {{ form_row(form.mercredi_a, {
+                            'attr': {
+                                'data-planning-hours-target': 'mercrediA',
+                                'data-action': 'change->planning-hours#updateAll'
+                            }
+                        }) }}
+                        {{ form_row(form.mercredi_d, {
+                            'attr': {
+                                'data-planning-hours-target': 'mercrediD',
+                                'data-action': 'change->planning-hours#updateAll'
+                            }
+                        }) }}
+                        <div>
+                            <span>Heures ce jour :</span>
+                            <span data-planning-hours-target="dayTotal"></span>
+                        </div>
+                    </div>
+                    <div class="day-group">
+                        <h3>Jeudi</h3>
+                        {{ form_row(form.jeudi_a, {
+                            'attr': {
+                                'data-planning-hours-target': 'jeudiA',
+                                'data-action': 'change->planning-hours#updateAll'
+                            }
+                        }) }}
+                        {{ form_row(form.jeudi_d, {
+                            'attr': {
+                                'data-planning-hours-target': 'jeudiD',
+                                'data-action': 'change->planning-hours#updateAll'
+                            }
+                        }) }}
+                        <div>
+                            <span>Heures ce jour :</span>
+                            <span data-planning-hours-target="dayTotal"></span>
+                        </div>
+                    </div>
+                    <div class="day-group">
+                        <h3>Vendredi</h3>
+                        {{ form_row(form.vendredi_a, {
+                            'attr': {
+                                'data-planning-hours-target': 'vendrediA',
+                                'data-action': 'change->planning-hours#updateAll'
+                            }
+                        }) }}
+                        {{ form_row(form.vendredi_d, {
+                            'attr': {
+                                'data-planning-hours-target': 'vendrediD',
+                                'data-action': 'change->planning-hours#updateAll'
+                            }
+                        }) }}
+                        <div>
+                            <span>Heures ce jour :</span>
+                            <span data-planning-hours-target="dayTotal"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="week-total">
+                    <strong>Total semaine :</strong>
+                    <span data-planning-hours-target="weekTotal"></span>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button type="submit" class="form-button form-button--submit">{{ button_label|default('Update') }}</button>
+                <a href="{{ path('app_child_index') }}" class="form-button form-button--cancel">back to list</a>
+                {{ include('child/_delete_form.html.twig') }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

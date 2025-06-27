@@ -30,19 +30,19 @@
     <section class="card-container">
         {# Card Enfants présents #}
         <card class="card">
-            <img src="{{ asset('assets/images/baby.svg') }}" alt="icon child">
+            <img src="{{ asset('images/baby.svg') }}" alt="icon child">
             <h3>{{ present_children_count }}</h3>
         </card>
 
         {# Card Repas #}
         <card class="card">
-            <img src="{{ asset('assets/images/meal.svg') }}" alt="icon meal">
+            <img src="{{ asset('images/meal.svg') }}" alt="icon meal">
             <h3>{{ mealsCount|default(0) }}</h3>
         </card>
 
         {# Card Enfants prévus #}
         <card class="card">
-            <img src="{{ asset('assets/images/child-care.svg') }}" alt="icon calendar">
+            <img src="{{ asset('images/child-care.svg') }}" alt="icon calendar">
             <h3>{{ childrenCount|default(0) }}</h3>
         </card>
     </section>

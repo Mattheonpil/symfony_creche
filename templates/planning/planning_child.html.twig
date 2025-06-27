@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Planning mensuel de {{ child.firstName }} {{ child.name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+<div class="planning-container">
+    <div class="date-navigation" >
+        <a href="{{ path('app_planning_child', {id: child.id, month: prevMonth|date('m'), year: prevMonth|date('Y')}) }}" class="week-nav-button">
+            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" width="40" height="40">
+                <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
+            </svg>
+        </a>
+        <h1 class="planning-title">
+            Planning de {{ child.firstName }} {{ child.name }}<br>
+            <span class="date-display">
+                {{ (year ~ '-' ~ month ~ '-01')|date('Y-m-d')|format_datetime(pattern='MMMM', locale='fr')|capitalize }} {{ year }}
+            </span>
+        </h1>
+        <a href="{{ path('app_planning_child', {id: child.id, month: nextMonth|date('m'), year: nextMonth|date('Y')}) }}" class="week-nav-button">
+            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" width="40" height="40">
+                <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
+            </svg>
+        </a>
+    </div>
+    <div class="planning-grid planning-child-grid" style="overflow-x: auto;">
+        <div class="timeline-header">
+            <div class="empty-cell"></div>
+            {% for hour in 7..19 %}
+                <div class="hour-column">
+                    <div class="hour-label">{{ hour }}h</div>
+                    <div class="quarter-hours">
+                        {% for minute in [0, 15, 30, 45] %}
+                            <div class="quarter-hour"></div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% for calendar in calendars %}
+            <div class="child-row">
+                <div class="child-info">
+                    <div class="day-label">
+                        {{ calendar.date|format_datetime(pattern="EEEE d MMMM", locale="fr") }}
+                    </div>
+                </div>
+                <div class="presence-container">
+                    {% set planning = planningsByDate[calendar.date|date('Y-m-d')] ?? null %}
+                    {% if calendar.isClosed == false %}
+                        <div class="presence-bar primary" style="width: 100%; background: var(--primary-bg); color: #333; min-width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 20px;">
+                            {{ calendar.closureJustification ?: 'Fermé' }}
+                        </div>
+                    {% elseif planning %}
+                        {% set barColor = 'primary' %}
+                        {% set planningDateTime = calendar.date|date('Y-m-d') ~ ' ' ~ planning.startTime|date('H:i') %}
+                        {% set nowDateTime = date('now')|date('Y-m-d H:i') %}
+                        {% if planning.absence %}
+                            {% set barColor = 'red' %}
+                        {% elseif calendar.date|date('Y-m-d') > date('now')|date('Y-m-d') %}
+                            {% set barColor = 'primary' %}
+                        {% elseif calendar.date|date('Y-m-d') < date('now')|date('Y-m-d') %}
+                            {% if not planning.actualArrival %}
+                                {% set barColor = 'orange' %}
+                            {% else %}
+                                {% set barColor = 'green' %}
+                            {% endif %}
+                        {% else %}
+                            {% if nowDateTime < planningDateTime %}
+                                {% set barColor = 'primary' %}
+                            {% elseif not planning.actualArrival %}
+                                {% set barColor = 'orange' %}
+                            {% else %}
+                                {% set barColor = 'green' %}
+                            {% endif %}
+                        {% endif %}
+                        <div class="presence-bar {{ barColor }}"
+                             style="--start-position: {{ (planning.startTime|date('G') - 7) + (planning.startTime|date('i')/60) }};
+                                    --duration: {{ (planning.endTime|date('G') - planning.startTime|date('G')) + ((planning.endTime|date('i') - planning.startTime|date('i'))/60) }}">
+                            {{ planning.startTime|date('H:i') }} - {{ planning.endTime|date('H:i') }}
+                            {% if barColor == 'red' %}<span style="margin-left:1em; font-weight:600;">Absence</span>{% endif %}
+                        </div>
+                    {% else %}
+                        <div class="presence-bar primary" style="width: 100%; background: var(--primary-bg); color: var(--primary); min-width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 20px; font-style: italic;">
+                            Pas de présence prévue ce jour
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 

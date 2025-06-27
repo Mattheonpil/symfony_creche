@@ -91,4 +91,276 @@
         font-weight: $weight-2;
         color: white;
     }
-} 
+}
+
+// Form Components
+.form {
+    &-wrapper {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 2rem;
+
+        h1 {
+            color: $primary;
+            margin-bottom: 2rem;
+        }
+    }
+
+    &-section {
+        margin-bottom: 2rem;
+        padding: 2rem;
+        border-radius: 8px;
+
+        & .form-rows-container , .child-info{
+            width: 40%;
+            margin: 0 auto;
+
+                .email-help-wrap {
+                    display: flex;
+                    flex-wrap: wrap;
+
+                    .help-text {
+                        flex-basis: 100%;
+                        font-size: 0.9rem;
+                        padding-top: 0.3rem;
+                    }
+                }
+
+                #inscription_form_child_genre {
+                    gap: 0.5rem;
+                    margin: 0.5rem 0;
+                }
+
+             div {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+                color: $primary;
+
+
+
+                input {
+                    outline: none;
+                    border: 1px solid $primary;
+                    padding: 0.5rem 1rem;
+                    cursor: pointer;
+                    border-radius: 4px;
+                    transition: all 0.3s;
+
+                    &:hover {
+                        border: 1px solid $orange;
+                        background-color: rgba($orange, 0.02);
+                    }
+                    &:focus {
+                        border: 1px solid $orange;
+                        background-color: rgba($orange, 0.02);
+                    }
+                }
+                select {
+                    outline: none;
+                    border: 1px solid $primary;
+                    padding: 0.5rem 1rem;
+                    border-radius: 4px ;
+                    color: $primary;
+
+                    &:hover {
+                        border: 1px solid $orange;
+                        background-color: rgba($orange, 0.02);
+                    }
+                    &:focus {
+                        border: 1px solid $orange;
+                        background-color: rgba($orange, 0.02);
+                    }
+                }
+                textarea {
+                    outline: none;
+                    border: 1px solid $primary;
+                    padding: 0.5rem 1rem;
+                    border-radius: 4px ;
+                    color: $primary;
+
+                    &:hover {
+                        border: 1px solid $orange;
+                        background-color: rgba($orange, 0.02);
+                    }
+                    &:focus {
+                        border: 1px solid $orange;
+                        background-color: rgba($orange, 0.02);
+                    }
+                }
+                label {
+                    align-content: center;
+                    font-weight: 600;
+                }
+             }
+            
+        }
+        &--user {
+            border: 1px solid $orange;
+            box-shadow: 0 2px 4px rgba($orange, 0.2);
+            
+        }
+
+        &--child {
+            border: 1px solid $blue-stroke;
+            box-shadow: 0 2px 4px rgba($blue-stroke, 0.2);
+        }
+
+        &--planning {
+            border: 1px solid $green-stroke;
+            box-shadow: 0 2px 4px rgba($green-stroke, 0.2);
+        }
+
+        h2 {
+            color: $primary;
+            margin-bottom: 1.5rem;
+            font-weight: $weight-2;
+        }
+
+        // .planning-hours {
+        //     display: flex;
+        //     flex-direction: column;
+        //     // grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        //     gap: 1.5rem;
+        //     margin-top: 1.5rem;
+
+        //     .day-group {
+        //         display: flex;
+        //         width: 100%;
+                
+        //         h3 {
+        //             color: $green;
+        //             text-align: center;
+        //             font-size: 1.1rem;
+        //             min-width: 5rem;
+        //         }
+        //         div {
+        //             flex: 1 1 0;
+        //             min-width: 0;
+        //             text-align: center;
+        //         }
+        //     }
+        // }
+
+        .planning-dates {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+    }
+
+    &-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        gap: 1rem;
+
+        label {
+            min-width: 200px;
+            color: $primary;
+            font-weight: $weight-1;
+        }
+
+        input, select, textarea {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid $primary;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+
+            &:hover {
+                border-color: $orange;
+                background-color: $primary-bg;
+            }
+
+            &:focus {
+                outline: none;
+                border-color: $orange;
+                box-shadow: 0 0 0 2px rgba($orange, 0.1);
+            }
+        }
+    }
+
+
+}
+
+// Button Components
+.form-button {
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    font-weight: $weight-1;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &--submit {
+        background-color: $green;
+        color: $white;
+        border: none;
+
+        &:hover {
+            background-color: darken($green, 10%);
+        }
+    }
+
+    &--cancel {
+        background-color: transparent;
+        border: 1px solid $primary;
+        color: $primary;
+
+        &:hover {
+            border-color: $orange;
+            color: $orange;
+        }
+    }
+
+    &--edit {
+        background-color: $blue;
+        color: $white;
+        border: none;
+
+        &:hover {
+            background-color: darken($blue, 10%);
+        }
+    }
+        &--delete {
+        background-color: $red;
+        color: $white;
+        border: none;
+
+        &:hover {
+            background-color: darken($red, 10%);
+        }
+    }
+}
+
+// Recap Components
+.recap {
+    &-wrapper {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+
+    &-section {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        border-radius: 8px;
+        background: $white;
+
+        &--user { @extend .form-section--user; }
+        &--child { @extend .form-section--child; }
+        &--planning { @extend .form-section--planning; }
+    }
+}
+
+.main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: $white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}

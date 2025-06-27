@@ -1,0 +1,15 @@
+{% block time_widget %}
+    {% set widget = widget|default('text') %}
+    {% if widget == 'single_text' %}
+        {{ block('form_widget_simple') }}
+    {% else %}
+        <div {{ block('widget_container_attributes') }}>
+            {{ form_widget(form.hour) }}
+            
+            {{ form_widget(form.minute) }}
+            {%- if form.with_seconds is defined and form.with_seconds -%}
+                {{ form_widget(form.second) }}
+            {%- endif -%}
+        </div>
+    {% endif %}
+{% endblock %}

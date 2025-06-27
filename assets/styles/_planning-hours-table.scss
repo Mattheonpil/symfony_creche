@@ -1,0 +1,162 @@
+// Planning grid (CSS Grid version)
+
+.planning-hours-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr 1fr 120px; // Jour + 3 colonnes
+//   gap: 0.7em;
+  background: $white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba($green-stroke, 0.08);
+  row-gap: 0.5rem;
+  margin-bottom: 2rem;
+  align-items: stretch;
+
+  & .header-group {
+    grid-column: 2 / span 2;
+    display: flex;
+    border: 2px solid $green;
+    border-radius: 8px;
+    overflow: hidden;
+    background: $primary-bg;
+    height: 100%;
+    justify-content: space-around;
+    box-sizing: border-box;
+  }
+
+  .header {
+    font-weight: bold;
+    background: $primary-bg;
+    color: $primary;
+    text-align: center;
+    padding: 0.75em 1em;
+    &:first-child {
+        border-radius: 8px 0 0 8px;
+    }
+    &:nth-child(4) {
+        border-radius: 0 8px 8px 0;
+    }
+
+  }
+  .day-label {
+    display: flex;
+    font-weight: bold;
+    background: $primary-bg;
+    color: $primary;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+
+  }
+  & .input-group {
+    grid-column: 2 / span 2;
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden;
+    background: $green;
+    height: 100%;
+    justify-content: space-around;
+    box-sizing: border-box;
+  }
+  & .input-group.filled {
+    background: lighten($green, 5%) !important;
+    .input-cell,
+    select,
+    .time-input {
+      background: lighten($green, 5%) !important;
+      color: $white !important;
+      font-weight: 700;
+    }
+    animation: highlight 0.5s;
+  }
+  @keyframes highlight {
+    from { box-shadow: 0 0 10px 2px $green; }
+    to { box-shadow: none; }
+  }
+  .input-cell {
+    padding: 0.5em 1em;
+    text-align: center;
+    background: $green;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .time-input {
+    border-radius: 8px;
+    border: 1px solid white;
+    padding: 0.2rem;
+    }
+  
+  .time-input select {
+    background-color: $green !important;
+    color: $white !important;
+    border: none;
+    font-weight: 600;
+    &:focus {
+      outline: none;
+      color: $white ;
+    }
+  }
+  .total-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $primary-bg;
+    border-radius: 0 8px 8px 0;
+    & span.has-value {
+      font-weight: 700;
+      color: $green-stroke;
+      padding: 0.5rem 0.8rem ;
+      border-radius: 8px;
+      background: lighten($primary-bg, 10%);
+      border: 2px solid $green-stroke;
+    }
+  }
+  .week-total-label {
+    grid-column: 1/4;
+    text-align: right;
+    font-weight: bold;
+    padding: 0.75em 1em;
+    background: $primary-bg;
+    border-radius: 0 0 0 8px;
+    color: $primary;
+  }
+  .week-total-value {
+    grid-column: 4/5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
+    padding: 0.5rem 0.8rem ;
+    background: $primary-bg;
+    border-radius: 0 0 8px 0;
+    color: $primary;
+    & span.has-value {
+      font-weight: 700;
+      color: $green-stroke;
+      padding: 0.5rem 0.8rem ;
+      border-radius: 8px;
+      background: lighten($primary-bg, 10%);
+      border: 2px solid $green-stroke;
+
+    }
+  }
+
+  // Responsive
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+    .header, .day-label, .input-cell, .total-cell, .week-total-label, .week-total-value {
+      grid-column: 1 / -1 !important;
+      border-radius: 8px;
+      margin-bottom: 0.5em;
+    }
+    .header {
+      display: none;
+    }
+    .day-label {
+      margin-top: 1em;
+    }
+  }
+}
+
+

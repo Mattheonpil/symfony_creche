@@ -25,7 +25,13 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
-    'vis-timeline/standalone' => [
-        'version' => '7.7.4',
+    'assets/controllers/planning_hours_controller.js' => [
+        'path' => './assets/controllers/planning_hours_controller.js',
+    ],
+    'assets/controllers/planning_editor_controller.js' => [
+        'path' => './assets/controllers/planning_editor_controller.js',
+    ],
+    '@symfony/ux-live-component' => [
+        'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
     ],
 ];

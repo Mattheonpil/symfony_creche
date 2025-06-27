@@ -3,10 +3,12 @@
 @import 'functions';
 @import 'components';
 @import 'pages';
+@import 'planning-hours-table';
 
 body {
     font-family: "Inter", sans-serif;
     height: 2000px;
+    // bixupdc,rprv,épx;htc'ih;'cgh"àhbçt'hzàçbj;c(pohj;(jnà))
 }
 
 .time-input {
@@ -170,37 +172,44 @@ body {
             &:nth-child(odd) {
                 .child-info,
                 .presence-container {
-                    background-color: #ffd2d2;
+                    background-color: #ecf1f5;
                 }
             }
 
             &:nth-child(even) {
                 .child-info,
                 .presence-container {
-                    background-color: #eaf4ff;
+                    background-color: #f8f9fa;
                 }
             }
 
             .child-info {
-                padding: 1rem;
+                // padding: 1rem;
                 font-weight: 500;
                 position: sticky;
                 left: 0;
                 z-index: 1;
                 text-align: center;
+                padding: 0 1.5rem 0 0.5rem;
+                color: $primary;
                 display: flex; // Ajout pour flexbox
                 align-items: center; // Centre verticalement
-                justify-content: center; // Centre horizontalement
-                height: 50px; // Même hauteur que presence-container
+                justify-content: space-between; // Centre horizontalement
+                height: 50px;
+                & .gear-icon {
+                    width: 2em;      /* ou 32px, 24px, etc. */
+                    height: 2em;     /* idem */
+                    color: $primary;  
+                    vertical-align: middle;
+                } // Même hauteur que presence-container
             }
 
             .presence-container {
                 grid-column: 2 / -1;
                 position: relative;
-                // height: 60px;
                 padding: 0.5rem 0;
-                display: flex; // Ajout pour permettre le centrage vertical
-                align-items: center; // Centre verticalement les éléments enfants
+
+
 
                 .presence-bar {
                     position: absolute;
@@ -208,7 +217,6 @@ body {
                     width: calc((var(--duration) / 13) * 100%);
                     min-width: 60px;
                     height: 40px; // Hauteur fixe pour la barre
-                    background: #faa984;
                     color: white;
                     display: flex;
                     align-items: center;
@@ -363,3 +371,17 @@ body {
         }
     }
 }
+
+.editor-row {
+  grid-column: 1 / -1; // Fait que l'éditeur prend toute la largeur de la grille
+  background: #f8f9fa;
+  padding: 1em;
+  border-bottom: 1px solid #eee;
+}
+
+
+.planning-container .planning-grid .child-row .presence-container .presence-bar.green { background: $green; }
+.planning-container .planning-grid .child-row .presence-container .presence-bar.orange { background: $orange; }
+.planning-container .planning-grid .child-row .presence-container .presence-bar.red { background: $red; }
+.planning-container .planning-grid .child-row .presence-container .presence-bar.primary { background: $primary; }
+
