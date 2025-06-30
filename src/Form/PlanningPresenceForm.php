@@ -29,7 +29,9 @@ class PlanningPresenceForm extends AbstractType
                     'hour' => 'HH',
                     'minute' => 'MM',
                 ],
-                'data' => $planning && $planning->getStartTime() ? $planning->getStartTime() : null,
+                'data' => $planning && $planning->getActualArrival()
+                    ? $planning->getActualArrival()
+                    : ($planning && $planning->getStartTime() ? $planning->getStartTime() : null),
             ])
             ->add('actual_departure', TimeType::class, [
                 'widget' => 'choice',
@@ -41,7 +43,9 @@ class PlanningPresenceForm extends AbstractType
                     'hour' => 'HH',
                     'minute' => 'MM',
                 ],
-                'data' => $planning && $planning->getEndTime() ? $planning->getEndTime() : null,
+                'data' => $planning && $planning->getActualDeparture()
+                    ? $planning->getActualDeparture()
+                    : ($planning && $planning->getEndTime() ? $planning->getEndTime() : null),
             ])
         ;
     }

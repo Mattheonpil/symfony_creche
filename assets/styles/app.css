@@ -63,7 +63,7 @@
 .datetime-container .date-container .day-number {
   font-size: 3rem;
   font-weight: 700;
-  color: rgb(248, 144, 99);
+  color: rgb(253, 148, 67);
   padding-left: 0.5rem;
 }
 .datetime-container .date-container .month {
@@ -93,7 +93,7 @@
 .datetime-container .time-container .minutes {
   font-size: 3rem;
   font-weight: 700;
-  color: rgb(248, 144, 99);
+  color: rgb(253, 148, 67);
 }
 
 .card-container {
@@ -101,7 +101,7 @@
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  border: 2px solid rgb(248, 144, 99);
+  border: 2px solid rgb(253, 148, 67);
   border-radius: 8px;
   padding: 2rem;
 }
@@ -172,12 +172,12 @@
   transition: all 0.3s;
 }
 .form-section .form-rows-container div input:hover, .form-section .child-info div input:hover {
-  border: 1px solid rgb(248, 144, 99);
-  background-color: rgba(248, 144, 99, 0.02);
+  border: 1px solid rgb(253, 148, 67);
+  background-color: rgba(253, 148, 67, 0.02);
 }
 .form-section .form-rows-container div input:focus, .form-section .child-info div input:focus {
-  border: 1px solid rgb(248, 144, 99);
-  background-color: rgba(248, 144, 99, 0.02);
+  border: 1px solid rgb(253, 148, 67);
+  background-color: rgba(253, 148, 67, 0.02);
 }
 .form-section .form-rows-container div select, .form-section .child-info div select {
   outline: none;
@@ -187,12 +187,12 @@
   color: rgb(108, 116, 124);
 }
 .form-section .form-rows-container div select:hover, .form-section .child-info div select:hover {
-  border: 1px solid rgb(248, 144, 99);
-  background-color: rgba(248, 144, 99, 0.02);
+  border: 1px solid rgb(253, 148, 67);
+  background-color: rgba(253, 148, 67, 0.02);
 }
 .form-section .form-rows-container div select:focus, .form-section .child-info div select:focus {
-  border: 1px solid rgb(248, 144, 99);
-  background-color: rgba(248, 144, 99, 0.02);
+  border: 1px solid rgb(253, 148, 67);
+  background-color: rgba(253, 148, 67, 0.02);
 }
 .form-section .form-rows-container div textarea, .form-section .child-info div textarea {
   outline: none;
@@ -202,20 +202,20 @@
   color: rgb(108, 116, 124);
 }
 .form-section .form-rows-container div textarea:hover, .form-section .child-info div textarea:hover {
-  border: 1px solid rgb(248, 144, 99);
-  background-color: rgba(248, 144, 99, 0.02);
+  border: 1px solid rgb(253, 148, 67);
+  background-color: rgba(253, 148, 67, 0.02);
 }
 .form-section .form-rows-container div textarea:focus, .form-section .child-info div textarea:focus {
-  border: 1px solid rgb(248, 144, 99);
-  background-color: rgba(248, 144, 99, 0.02);
+  border: 1px solid rgb(253, 148, 67);
+  background-color: rgba(253, 148, 67, 0.02);
 }
 .form-section .form-rows-container div label, .form-section .child-info div label {
   align-content: center;
   font-weight: 600;
 }
 .form-section--user, .recap-section--user {
-  border: 1px solid rgb(248, 144, 99);
-  box-shadow: 0 2px 4px rgba(248, 144, 99, 0.2);
+  border: 1px solid rgb(253, 148, 67);
+  box-shadow: 0 2px 4px rgba(253, 148, 67, 0.2);
 }
 .form-section--child, .recap-section--child {
   border: 1px solid rgb(0, 74, 154);
@@ -256,13 +256,13 @@
   transition: all 0.3s ease;
 }
 .form-group input:hover, .form-group select:hover, .form-group textarea:hover {
-  border-color: rgb(248, 144, 99);
+  border-color: rgb(253, 148, 67);
   background-color: rgb(233, 236, 239);
 }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
   outline: none;
-  border-color: rgb(248, 144, 99);
-  box-shadow: 0 0 0 2px rgba(248, 144, 99, 0.1);
+  border-color: rgb(253, 148, 67);
+  box-shadow: 0 0 0 2px rgba(253, 148, 67, 0.1);
 }
 
 .form-button {
@@ -286,8 +286,8 @@
   color: rgb(108, 116, 124);
 }
 .form-button--cancel:hover {
-  border-color: rgb(248, 144, 99);
-  color: rgb(248, 144, 99);
+  border-color: rgb(253, 148, 67);
+  color: rgb(253, 148, 67);
 }
 .form-button--edit {
   background-color: rgb(43, 146, 255);
@@ -333,7 +333,7 @@
   min-height: 80px;
   display: flex;
   align-items: center;
-  box-shadow: 0 -1px 2px rgba(248, 144, 99, 0.5) inset;
+  box-shadow: 0 -1px 2px rgba(253, 148, 67, 0.5) inset;
 }
 
 .nav-icon {
@@ -343,11 +343,11 @@
   text-decoration: none;
   font-weight: 600;
   font-size: 2rem;
-  color: rgb(248, 144, 99);
+  color: rgb(253, 148, 67);
 }
 
 .nav-logo1 {
-  background-color: rgba(248, 144, 99, 0.5);
+  background-color: rgba(253, 148, 67, 0.5);
   border-radius: 50%;
   width: 40px;
   aspect-ratio: 1/1;
@@ -381,7 +381,7 @@
   bottom: -3px;
   width: 100%;
   height: 1px;
-  background: rgb(248, 144, 99);
+  background: rgb(253, 148, 67);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease-out;
@@ -412,7 +412,7 @@
   border-radius: 8px;
 }
 .sign_button > a:hover {
-  border: 1px solid rgb(248, 144, 99);
+  border: 1px solid rgb(253, 148, 67);
   transition: 0.4s ease-out;
 }
 
@@ -436,13 +436,13 @@
   margin-bottom: 3rem;
 }
 .bienvenue span:first-child {
-  color: rgb(248, 144, 99);
+  color: rgb(253, 148, 67);
   font-weight: 500;
   font-style: italic;
   text-transform: capitalize;
 }
 .bienvenue span:last-child {
-  color: rgb(248, 144, 99);
+  color: rgb(253, 148, 67);
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -495,7 +495,7 @@
 .datetime-container .date-container .day-number {
   font-size: 2rem;
   font-weight: 600;
-  color: rgb(248, 144, 99);
+  color: rgb(253, 148, 67);
   margin-right: 0.5rem;
 }
 .datetime-container .date-container .month {
@@ -504,7 +504,7 @@
 }
 .datetime-container .date-container .year {
   font-size: 1.5rem;
-  color: rgb(248, 144, 99);
+  color: rgb(253, 148, 67);
 }
 .datetime-container .time-container {
   font-size: 2rem;
@@ -870,7 +870,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 50px;
+  height: 60px;
 }
 .planning-container .planning-grid .child-row .child-info .gear-icon {
   width: 2em; /* ou 32px, 24px, etc. */
@@ -882,6 +882,7 @@ body {
   grid-column: 2/-1;
   position: relative;
   padding: 0.5rem 0;
+  align-items: center;
 }
 .planning-container .planning-grid .child-row .presence-container .presence-bar {
   position: absolute;
@@ -933,7 +934,7 @@ body {
   transition: fill 0.3s ease;
 }
 .planning-container .week-navigation .week-nav-button .nav-icon:hover {
-  fill: rgb(248, 144, 99);
+  fill: rgb(253, 148, 67);
 }
 .planning-container .week-navigation .week-info {
   margin: 0 3rem;
@@ -964,7 +965,7 @@ body {
   background: white;
 }
 .planning-container .week-navigation .week-info .weekdays .day-box:hover {
-  border: 1px solid rgb(248, 144, 99);
+  border: 1px solid rgb(253, 148, 67);
 }
 .planning-container .week-navigation .week-info .weekdays .day-box.current-day {
   border-color: #4caf50;
@@ -1031,7 +1032,7 @@ body {
 }
 
 .planning-container .planning-grid .child-row .presence-container .presence-bar.orange {
-  background: rgb(248, 144, 99);
+  background: rgb(253, 148, 67);
 }
 
 .planning-container .planning-grid .child-row .presence-container .presence-bar.red {
@@ -1040,6 +1041,103 @@ body {
 
 .planning-container .planning-grid .child-row .presence-container .presence-bar.primary {
   background: rgb(108, 116, 124);
+}
+
+.presence-bar-multi {
+  position: relative;
+  height: 40px;
+  min-width: 60px;
+  border-radius: 20px;
+  align-items: center;
+  background: none;
+}
+
+.bar-segment {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  z-index: 1;
+}
+
+.bar-segment.green {
+  background: rgb(73, 195, 0);
+  border-radius: 20px;
+}
+
+.bar-segment.orange {
+  background: rgb(253, 148, 67);
+  border-radius: 20px;
+}
+
+.bar-segment.green.no-radius-left {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.bar-segment.green.no-radius-right {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.bar-segment.orange.radius-left {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.bar-segment.orange.radius-right {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.bar-segment.orange.radius-right .real-hour-departure {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  color: rgb(253, 148, 67);
+  font-size: 0.85em;
+  font-weight: 700;
+  white-space: nowrap;
+  transform: translateX(50%);
+}
+
+.planned-hours {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.real-hour {
+  position: absolute;
+  top: 100%;
+  font-size: 0.85em;
+  font-weight: 700;
+  z-index: 3;
+  white-space: nowrap;
+}
+
+.real-hour-arrival {
+  left: 0;
+  color: rgb(253, 148, 67);
+}
+
+.presence-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=app.css.map */

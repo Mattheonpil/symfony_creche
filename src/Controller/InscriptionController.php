@@ -316,7 +316,7 @@ final class InscriptionController extends AbstractController
                         $planning->setCalendar($calendarDay);
                         $planning->setStartTime($horaires[$heureArriveeKey]);
                         $planning->setEndTime($horaires[$heureDepartKey]);
-                        $planning->setAbsence(true);
+                        $planning->setAbsence(false);
                         $planning->setMeal(true);
                         
                         $entityManager->persist($planning);

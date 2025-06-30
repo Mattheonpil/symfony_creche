@@ -38,9 +38,6 @@ export default class extends Controller {
 
         const formData = new FormData(form);
 
-        // DEBUG
-        console.log('Soumission AJAX', planningId, formData);
-
         fetch(`/planning/${planningId}/presence-save`, {
             method: 'POST',
             body: formData,
@@ -50,30 +47,10 @@ export default class extends Controller {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Réponse AJAX', data);
             if (data.success) {
-                // Met à jour la barre de présence
-                // On cherche la .presence-bar dans la même child-row que l'editor-row
-                const editorRow = editor;
-                const childRow = editorRow.previousElementSibling;
-                if (childRow && childRow.classList.contains('child-row')) {
-                    const bar = childRow.querySelector('.presence-bar');
-                    if (bar) {
-                        bar.classList.remove('primary', 'orange', 'green', 'red');
-                        bar.classList.add(data.barColor);
-                        // Met à jour le texte si besoin
-                        if (data.actual_arrival && data.actual_departure) {
-                            bar.textContent = `${data.actual_arrival} - ${data.actual_departure}`;
-                        } else if (data.actual_arrival) {
-                            bar.textContent = `${data.actual_arrival} - ${bar.textContent.split(' - ')[1]}`;
-                        } else if (data.actual_departure) {
-                            bar.textContent = `${bar.textContent.split(' - ')[0]} - ${data.actual_departure}`;
-                        }
-                    }
-                }
-                // Ferme l'éditeur
-                editor.innerHTML = '';
-                editor.style.display = 'none';
+                // Recharge la page pour garantir la cohérence de l'affichage (plus simple et robuste)
+                window.location.reload();
+                // Si tu veux un rechargement partiel, il faudrait fetch la page et remplacer la cellule, mais le reload est le plus fiable ici.
             } else {
                 // Affiche le formulaire avec erreurs
                 editor.innerHTML = data.form;

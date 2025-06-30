@@ -195,7 +195,7 @@ body {
                 display: flex; // Ajout pour flexbox
                 align-items: center; // Centre verticalement
                 justify-content: space-between; // Centre horizontalement
-                height: 50px;
+                height: 60px;
                 & .gear-icon {
                     width: 2em;      /* ou 32px, 24px, etc. */
                     height: 2em;     /* idem */
@@ -208,8 +208,8 @@ body {
                 grid-column: 2 / -1;
                 position: relative;
                 padding: 0.5rem 0;
-
-
+                // display: flex;
+                align-items: center;
 
                 .presence-bar {
                     position: absolute;
@@ -385,3 +385,77 @@ body {
 .planning-container .planning-grid .child-row .presence-container .presence-bar.red { background: $red; }
 .planning-container .planning-grid .child-row .presence-container .presence-bar.primary { background: $primary; }
 
+// GESTION COULEURS arrivées/retards sur presencebar
+.presence-bar-multi {
+  position: relative;
+  height: 40px;
+  min-width: 60px;
+  border-radius: 20px;
+
+  align-items: center;
+  background: none;
+}
+.bar-segment {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  z-index: 1;
+}
+.bar-segment.green {
+  background: $green;
+  border-radius: 20px;
+}
+.bar-segment.orange {
+  background: $orange;
+  border-radius: 20px;
+}
+// Correction du border-radius pour les cas de retard (orange à gauche)
+.bar-segment.green.no-radius-left { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+.bar-segment.green.no-radius-right { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.bar-segment.orange.radius-left { border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.bar-segment.orange.radius-right { border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 20px; border-bottom-right-radius: 20px; 
+//   position: absolute;
+//   z-index: 2;
+}
+.bar-segment.orange.radius-right .real-hour-departure {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  color: $orange;
+  font-size: 0.85em;
+  font-weight: 700;
+  white-space: nowrap;
+  transform: translateX(50%);
+}
+
+// Centrage du texte dans la barre verte
+.planned-hours {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  z-index: 2;
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.real-hour {
+  position: absolute;
+  top: 100%;
+  font-size: 0.85em;
+  font-weight: 700;
+  z-index: 3;
+  white-space: nowrap;
+}
+.real-hour-arrival { left: 0; color: $orange; }
+// .real-hour-departure { right: 0; }
+
+// FIN GESTION COULEURS arrivées/retards sur presencebar
+
+.presence-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}

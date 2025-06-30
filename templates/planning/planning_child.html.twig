@@ -4,6 +4,26 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    <style>
+        .bar-segment.green.no-radius-right {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .bar-segment.orange.radius-right {
+            position: absolute;
+            z-index: 2;
+        }
+        .bar-segment.orange.radius-right .real-hour-departure {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            color: $orange;
+            font-size: 0.85em;
+            font-weight: 700;
+            white-space: nowrap;
+            transform: translateX(50%);
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -26,7 +46,7 @@
             </svg>
         </a>
     </div>
-    <div class="planning-grid planning-child-grid" style="overflow-x: auto;">
+    <div class="planning-grid planning-child-grid">
         <div class="timeline-header">
             <div class="empty-cell"></div>
             {% for hour in 7..19 %}
@@ -49,39 +69,58 @@
                 </div>
                 <div class="presence-container">
                     {% set planning = planningsByDate[calendar.date|date('Y-m-d')] ?? null %}
-                    {% if calendar.isClosed == false %}
-                        <div class="presence-bar primary" style="width: 100%; background: var(--primary-bg); color: #333; min-width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 20px;">
-                            {{ calendar.closureJustification ?: 'Fermé' }}
-                        </div>
-                    {% elseif planning %}
-                        {% set barColor = 'primary' %}
-                        {% set planningDateTime = calendar.date|date('Y-m-d') ~ ' ' ~ planning.startTime|date('H:i') %}
-                        {% set nowDateTime = date('now')|date('Y-m-d H:i') %}
-                        {% if planning.absence %}
-                            {% set barColor = 'red' %}
-                        {% elseif calendar.date|date('Y-m-d') > date('now')|date('Y-m-d') %}
-                            {% set barColor = 'primary' %}
-                        {% elseif calendar.date|date('Y-m-d') < date('now')|date('Y-m-d') %}
-                            {% if not planning.actualArrival %}
-                                {% set barColor = 'orange' %}
+                    {% if planning %}
+                        {% set start = planning.startTime|date('H:i') %}
+                        {% set end = planning.endTime|date('H:i') %}
+                        {% set actualArrival = planning.actualArrival ? planning.actualArrival|date('H:i') : null %}
+                        {% set actualDeparture = planning.actualDeparture ? planning.actualDeparture|date('H:i') : null %}
+                        {% set startPos = (planning.startTime|date('G') - 7) + (planning.startTime|date('i')/60) %}
+                        {% set endPos = (planning.endTime|date('G') - 7) + (planning.endTime|date('i')/60) %}
+                        {% set arrivalPos = actualArrival ? (planning.actualArrival|date('G') - 7) + (planning.actualArrival|date('i')/60) : startPos %}
+                        {% set departurePos = actualDeparture ? (planning.actualDeparture|date('G') - 7) + (planning.actualDeparture|date('i')/60) : endPos %}
+                        {% set startDateTime = planning.date|date('Y-m-d') ~ ' ' ~ planning.startTime|date('H:i') %}
+                        {% set startTimestamp = startDateTime|date('U') %}
+                        {% set nowTimestamp = "now"|date('U') %}
+                        {% set isToday = planning.date|date('Y-m-d') == "now"|date('Y-m-d') %}
+                        {% if planning.isAbsence %}
+                            <div class="presence-bar red"
+                                 style="position: absolute; left: calc(({{ startPos }} / 13) * 100%); width: calc(({{ endPos - startPos }} / 13) * 100%); min-width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 20px;">
+                                Absent
+                            </div>
+                        {% elseif not actualArrival %}
+                            {% if isToday and startTimestamp < nowTimestamp %}
+                                <div class="presence-bar orange"
+                                     style="position: absolute; left: calc(({{ startPos }} / 13) * 100%); width: calc(({{ endPos - startPos }} / 13) * 100%); min-width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 20px;">
+                                    En retard
+                                </div>
                             {% else %}
-                                {% set barColor = 'green' %}
+                                <div class="presence-bar primary"
+                                     style="position: absolute; left: calc(({{ startPos }} / 13) * 100%); width: calc(({{ endPos - startPos }} / 13) * 100%); min-width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 20px;">
+                                    En attente de pointage
+                                </div>
                             {% endif %}
                         {% else %}
-                            {% if nowDateTime < planningDateTime %}
-                                {% set barColor = 'primary' %}
-                            {% elseif not planning.actualArrival %}
-                                {% set barColor = 'orange' %}
-                            {% else %}
-                                {% set barColor = 'green' %}
+                        <div class="presence-bar-multi">
+                            {% if actualArrival and actualArrival > start %}
+                                <div class="bar-segment orange radius-left"
+                                     style="left: calc(({{ startPos }} / 13) * 100%); width: calc(({{ arrivalPos - startPos }} / 13) * 100%);">
+                                     <span class="real-hour real-hour-arrival">{{ actualArrival }}</span>
+                                     </div>
                             {% endif %}
-                        {% endif %}
-                        <div class="presence-bar {{ barColor }}"
-                             style="--start-position: {{ (planning.startTime|date('G') - 7) + (planning.startTime|date('i')/60) }};
-                                    --duration: {{ (planning.endTime|date('G') - planning.startTime|date('G')) + ((planning.endTime|date('i') - planning.startTime|date('i'))/60) }}">
-                            {{ planning.startTime|date('H:i') }} - {{ planning.endTime|date('H:i') }}
-                            {% if barColor == 'red' %}<span style="margin-left:1em; font-weight:600;">Absence</span>{% endif %}
+                            <div class="bar-segment green{% if actualArrival and actualArrival > start %} no-radius-left{% endif %}{% if actualDeparture and actualDeparture > end %} no-radius-right{% endif %}"
+                                 style="left: calc(({{ arrivalPos }} / 13) * 100%); width: calc(({{ (actualDeparture and actualDeparture > end ? endPos : departurePos) - arrivalPos }} / 13) * 100%);">
+                                 <span class="planned-hours">{{ start }} - {{ end }}</span>
+                            </div>
+                            {% if actualDeparture and actualDeparture > end %}
+                                <div class="bar-segment orange radius-right"
+                                     style="left: calc(({{ endPos }} / 13) * 100%); width: calc(({{ departurePos - endPos }} / 13) * 100%);">
+                                    <span class="real-hour real-hour-departure">{{ actualDeparture }}</span>
+                                </div>
+                            {% elseif actualDeparture and actualDeparture < end %}
+                                <span class="real-hour real-hour-departure" style="color: #888;">{{ actualDeparture }}</span>
+                            {% endif %}
                         </div>
+                        {% endif %}
                     {% else %}
                         <div class="presence-bar primary" style="width: 100%; background: var(--primary-bg); color: var(--primary); min-width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 20px; font-style: italic;">
                             Pas de présence prévue ce jour

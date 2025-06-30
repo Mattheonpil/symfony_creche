@@ -137,13 +137,32 @@ final class PlanningController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
+            $em->refresh($planning);
 
-            // Logique couleur (même que dans day.html.twig)
+            // Logique couleur identique aux templates
             $barColor = 'primary';
+            $now = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
+            $planningDate = $planning->getDate();
+            $planningStart = $planning->getStartTime();
+            $planningDateTime = null;
+            if ($planningDate && $planningStart) {
+                $planningDateTime = (clone $planningDate)->setTime((int)$planningStart->format('H'), (int)$planningStart->format('i'));
+            }
             if ($planning->isAbsence()) {
                 $barColor = 'red';
-            } elseif ($planning->getStartTime() && (new \DateTime('now', new \DateTimeZone('Europe/Paris'))) > $planning->getStartTime()) {
+            } elseif ($planningDate && $planningDate > $now->setTime(0,0)) {
+                $barColor = 'primary';
+            } elseif ($planningDate && $planningDate < $now->setTime(0,0)) {
                 if (!$planning->getActualArrival()) {
+                    $barColor = 'orange';
+                } else {
+                    $barColor = 'green';
+                }
+            } else {
+                // Jour courant
+                if ($planningDateTime && $now < $planningDateTime) {
+                    $barColor = 'primary';
+                } elseif (!$planning->getActualArrival()) {
                     $barColor = 'orange';
                 } else {
                     $barColor = 'green';
@@ -154,8 +173,6 @@ final class PlanningController extends AbstractController
                 'success' => true,
                 'message' => 'Présence enregistrée !',
                 'absence' => $planning->isAbsence(),
-                'actual_arrival' => $planning->getActualArrival()?->format('H:i'),
-                'actual_departure' => $planning->getActualDeparture()?->format('H:i'),
                 'barColor' => $barColor,
             ]);
         }
@@ -225,6 +242,14 @@ final class PlanningController extends AbstractController
             'year' => $year,
             'prevMonth' => $prevMonth,
             'nextMonth' => $nextMonth,
+        ]);
+    }
+
+    #[Route('/{id}/row', name: 'app_planning_row', methods: ['GET'])]
+    public function planningRow(Planning $planning): Response
+    {
+        return $this->render('planning/_planning_row.html.twig', [
+            'planning' => $planning,
         ]);
     }
 }
