@@ -8,19 +8,19 @@
 
 {% block body %}
     <div class="form-wrapper">
-        <h1 class="text-center mb-4">Inscription d'un nouvel enfant</h1>
+        <h1>Inscription d'un nouvel enfant</h1>
 
         {{ form_start(form) }}
             <div class="form-section form-section--user">
-                <h2>Informations responsables</h2>
+                <h2>Informations utilisateur</h2>
                 {{ form_widget(form.user) }}
             </div>
 
             <div class="form-section form-section--user">
-                <h2>Informations sur les accompagnateurs</h2>
+                <h2>Ajouter un responsable</h2>
                 <div class="form-rows-container">
-                    {{ form_row(form.recovery.name) }}
                     {{ form_row(form.recovery.first_name) }}
+                    {{ form_row(form.recovery.name) }}
                     {{ form_row(form.recovery.phone) }}
                     {{ form_row(form.recovery.is_legal_guardian) }}
                     {{ form_row(form.recovery.email) }}
@@ -44,7 +44,7 @@
                 <div class="form-section form-section--planning"
                      data-controller="planning-hours">
                     <h2>Planning</h2>
-                    <div class="planning-dates">
+                    <div class="form-style-general">
                         {{ form_row(form.child.date_debut) }}
                         {{ form_row(form.child.date_fin) }}
                     </div>
@@ -146,7 +146,7 @@
                 </div>
             </div>
 
-            <div class="text-center mt-4">
+            <div>
                 <button type="submit" class="form-button form-button--submit">Valider l'inscription</button>
             </div>
         {{ form_end(form) }}

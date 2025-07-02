@@ -1,6 +1,15 @@
 <form data-action="submit->planning-editor#submit" data-planning-id="{{ planning.id }}">
-    {{ form_row(form.absence) }}
-    {{ form_row(form.actual_arrival) }}
-    {{ form_row(form.actual_departure) }}
-    <button type="submit" class="btn btn-primary">Valider</button>
+    <div class="toggle-switch">
+                <span>Présent</span>
+        {{ form_widget(form.absence) }}
+
+        <label for="{{ form.absence.vars.id }}"></label>
+        
+        <span>Absent</span>
+    </div>
+    <div class="presence-form-part">
+        {{ form_row(form.actual_arrival) }}
+        {{ form_row(form.actual_departure) }}
+    </div>
+    <button type="submit" class="form-button form-button--submit">Valider</button>
 </form> 

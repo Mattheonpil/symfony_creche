@@ -133,43 +133,7 @@
     }
 }
 
-.card-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-top: 2rem;
 
-    .card {
-        background: $green;
-        border-radius: 8px;
-        padding: 2rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-            display: block; // Assurez-vous que l'image est bien visible
-        }
-
-        img {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-            display: block;
-        }
-
-        h3 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: $white;
-        }
-    }
-}
 
 .datetime-container {
     margin-bottom: 2rem;
@@ -243,29 +207,65 @@
 // Start------SHOW INSCRIPTION NOUVEL ENFANT-------show_inscription.html.twig
 
 
-        .recap-section {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-        }
 
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #eee;
-        }
+.recap {
+    &-wrapper {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 2rem;
+        color: $primary;
+    }
+    
+    &-section {
+        margin: 3rem 0;
+        padding: 1.5rem;
+        border-radius: 8px;
+        background: $white;
+        
+        &--user { @extend .form-section--user; }
+        &--child { @extend .form-section--child; }
+        &--planning { @extend .form-section--planning; }
+    }
+}
 
-        .section-content {
-            padding: 1rem 0;
-        }
 
-        .planning-recap {
-            margin-top: 1.5rem;
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eee;
+    h2 {
+        color: $primary;
+    }
+}
+
+.section-content {
+    margin-left: 2rem;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    p {
+        display: flex;
+        margin-top: 0.2rem;
+        
+        justify-content: space-between;
+        span {
+            font-weight: $weight-1;
+            color: darken($primary, 20%);
         }
+    }
+    &--user > p{
+        color: darken($orange, 20%);
+    }
+
+    &--child > p{
+        color: $blue-stroke;
+    }
+
+  
+}
+
 
 // End------SHOW INSCRIPTION NOUVEL ENFANT-------show_inscription.html.twig

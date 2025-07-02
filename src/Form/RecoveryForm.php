@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class RecoveryForm extends AbstractType
 {
@@ -28,11 +29,16 @@ class RecoveryForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('first_name')
-            ->add('phone')
-            ->add('email')
-            ->add('email', EmailType::class, [
+            ->add('first_name', TextType::class, [
+                'label' => 'Prénom'
+            ])
+            ->add('name', TextType::class, [
+                'label' => 'Nom'
+            ])
+            ->add('phone', TextType::class, [
+                'label' => 'Téléphone'
+            ])
+            ->add('email', TextType::class, [
                 'required' => false,
                 'help' => '* Optionnel sauf pour les responsables légaux',
                 'row_attr' => ['class' => 'email-help-wrap']

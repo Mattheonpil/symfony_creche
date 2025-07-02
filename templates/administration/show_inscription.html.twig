@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="recap-wrapper">
-        <h1 class="text-center mb-4">Récapitulatif de l'inscription</h1>
+        <h1>Récapitulatif de l'inscription</h1>
 
         <div class="recap-section recap-section--user">
             <div class="section-header">
@@ -14,11 +14,11 @@
                 </a>
             </div>
             <div class="section-content">
-                <p><strong>Nom :</strong> {{ user.name }}</p>
-                <p><strong>Prénom :</strong> {{ user.firstName }}</p>
-                <p><strong>Email :</strong> {{ user.email }}</p>
-                <p><strong>Téléphone :</strong> {{ user.phone }}</p>
-                <p><strong>Lien avec l'enfant :</strong> {{ userChild.relation }}</p>
+                <p><span>Nom :</span> {{ user.name }}</p>
+                <p><span>Prénom :</span> {{ user.firstName }}</p>
+                <p><span>Email :</span> {{ user.email }}</p>
+                <p><span>Téléphone :</span> {{ user.phone }}</p>
+                <p><span>Lien avec l'enfant :</span> {{ userChild.relation }}</p>
             </div>
         </div>
 
@@ -30,13 +30,13 @@
                         <i class="fas fa-edit"></i> Modifier
                     </a>
                 </div>
-                <div class="section-content">
-                    <p><strong>Nom :</strong> {{ recovery.name }}</p>
-                    <p><strong>Prénom :</strong> {{ recovery.firstName }}</p>
-                    <p><strong>Email :</strong> {{ recovery.email }}</p>
-                    <p><strong>Téléphone :</strong> {{ recovery.phone }}</p>
-                    <p><strong> lien avec l'enfant :</strong> {{ recoveryChild.relation }}</p>
-                    <p><strong>Responsable légal :</strong> {{ recoveryChild.isResponsable ? 'Oui' : 'Non' }}</p>
+                <div class="section-content section-content--user">
+                    <p><span>Nom :</span> {{ recovery.name }}</p>
+                    <p><span>Prénom :</span> {{ recovery.firstName }}</p>
+                    <p><span>Email :</span> {{ recovery.email }}</p>
+                    <p><span>Téléphone :</span> {{ recovery.phone }}</p>
+                    <p><span> lien avec l'enfant :</span> {{ recoveryChild.relation }}</p>
+                    <p><span>Responsable légal :</span> {{ recoveryChild.isResponsable ? 'Oui' : 'Non' }}</p>
                 </div>
             </div>
         {% endif %}
@@ -48,13 +48,13 @@
                     <i class="fas fa-edit"></i> Modifier
                 </a>
             </div>
-            <div class="section-content">
-                <p><strong>Nom :</strong> {{ child.name }}</p>
-                <p><strong>Prénom :</strong> {{ child.firstName }}</p>
-                <p><strong>Date de naissance :</strong> {{ child.birthDate|date('d/m/Y') }}</p>
-                <p><strong>Genre :</strong> {{ child.genre }}</p>
-                <p><strong>Allergies :</strong> {{ child.allergy ?? 'Aucune' }}</p>
-                <p><strong>Spécificités médicales :</strong> {{ child.medicalSpecificity ?? 'Aucune' }}</p>
+            <div class="section-content section-content--child">
+                <p><span>Nom :</span> {{ child.name }}</p>
+                <p><span>Prénom :</span> {{ child.firstName }}</p>
+                <p><span>Date de naissance :</span> {{ child.birthDate|date('d/m/Y') }}</p>
+                <p><span>Genre :</span> {{ child.genre }}</p>
+                <p><span>Allergies :</span> {{ child.allergy ?? 'Aucune' }}</p>
+                <p><span>Spécificités médicales :</span> {{ child.medicalSpecificity ?? 'Aucune' }}</p>
             </div>
 
             <div class="recap-section recap-section--planning">

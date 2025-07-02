@@ -30,19 +30,20 @@
     <section class="card-container">
         {# Card Enfants présents #}
         <card class="card">
-            <img src="{{ asset('images/baby.svg') }}" alt="icon child">
+            <img src="{{ asset('images/baby.svg') }}" alt="icon child" class="icon-accueil">
             <h3>{{ present_children_count }}</h3>
         </card>
 
         {# Card Repas #}
         <card class="card">
-            <img src="{{ asset('images/meal.svg') }}" alt="icon meal">
+            <img src="{{ asset('images/meal.svg') }}" alt="icon meal" class="icon-accueil">
             <h3>{{ mealsCount|default(0) }}</h3>
         </card>
 
         {# Card Enfants prévus #}
         <card class="card">
-            <img src="{{ asset('images/child-care.svg') }}" alt="icon calendar">
+            {# <img src="{{ asset('images/child-care.svg') }}" alt="icon calendar"> #}
+            <twig:ux:icon name="fa6-solid:children" class="icon-accueil" />
             <h3>{{ childrenCount|default(0) }}</h3>
         </card>
     </section>

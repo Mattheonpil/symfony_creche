@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ChildForm extends AbstractType
 {
@@ -63,11 +64,21 @@ class ChildForm extends AbstractType
             'input_format' => 'Y-m-d',
             'required' => false
         ])
-        ->add('allergy', null, [
-            'label' => 'Allergies'
+        ->add('allergy', TextareaType::class, [
+            'label' => 'Allergies',
+            'attr' => ['class' => 'ta-allergy',
+                        'rows' => 2,
+                        'cols' => 40
+                    ],
+            'required' => false
         ])
-        ->add('medical_specificity', null, [
-            'label' => 'Spécificités médicales'
+        ->add('medical_specificity', TextareaType::class, [
+            'label' => 'Spécificités médicales',
+            'attr' => ['class' => 'ta-medical-specificity',
+                        'rows' => 2,
+                        'cols' => 40
+                    ],
+            'required' => false
         ])
         ->add('lundi_a', TimeType::class, [
             'widget' => 'choice',

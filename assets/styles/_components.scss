@@ -71,23 +71,30 @@
     border: 2px solid $orange;
     border-radius: 8px;
     padding: 2rem;
+    gap: 5rem;
 }
 
 .card {
     width: 200px;
     aspect-ratio: 1/1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: $green;
-    border-radius: 6px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     gap :1rem;
-    & img {
+    padding: 2rem;
+    & .icon-accueil {
         width: 40%;
         aspect-ratio: 1/1;
+        object-fit: contain;
+        display: block;
+        color: white;
     }
     & h3 {
-        font-size: $size-t4;
+        font-size: $size-t2;
         font-weight: $weight-2;
         color: white;
     }
@@ -188,6 +195,10 @@
                         background-color: rgba($orange, 0.02);
                     }
                 }
+                .ta-allergy, .ta-medical-specificity {
+                    width: 50%;
+                    resize: vertical;
+                }
                 label {
                     align-content: center;
                     font-weight: 600;
@@ -216,31 +227,6 @@
             margin-bottom: 1.5rem;
             font-weight: $weight-2;
         }
-
-        // .planning-hours {
-        //     display: flex;
-        //     flex-direction: column;
-        //     // grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        //     gap: 1.5rem;
-        //     margin-top: 1.5rem;
-
-        //     .day-group {
-        //         display: flex;
-        //         width: 100%;
-                
-        //         h3 {
-        //             color: $green;
-        //             text-align: center;
-        //             font-size: 1.1rem;
-        //             min-width: 5rem;
-        //         }
-        //         div {
-        //             flex: 1 1 0;
-        //             min-width: 0;
-        //             text-align: center;
-        //         }
-        //     }
-        // }
 
         .planning-dates {
             display: grid;
@@ -287,10 +273,18 @@
 }
 
 // Button Components
+.button-group {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 1rem;
+    margin-left: 1rem;
+}
 .form-button {
     padding: 0.5rem 1.5rem;
     border-radius: 4px;
     font-weight: $weight-1;
+    font-size: $size-default;
     transition: all 0.3s ease;
     cursor: pointer;
 
@@ -298,20 +292,23 @@
         background-color: $green;
         color: $white;
         border: none;
-
+        font-weight: $weight-1;
         &:hover {
             background-color: darken($green, 10%);
         }
     }
 
     &--cancel {
-        background-color: transparent;
-        border: 1px solid $primary;
-        color: $primary;
-
+        box-sizing: border-box;
+        background-color: $orange;
+        padding: 0.45rem 1.5rem;
+        border: none;
+        color: $white;
+        font-size: $size-default;
+        font-weight: $weight-1;
+        text-decoration: none;
         &:hover {
-            border-color: $orange;
-            color: $orange;
+            background-color: darken($orange, 10%);
         }
     }
 
@@ -319,7 +316,7 @@
         background-color: $blue;
         color: $white;
         border: none;
-
+        text-decoration: none;
         &:hover {
             background-color: darken($blue, 10%);
         }
@@ -335,25 +332,7 @@
     }
 }
 
-// Recap Components
-.recap {
-    &-wrapper {
-        max-width: 1200px;
-        margin: 2rem auto;
-        padding: 2rem;
-    }
 
-    &-section {
-        margin-bottom: 2rem;
-        padding: 1.5rem;
-        border-radius: 8px;
-        background: $white;
-
-        &--user { @extend .form-section--user; }
-        &--child { @extend .form-section--child; }
-        &--planning { @extend .form-section--planning; }
-    }
-}
 
 .main-nav {
     position: fixed;
@@ -364,3 +343,85 @@
     background-color: $white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+// tentative classe generale pour formulaires
+.form-style-general {
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    color: $primary;
+       div {
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+        margin-bottom: 0.5rem;
+       }
+       .email-help-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        .help-text {
+            flex-basis: 100%;
+            font-size: 0.9rem;
+            padding-top: 0.3rem;
+        }
+       }
+    input {
+        outline: none;
+        border: 1px solid $primary;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: all 0.3s;
+        text-align: end;
+        color: $primary;
+        &:hover {
+            border: 1px solid $orange;
+            background-color: rgba($orange, 0.02);
+        }
+        &:focus {
+            border: 1px solid $orange;
+            background-color: rgba($orange, 0.02);
+        }
+    }
+    select {
+        outline: none;
+        border: 1px solid $primary;
+        padding: 0.5rem 1rem;
+        border-radius: 4px ;
+        color: $primary;
+
+        &:hover {
+            border: 1px solid $orange;
+            background-color: rgba($orange, 0.02);
+        }
+        &:focus {
+            border: 1px solid $orange;
+            background-color: rgba($orange, 0.02);
+        }
+    }
+    textarea {
+        outline: none;
+        border: 1px solid $primary;
+        padding: 0.5rem 1rem;
+        border-radius: 4px ;
+        color: $primary;
+
+        &:hover {
+            border: 1px solid $orange;
+            background-color: rgba($orange, 0.02);
+        }
+        &:focus {
+            border: 1px solid $orange;
+            background-color: rgba($orange, 0.02);
+        }
+    }
+    .ta-allergy, .ta-medical-specificity {
+        width: 50%;
+        resize: vertical;
+    }
+    label {
+        // align-content: center;
+        font-weight: 600;
+    }
+ }

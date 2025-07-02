@@ -31,34 +31,34 @@
 }
 
 // Mixin pour les form-groups (label + input)
-@mixin form-group {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    gap: 1rem;
+// @mixin form-group {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     margin-bottom: 1rem;
+//     gap: 1rem;
 
-    label {
-        color: $primary;
-        min-width: 200px;
-    }
+//     label {
+//         color: $primary;
+//         min-width: 200px;
+//     }
 
-    input, select, textarea {
-        flex: 1;
-        padding: 0.5rem;
-        border: 1px solid $primary;
-        border-radius: 4px;
-        transition: all 0.3s ease;
+//     input, select, textarea {
+//         flex: 1;
+//         padding: 0.5rem;
+//         border: 1px solid $primary;
+//         border-radius: 4px;
+//         transition: all 0.3s ease;
 
-        &:hover {
-            border-color: $orange;
-            background-color: $primary-bg;
-        }
+//         &:hover {
+//             border-color: $orange;
+//             background-color: $primary-bg;
+//         }
 
-        &:focus {
-            outline: none;
-            border-color: $orange;
-            box-shadow: 0 0 0 2px rgba($orange, 0.1);
-        }
-    }
-}
+//         &:focus {
+//             outline: none;
+//             border-color: $orange;
+//             box-shadow: 0 0 0 2px rgba($orange, 0.1);
+//         }
+//     }
+// }

@@ -24,7 +24,7 @@ class PlanningPresenceForm extends AbstractType
                 // 'minutes' => [0, 15, 30, 45],
                 'hours' => range(7, 19),
                 'required' => false,
-                'label' => "Heure d'arrivée réelle",
+                'label' => "Modifier l'heure d'arrivée:",
                 'placeholder' => [
                     'hour' => 'HH',
                     'minute' => 'MM',
@@ -38,7 +38,7 @@ class PlanningPresenceForm extends AbstractType
                 // 'minutes' => [0, 15, 30, 45],
                 'hours' => range(7, 19),
                 'required' => false,
-                'label' => "Heure de départ réelle",
+                'label' => "Modifier l'heure de départ :",
                 'placeholder' => [
                     'hour' => 'HH',
                     'minute' => 'MM',

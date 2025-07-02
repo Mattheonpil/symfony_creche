@@ -372,12 +372,7 @@ body {
     }
 }
 
-.editor-row {
-  grid-column: 1 / -1; // Fait que l'éditeur prend toute la largeur de la grille
-  background: #f8f9fa;
-  padding: 1em;
-  border-bottom: 1px solid #eee;
-}
+
 
 
 .planning-container .planning-grid .child-row .presence-container .presence-bar.green { background: $green; }
@@ -409,7 +404,7 @@ body {
   background: $orange;
   border-radius: 20px;
 }
-// Correction du border-radius pour les cas de retard (orange à gauche)
+// Correction du border-radius pour les cas de retard 
 .bar-segment.green.no-radius-left { border-top-left-radius: 0; border-bottom-left-radius: 0; }
 .bar-segment.green.no-radius-right { border-top-right-radius: 0; border-bottom-right-radius: 0; }
 .bar-segment.orange.radius-left { border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 0; border-bottom-right-radius: 0; }
@@ -459,3 +454,123 @@ body {
   color: inherit;
   cursor: pointer;
 }
+// DEBUTstylage de editor-row
+
+.editor-row {
+    grid-column: 1 / -1; // Fait que l'éditeur prend toute la largeur de la grille
+    background: #f8f9fa;
+    padding: 1em;
+    border-bottom: 1px solid #eee;
+  }
+
+.presence-form-part {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin: 1.5rem 0;
+    color: darken($primary, 15%);
+    & > div {
+        text-align: center;
+        padding: 1rem 1rem;
+        border: 1px solid $orange;
+        border-radius: 8px;
+        transform: scale(1);
+        transition: all 0.3s ease;
+        &:hover {
+            transform: scale(1.01);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    }
+    select {
+        cursor: pointer;
+        margin-top: 0.5rem;
+        background-color: $primary-bg;
+        color: $primary;
+        border: 1px solid $primary;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        &:hover {
+            background-color: lighten($orange, 35%);
+            border: 1px solid $orange;
+            
+        }
+        &:focus {
+            outline: none;
+            border: 1px solid $orange;
+        }
+    }
+}
+  // Toggle Switch CSS
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    & > span {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: $primary;
+        // margin-left: 1rem;
+        border-radius: 8px;
+        padding: 0.2rem 0.5rem;
+        color: $white;
+    }
+    & > span:nth-child(1){
+        background-color: $green;
+    }
+    & > span:last-child {
+        background-color: $red;
+        margin-left: 1rem;
+    }
+  }
+  
+  .toggle-switch input[type="checkbox"] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .toggle-switch label {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  
+  .toggle-switch label:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50px;
+    height: 28px;
+    background-color: $green;
+    border-radius: 34px;
+    transition: background 0.3s;
+  }
+  
+  .toggle-switch label:after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    width: 20px;
+    height: 20px;
+    background: $white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  
+  .toggle-switch input[type="checkbox"]:checked + label:before {
+    background-color: $red;
+  }
+  
+  .toggle-switch input[type="checkbox"]:checked + label:after {
+    transform: translateX(22px);
+  }
+//FIN stylage de editor-row

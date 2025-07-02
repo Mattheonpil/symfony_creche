@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UserForm extends AbstractType
 {
@@ -25,10 +26,18 @@ class UserForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('first_name')
-            ->add('name')
-            ->add('phone')
-            ->add('email')
+            ->add('first_name', TextType::class, [
+                'label' => 'Prénom'
+            ])
+            ->add('name', TextType::class, [
+                'label' => 'Nom'
+            ])
+            ->add('phone', TextType::class, [
+                'label' => 'Téléphone'
+            ])
+            ->add('email', TextType::class, [
+                'label' => 'Email'
+            ])
             ->add('relation', ChoiceType::class, [
                 'mapped' => false,
                 'choices' => [
@@ -43,6 +52,7 @@ class UserForm extends AbstractType
         // Ajouter le champ password uniquement en création
         if (!$options['edit_mode']) {
             $builder->add('plainPassword', PasswordType::class, [
+                'label' => 'Mot de passe',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [

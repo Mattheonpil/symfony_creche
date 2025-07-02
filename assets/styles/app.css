@@ -104,24 +104,31 @@
   border: 2px solid rgb(253, 148, 67);
   border-radius: 8px;
   padding: 2rem;
+  gap: 5rem;
 }
 
 .card {
   width: 200px;
   aspect-ratio: 1/1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: rgb(73, 195, 0);
-  border-radius: 6px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   gap: 1rem;
+  padding: 2rem;
 }
-.card img {
+.card .icon-accueil {
   width: 40%;
   aspect-ratio: 1/1;
+  object-fit: contain;
+  display: block;
+  color: white;
 }
 .card h3 {
-  font-size: 4rem;
+  font-size: 2rem;
   font-weight: 600;
   color: white;
 }
@@ -209,6 +216,10 @@
   border: 1px solid rgb(253, 148, 67);
   background-color: rgba(253, 148, 67, 0.02);
 }
+.form-section .form-rows-container div .ta-allergy, .form-section .form-rows-container div .ta-medical-specificity, .form-section .child-info div .ta-allergy, .form-section .child-info div .ta-medical-specificity {
+  width: 50%;
+  resize: vertical;
+}
 .form-section .form-rows-container div label, .form-section .child-info div label {
   align-content: center;
   font-weight: 600;
@@ -265,10 +276,19 @@
   box-shadow: 0 0 0 2px rgba(253, 148, 67, 0.1);
 }
 
+.button-group {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 1rem;
+}
+
 .form-button {
   padding: 0.5rem 1.5rem;
   border-radius: 4px;
   font-weight: 500;
+  font-size: 1rem;
   transition: all 0.3s ease;
   cursor: pointer;
 }
@@ -276,23 +296,29 @@
   background-color: rgb(73, 195, 0);
   color: white;
   border: none;
+  font-weight: 500;
 }
 .form-button--submit:hover {
   background-color: rgb(53.9076923077, 144, 0);
 }
 .form-button--cancel {
-  background-color: transparent;
-  border: 1px solid rgb(108, 116, 124);
-  color: rgb(108, 116, 124);
+  box-sizing: border-box;
+  background-color: rgb(253, 148, 67);
+  padding: 0.45rem 1.5rem;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
 }
 .form-button--cancel:hover {
-  border-color: rgb(253, 148, 67);
-  color: rgb(253, 148, 67);
+  background-color: rgb(252.4631578947, 119.2789473684, 16.5368421053);
 }
 .form-button--edit {
   background-color: rgb(43, 146, 255);
   color: white;
   border: none;
+  text-decoration: none;
 }
 .form-button--edit:hover {
   background-color: rgb(0, 120.0047169811, 247);
@@ -306,17 +332,6 @@
   background-color: rgb(255, 0, 3.75);
 }
 
-.recap-wrapper {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 2rem;
-}
-.recap-section {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  border-radius: 8px;
-  background: white;
-}
 .main-nav {
   position: fixed;
   top: 0;
@@ -325,6 +340,84 @@
   z-index: 1000;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-style-general {
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  color: rgb(108, 116, 124);
+}
+.form-style-general div {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin-bottom: 0.5rem;
+}
+.form-style-general .email-help-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.form-style-general .email-help-wrap .help-text {
+  flex-basis: 100%;
+  font-size: 0.9rem;
+  padding-top: 0.3rem;
+}
+.form-style-general input {
+  outline: none;
+  border: 1px solid rgb(108, 116, 124);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s;
+  text-align: end;
+  color: rgb(108, 116, 124);
+}
+.form-style-general input:hover {
+  border: 1px solid rgb(253, 148, 67);
+  background-color: rgba(253, 148, 67, 0.02);
+}
+.form-style-general input:focus {
+  border: 1px solid rgb(253, 148, 67);
+  background-color: rgba(253, 148, 67, 0.02);
+}
+.form-style-general select {
+  outline: none;
+  border: 1px solid rgb(108, 116, 124);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  color: rgb(108, 116, 124);
+}
+.form-style-general select:hover {
+  border: 1px solid rgb(253, 148, 67);
+  background-color: rgba(253, 148, 67, 0.02);
+}
+.form-style-general select:focus {
+  border: 1px solid rgb(253, 148, 67);
+  background-color: rgba(253, 148, 67, 0.02);
+}
+.form-style-general textarea {
+  outline: none;
+  border: 1px solid rgb(108, 116, 124);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  color: rgb(108, 116, 124);
+}
+.form-style-general textarea:hover {
+  border: 1px solid rgb(253, 148, 67);
+  background-color: rgba(253, 148, 67, 0.02);
+}
+.form-style-general textarea:focus {
+  border: 1px solid rgb(253, 148, 67);
+  background-color: rgba(253, 148, 67, 0.02);
+}
+.form-style-general .ta-allergy, .form-style-general .ta-medical-specificity {
+  width: 50%;
+  resize: vertical;
+}
+.form-style-general label {
+  font-weight: 600;
 }
 
 .main-nav {
@@ -447,40 +540,6 @@
   text-transform: uppercase;
 }
 
-.card-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin-top: 2rem;
-}
-.card-container .card {
-  background: rgb(73, 195, 0);
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-.card-container .card .card-icon {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-  display: block;
-}
-.card-container .card img {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-  display: block;
-}
-.card-container .card h3 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: white;
-}
-
 .datetime-container {
   margin-bottom: 2rem;
   text-align: center;
@@ -538,14 +597,18 @@ h2 {
   margin-bottom: 1.5rem;
 }
 
-.recap-section {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-  padding: 1.5rem;
+.recap-wrapper {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  color: rgb(108, 116, 124);
 }
-
+.recap-section {
+  margin: 3rem 0;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: white;
+}
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -554,13 +617,30 @@ h2 {
   padding-bottom: 0.5rem;
   border-bottom: 2px solid #eee;
 }
-
-.section-content {
-  padding: 1rem 0;
+.section-header h2 {
+  color: rgb(108, 116, 124);
 }
 
-.planning-recap {
-  margin-top: 1.5rem;
+.section-content {
+  margin-left: 2rem;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+.section-content p {
+  display: flex;
+  margin-top: 0.2rem;
+  justify-content: space-between;
+}
+.section-content p span {
+  font-weight: 500;
+  color: rgb(60.5172413793, 65, 69.4827586207);
+}
+.section-content--user > p {
+  color: rgb(215.7052631579, 95.2315789474, 2.2947368421);
+}
+.section-content--child > p {
+  color: rgb(0, 74, 154);
 }
 
 .planning-hours-grid {
@@ -594,7 +674,7 @@ h2 {
 .planning-hours-grid .header:first-child {
   border-radius: 8px 0 0 8px;
 }
-.planning-hours-grid .header:nth-child(4) {
+.planning-hours-grid .header:nth-child(3) {
   border-radius: 0 8px 8px 0;
 }
 .planning-hours-grid .day-label {
@@ -611,7 +691,7 @@ h2 {
   display: flex;
   border-radius: 8px;
   overflow: hidden;
-  background: rgb(73, 195, 0);
+  background: rgb(160.9310344828, 167, 173.0689655172);
   height: 100%;
   justify-content: space-around;
   box-sizing: border-box;
@@ -626,6 +706,7 @@ h2 {
   background: rgb(82.5461538462, 220.5, 0) !important;
   color: white !important;
   font-weight: 700;
+  font-size: 1rem;
 }
 @keyframes highlight {
   from {
@@ -638,8 +719,8 @@ h2 {
 .planning-hours-grid .input-cell {
   padding: 0.5em 1em;
   text-align: center;
-  background: rgb(73, 195, 0);
-  border-radius: 0 8px 8px 0;
+  background: rgb(160.9310344828, 167, 173.0689655172);
+  border-radius: 8px;
 }
 .planning-hours-grid .time-input {
   border-radius: 8px;
@@ -647,10 +728,11 @@ h2 {
   padding: 0.2rem;
 }
 .planning-hours-grid .time-input select {
-  background-color: rgb(73, 195, 0) !important;
+  background-color: rgb(160.9310344828, 167, 173.0689655172);
   color: white !important;
   border: none;
   font-weight: 600;
+  font-size: 1rem;
 }
 .planning-hours-grid .time-input select:focus {
   outline: none;
@@ -1020,13 +1102,6 @@ body {
   font-weight: 500;
 }
 
-.editor-row {
-  grid-column: 1/-1;
-  background: #f8f9fa;
-  padding: 1em;
-  border-bottom: 1px solid #eee;
-}
-
 .planning-container .planning-grid .child-row .presence-container .presence-bar.green {
   background: rgb(73, 195, 0);
 }
@@ -1138,6 +1213,122 @@ body {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+}
+
+.editor-row {
+  grid-column: 1/-1;
+  background: #f8f9fa;
+  padding: 1em;
+  border-bottom: 1px solid #eee;
+}
+
+.presence-form-part {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 1.5rem 0;
+  color: rgb(72.3879310345, 77.75, 83.1120689655);
+}
+.presence-form-part > div {
+  text-align: center;
+  padding: 1rem 1rem;
+  border: 1px solid rgb(253, 148, 67);
+  border-radius: 8px;
+  transform: scale(1);
+  transition: all 0.3s ease;
+}
+.presence-form-part > div:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.presence-form-part select {
+  cursor: pointer;
+  margin-top: 0.5rem;
+  background-color: rgb(233, 236, 239);
+  color: rgb(108, 116, 124);
+  border: 1px solid rgb(108, 116, 124);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.presence-form-part select:hover {
+  background-color: rgb(254.8789473684, 248.5236842105, 243.6210526316);
+  border: 1px solid rgb(253, 148, 67);
+}
+.presence-form-part select:focus {
+  outline: none;
+  border: 1px solid rgb(253, 148, 67);
+}
+
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.toggle-switch > span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgb(108, 116, 124);
+  border-radius: 8px;
+  padding: 0.2rem 0.5rem;
+  color: white;
+}
+.toggle-switch > span:nth-child(1) {
+  background-color: rgb(73, 195, 0);
+}
+.toggle-switch > span:last-child {
+  background-color: rgb(255, 51, 54);
+  margin-left: 1rem;
+}
+
+.toggle-switch input[type=checkbox] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-switch label {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.toggle-switch label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50px;
+  height: 28px;
+  background-color: rgb(73, 195, 0);
+  border-radius: 34px;
+  transition: background 0.3s;
+}
+
+.toggle-switch label:after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch input[type=checkbox]:checked + label:before {
+  background-color: rgb(255, 51, 54);
+}
+
+.toggle-switch input[type=checkbox]:checked + label:after {
+  transform: translateX(22px);
 }
 
 /*# sourceMappingURL=app.css.map */
