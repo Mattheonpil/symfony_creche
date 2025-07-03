@@ -4,38 +4,18 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <style>
-        .bar-segment.green.no-radius-right {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-        .bar-segment.orange.radius-right {
-            position: absolute;
-            z-index: 2;
-        }
-        .bar-segment.orange.radius-right .real-hour-departure {
-            position: absolute;
-            right: 0;
-            top: 100%;
-            color: $orange;
-            font-size: 0.85em;
-            font-weight: 700;
-            white-space: nowrap;
-            transform: translateX(50%);
-        }
-    </style>
 {% endblock %}
 
 {% block body %}
 <div class="planning-container">
-    <div class="date-navigation" >
+    <div class="navigation-child-planning" >
         <a href="{{ path('app_planning_child', {id: child.id, month: prevMonth|date('m'), year: prevMonth|date('Y')}) }}" class="week-nav-button">
             <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" width="40" height="40">
                 <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
             </svg>
         </a>
-        <h1 class="planning-title">
-            Planning de {{ child.firstName }} {{ child.name }}<br>
+        <h1 class="planning-child-title">
+            Planning de <span class="planning-child-name">{{ child.firstName }} {{ child.name }} :</span>
             <span class="date-display">
                 {{ (year ~ '-' ~ month ~ '-01')|date('Y-m-d')|format_datetime(pattern='MMMM', locale='fr')|capitalize }} {{ year }}
             </span>
@@ -64,7 +44,9 @@
             <div class="child-row">
                 <div class="child-info">
                     <div class="day-label">
-                        {{ calendar.date|format_datetime(pattern="EEEE d MMMM", locale="fr") }}
+                        <span class="day-name">{{ calendar.date|format_datetime(pattern="EEEE", locale="fr") }}</span>
+                        <span class="day-number">{{ calendar.date|date('d') }}</span>
+                        <span class="month">{{ calendar.date|format_datetime(pattern="MMMM", locale="fr") }}</span>
                     </div>
                 </div>
                 <div class="presence-container">

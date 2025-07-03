@@ -293,6 +293,7 @@
         color: $white;
         border: none;
         font-weight: $weight-1;
+        text-decoration: none;
         &:hover {
             background-color: darken($green, 10%);
         }

@@ -49,13 +49,7 @@ body {
     padding-top: 80px !important;
 }
 
-.navig-jour {
-    color: rgb(79, 116, 93);
-    text-decoration: none;
-}
-.date-navigation {
-    background: rgb(151, 128, 128);
-}
+
 
 .planning-container {
     padding: 2rem;
@@ -77,7 +71,7 @@ body {
         h1 {
             margin: 0;
             font-size: 1.5rem;
-            color: $black;
+            color: $primary;
             & span {
                color: $primary; 
             }
@@ -99,19 +93,6 @@ body {
                 color: rgb(248, 144, 99);
             }
         }
-
-        // .navig-jour {
-        //     padding: 0.5rem 1rem;
-        //     background: white;
-        //     border-radius: 4px;
-        //     color: #333;
-        //     text-decoration: none;
-        //     transition: all 0.3s ease;
-
-        //     &:hover {
-        //         background: #e9ecef;
-        //     }
-        // }
     }
 
     .planning-grid {
@@ -120,7 +101,7 @@ body {
         border-radius: 8px;
         overflow-x: auto;
         display: grid;
-        grid-template-columns: 200px repeat(13, minmax(80px, 1fr));
+        grid-template-columns: 250px repeat(13, minmax(80px, 1fr));
 
         .timeline-header {
             grid-column: 1 / -1;
@@ -169,40 +150,38 @@ body {
         .child-row {
             display: contents;
 
-            &:nth-child(odd) {
-                .child-info,
-                .presence-container {
-                    background-color: #ecf1f5;
-                }
-            }
-
-            &:nth-child(even) {
-                .child-info,
-                .presence-container {
-                    background-color: #f8f9fa;
-                }
-            }
-
             .child-info {
-                // padding: 1rem;
-                font-weight: 500;
+                
+                font-weight: 600;
+                font-size: 1.1rem;
                 position: sticky;
                 left: 0;
                 z-index: 1;
-                text-align: center;
+                text-align: left;
                 padding: 0 1.5rem 0 0.5rem;
-                color: $primary;
-                display: flex; // Ajout pour flexbox
-                align-items: center; // Centre verticalement
-                justify-content: space-between; // Centre horizontalement
+                color: darken($primary, 20%);
+                display: flex; 
+                align-items: center; 
+                justify-content: space-between;
                 height: 60px;
+                font-family: "Playwrite US Trad", cursive;
+                text-transform: capitalize;
                 & .gear-icon {
-                    width: 2em;      /* ou 32px, 24px, etc. */
-                    height: 2em;     /* idem */
+                    width: 2em;
+                    height: 2em;
                     color: $primary;  
                     vertical-align: middle;
-                } // Même hauteur que presence-container
+                }
+                .child-name {
+                    display: flex;
+                    align-items: left;
+                    gap: 0.7rem;
+                }
+                .child-name .fname {
+                    font-weight: 500;
+                }
             }
+
 
             .presence-container {
                 grid-column: 2 / -1;
@@ -227,6 +206,16 @@ body {
                     transform: translateY(-50%); // Ajustement pour un centrage parfait
                 }
             }
+
+            &.is-female {
+                .child-info { background: #ffe0ef; }
+                .presence-container { background: #ffe0ef; }
+            }
+            &.is-male {
+                .child-info { background: #e0f0ff; }
+                .presence-container { background:#e0f0ff; }
+            }
+        
         }
 
         .no-plannings {
@@ -281,6 +270,7 @@ body {
                 font-size: 1.5rem;
                 font-weight: 500;
                 margin-bottom: 2rem;
+                color: darken($primary, 15%);
             }
 
             .weekdays {

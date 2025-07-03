@@ -86,9 +86,9 @@
                 {% endfor %}
             </div>
             {% for planning in plannings %}
-                <div class="child-row">
+                <div class="child-row {{ planning.child.genre == 'F' ? 'is-female' : 'is-male' }}">
                     <div class="child-info">
-                        <div class="child-name">{{ planning.child.firstName }} {{ planning.child.name }}</div>
+                        <div class="child-name">{{ planning.child.firstName }} <span class="fname">{{ planning.child.name }}</span></div>
                         <a href="#"
                            data-action="planning-editor#toggle"
                            data-planning-editor-id-value="{{ planning.id }}">

@@ -297,6 +297,7 @@
   color: white;
   border: none;
   font-weight: 500;
+  text-decoration: none;
 }
 .form-button--submit:hover {
   background-color: rgb(53.9076923077, 144, 0);
@@ -609,6 +610,10 @@ h2 {
   border-radius: 8px;
   background: white;
 }
+.recap-section--planning h2 {
+  color: rgb(108, 116, 124);
+}
+
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -627,6 +632,9 @@ h2 {
   display: flex;
   flex-direction: column;
 }
+.section-content h2 {
+  color: rgb(108, 116, 124);
+}
 .section-content p {
   display: flex;
   margin-top: 0.2rem;
@@ -641,6 +649,75 @@ h2 {
 }
 .section-content--child > p {
   color: rgb(0, 74, 154);
+}
+
+.planning-grid-recap {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  margin-top: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.planning-grid-recap .grid-header {
+  font-weight: bold;
+  background: rgb(88.2738461538, 235.8, 0);
+  color: #fff;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  border-bottom: 1px solid rgb(92.0923076923, 246, 0);
+}
+.planning-grid-recap .grid-row {
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+.planning-grid-recap .grid-row:nth-last-child(-n+3) {
+  border-bottom: none;
+}
+.planning-grid-recap .grid-row-day {
+  font-weight: 500;
+  color: rgb(84.2586206897, 90.5, 96.7413793103);
+}
+
+.navigation-child-planning {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem auto 3rem auto;
+  color: rgb(108, 116, 124);
+  align-items: center;
+  width: 70%;
+}
+.navigation-child-planning a > svg {
+  height: 80px;
+  fill: rgb(108, 116, 124);
+  transition: ease-in 0.3s;
+}
+.navigation-child-planning a > svg:hover {
+  fill: rgb(253, 148, 67);
+}
+
+.planning-child-title {
+  display: flex;
+}
+.planning-child-title .planning-child-name {
+  text-transform: capitalize;
+  margin: 0 0.5rem;
+  align-items: center;
+  color: rgb(84.2586206897, 90.5, 96.7413793103);
+}
+.planning-child-title .date-display {
+  color: rgb(253, 148, 67);
+}
+
+.day-label {
+  margin-left: 2rem;
+  color: rgb(108, 116, 124);
+}
+.day-label span:nth-child(2) {
+  color: rgb(253, 148, 67);
+  font-weight: 700;
 }
 
 .planning-hours-grid {
@@ -834,15 +911,6 @@ body {
   padding-top: 80px !important;
 }
 
-.navig-jour {
-  color: rgb(79, 116, 93);
-  text-decoration: none;
-}
-
-.date-navigation {
-  background: rgb(151, 128, 128);
-}
-
 .planning-container {
   padding: 2rem;
   max-width: 1400px;
@@ -863,7 +931,7 @@ body {
 .planning-container .date-navigation h1 {
   margin: 0;
   font-size: 1.5rem;
-  color: rgb(29, 32, 32);
+  color: rgb(108, 116, 124);
 }
 .planning-container .date-navigation h1 span {
   color: rgb(108, 116, 124);
@@ -891,7 +959,7 @@ body {
   border-radius: 8px;
   overflow-x: auto;
   display: grid;
-  grid-template-columns: 200px repeat(13, minmax(80px, 1fr));
+  grid-template-columns: 250px repeat(13, minmax(80px, 1fr));
 }
 .planning-container .planning-grid .timeline-header {
   grid-column: 1/-1;
@@ -933,32 +1001,35 @@ body {
 .planning-container .planning-grid .child-row {
   display: contents;
 }
-.planning-container .planning-grid .child-row:nth-child(odd) .child-info,
-.planning-container .planning-grid .child-row:nth-child(odd) .presence-container {
-  background-color: #ecf1f5;
-}
-.planning-container .planning-grid .child-row:nth-child(even) .child-info,
-.planning-container .planning-grid .child-row:nth-child(even) .presence-container {
-  background-color: #f8f9fa;
-}
 .planning-container .planning-grid .child-row .child-info {
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.1rem;
   position: sticky;
   left: 0;
   z-index: 1;
-  text-align: center;
+  text-align: left;
   padding: 0 1.5rem 0 0.5rem;
-  color: rgb(108, 116, 124);
+  color: rgb(60.5172413793, 65, 69.4827586207);
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 60px;
+  font-family: "Playwrite US Trad", cursive;
+  text-transform: capitalize;
 }
 .planning-container .planning-grid .child-row .child-info .gear-icon {
-  width: 2em; /* ou 32px, 24px, etc. */
-  height: 2em; /* idem */
+  width: 2em;
+  height: 2em;
   color: rgb(108, 116, 124);
   vertical-align: middle;
+}
+.planning-container .planning-grid .child-row .child-info .child-name {
+  display: flex;
+  align-items: left;
+  gap: 0.7rem;
+}
+.planning-container .planning-grid .child-row .child-info .child-name .fname {
+  font-weight: 500;
 }
 .planning-container .planning-grid .child-row .presence-container {
   grid-column: 2/-1;
@@ -980,6 +1051,18 @@ body {
   border-radius: 20px;
   top: 50%;
   transform: translateY(-50%);
+}
+.planning-container .planning-grid .child-row.is-female .child-info {
+  background: #ffe0ef;
+}
+.planning-container .planning-grid .child-row.is-female .presence-container {
+  background: #ffe0ef;
+}
+.planning-container .planning-grid .child-row.is-male .child-info {
+  background: #e0f0ff;
+}
+.planning-container .planning-grid .child-row.is-male .presence-container {
+  background: #e0f0ff;
 }
 .planning-container .planning-grid .no-plannings {
   padding: 3rem;
@@ -1026,6 +1109,7 @@ body {
   font-size: 1.5rem;
   font-weight: 500;
   margin-bottom: 2rem;
+  color: rgb(72.3879310345, 77.75, 83.1120689655);
 }
 .planning-container .week-navigation .week-info .weekdays {
   display: flex;

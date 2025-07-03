@@ -13,7 +13,7 @@
                     <i class="fas fa-edit"></i> Modifier
                 </a>
             </div>
-            <div class="section-content">
+            <div class="section-content section-content--user">
                 <p><span>Nom :</span> {{ user.name }}</p>
                 <p><span>Prénom :</span> {{ user.firstName }}</p>
                 <p><span>Email :</span> {{ user.email }}</p>
@@ -58,47 +58,36 @@
             </div>
 
             <div class="recap-section recap-section--planning">
-                <h3>Planning hebdomadaire</h3>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Jour</th>
-                            <th>Arrivée</th>
-                            <th>Départ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Lundi</td>
-                            <td>{{ child.lundiA ? child.lundiA|date('H:i') : '-' }}</td>
-                            <td>{{ child.lundiD ? child.lundiD|date('H:i') : '-' }}</td>
-                        </tr>
-                        <tr>
-                            <td>Mardi</td>
-                            <td>{{ child.mardiA ? child.mardiA|date('H:i') : '-' }}</td>
-                            <td>{{ child.mardiD ? child.mardiD|date('H:i') : '-' }}</td>
-                        </tr>
-                        <tr>
-                            <td>Mercredi</td>
-                            <td>{{ child.mercrediA ? child.mercrediA|date('H:i') : '-' }}</td>
-                            <td>{{ child.mercrediD ? child.mercrediD|date('H:i') : '-' }}</td>
-                        </tr>
-                        <tr>
-                            <td>Jeudi</td>
-                            <td>{{ child.jeudiA ? child.jeudiA|date('H:i') : '-' }}</td>
-                            <td>{{ child.jeudiD ? child.jeudiD|date('H:i') : '-' }}</td>
-                        </tr>
-                        <tr>
-                            <td>Vendredi</td>
-                            <td>{{ child.vendrediA ? child.vendrediA|date('H:i') : '-' }}</td>
-                            <td>{{ child.vendrediD ? child.vendrediD|date('H:i') : '-' }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h2>Planning hebdomadaire</h2>
+                <div class="planning-grid-recap">
+                    <div class="grid-header">Jour</div>
+                    <div class="grid-header">Arrivée</div>
+                    <div class="grid-header">Départ</div>
+
+                    <div class="grid-row grid-row-day">Lundi</div>
+                    <div class="grid-row">{{ child.lundiA ? child.lundiA|date('H:i') : '-' }}</div>
+                    <div class="grid-row">{{ child.lundiD ? child.lundiD|date('H:i') : '-' }}</div>
+
+                    <div class="grid-row grid-row-day">Mardi</div>
+                    <div class="grid-row">{{ child.mardiA ? child.mardiA|date('H:i') : '-' }}</div>
+                    <div class="grid-row">{{ child.mardiD ? child.mardiD|date('H:i') : '-' }}</div>
+
+                    <div class="grid-row grid-row-day">Mercredi</div>
+                    <div class="grid-row">{{ child.mercrediA ? child.mercrediA|date('H:i') : '-' }}</div>
+                    <div class="grid-row">{{ child.mercrediD ? child.mercrediD|date('H:i') : '-' }}</div>
+
+                    <div class="grid-row grid-row-day">Jeudi</div>
+                    <div class="grid-row">{{ child.jeudiA ? child.jeudiA|date('H:i') : '-' }}</div>
+                    <div class="grid-row">{{ child.jeudiD ? child.jeudiD|date('H:i') : '-' }}</div>
+
+                    <div class="grid-row grid-row-day">Vendredi</div>
+                    <div class="grid-row">{{ child.vendrediA ? child.vendrediA|date('H:i') : '-' }}</div>
+                    <div class="grid-row">{{ child.vendrediD ? child.vendrediD|date('H:i') : '-' }}</div>
+                </div>
             </div>
         </div>
 
-        <div class="text-center mt-4">
+        <div class="button-group">
             <a href="{{ path('app_administration') }}" class="form-button form-button--submit">Terminer l'inscription</a>
         </div>
     </div>
