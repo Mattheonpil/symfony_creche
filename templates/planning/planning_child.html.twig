@@ -46,7 +46,7 @@
                     <div class="day-label">
                         <span class="day-name">{{ calendar.date|format_datetime(pattern="EEEE", locale="fr") }}</span>
                         <span class="day-number">{{ calendar.date|date('d') }}</span>
-                        <span class="month">{{ calendar.date|format_datetime(pattern="MMMM", locale="fr") }}</span>
+                        <span class="month">{{ calendar.date|format_datetime(pattern="MMM", locale="fr") }}</span>
                     </div>
                 </div>
                 <div class="presence-container">
@@ -77,8 +77,8 @@
                                 </div>
                             {% else %}
                                 <div class="presence-bar primary"
-                                     style="position: absolute; left: calc(({{ startPos }} / 13) * 100%); width: calc(({{ endPos - startPos }} / 13) * 100%); min-width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 20px;">
-                                    En attente de pointage
+                                     style="position: absolute; left: calc(({{ startPos }} / 13) * 100%); width: calc(({{ endPos - startPos }} / 13) * 100%); min-width: 60px; height: 40px;">
+                                    Attente de pointage
                                 </div>
                             {% endif %}
                         {% else %}
@@ -104,7 +104,7 @@
                         </div>
                         {% endif %}
                     {% else %}
-                        <div class="presence-bar primary" style="width: 100%; background: var(--primary-bg); color: var(--primary); min-width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 20px; font-style: italic;">
+                        <div class="presence-bar primary" style="width: 100%; background: var(--primary-bg); color: var(--primary); min-width: 60px; height: 40px;">
                             Pas de présence prévue ce jour
                         </div>
                     {% endif %}

@@ -342,7 +342,7 @@
     }
 }
 .day-label {
-    margin-left: 2rem;
+    margin-left: 1rem;
     color: $primary;
         span {
             &:nth-child(2) {
@@ -350,5 +350,9 @@
             font-weight: 700;
              }
         }
+}
+.primary {
+    text-align: center;
+    font-style: italic;
 }
 //End complement planning-child

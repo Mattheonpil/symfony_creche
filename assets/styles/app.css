@@ -712,12 +712,17 @@ h2 {
 }
 
 .day-label {
-  margin-left: 2rem;
+  margin-left: 1rem;
   color: rgb(108, 116, 124);
 }
 .day-label span:nth-child(2) {
   color: rgb(253, 148, 67);
   font-weight: 700;
+}
+
+.primary {
+  text-align: center;
+  font-style: italic;
 }
 
 .planning-hours-grid {
