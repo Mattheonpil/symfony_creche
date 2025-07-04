@@ -360,4 +360,34 @@
 .green {
     text-align: center;
 }
+
+.page-navigation-button-nodata {
+    display: inline-block;
+    min-width: 110px;
+    padding: 0.5rem 1rem;
+    color: $primary;
+    text-decoration: none;
+    text-align: center;
+    border: 1px solid $primary;
+    border-radius: 20px;
+    transition: 0.4s ease-out;
+    &:hover {
+        border: 2px solid $orange;
+        color:darken($primary, 10%);
+        font-weight: $weight-1;
+    }
+ }
+
+a.page-navigation-button:hover .presence-bar,
+// a.page-navigation-button:hover .presence-bar-multi,
+a.page-navigation-button:hover .primary ,
+a.page-navigation-button:hover .green ,
+a.page-navigation-button:hover .orange {
+    filter: brightness(0.8);
+   
+    cursor: pointer;
+    transition: filter 0.4s ease-out;
+
+    font-style: normal;
+}
 //End complement planning-child

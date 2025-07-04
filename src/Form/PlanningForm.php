@@ -15,8 +15,29 @@ class PlanningForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        if (!empty($options['exceptional_presence'])) {
+            $builder
+                ->add('start_time', TimeType::class, [
+                    'widget' => 'choice',
+                    'minutes' => [0, 15, 30, 45],
+                    'hours' => range(7, 19),
+                    'label' => 'Heure de début prévue',
+                    'required' => true,
+                ])
+                ->add('end_time', TimeType::class, [
+                    'widget' => 'choice',
+                    'minutes' => [0, 15, 30, 45],
+                    'hours' => range(7, 19),
+                    'label' => 'Heure de fin prévue',
+                    'required' => true,
+                ]);
+            return;
+        }
+
         $builder
-            ->add('date')
+            ->add('date', null, [
+                'disabled' => $options['disable_date'],
+            ])
             ->add('start_time', TimeType::class, [
                 'widget' => 'choice',
                 'minutes' => [0, 15, 30, 45],
@@ -65,6 +86,7 @@ class PlanningForm extends AbstractType
             ->add('child', EntityType::class, [
                 'class' => Child::class,
                 'choice_label' => 'id',
+                'disabled' => $options['disable_child'],
             ])
         ;
     }
@@ -73,6 +95,9 @@ class PlanningForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Planning::class,
+            'disable_child' => false,
+            'disable_date' => false,
+            'exceptional_presence' => false,
         ]);
     }
 }

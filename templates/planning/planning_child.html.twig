@@ -71,41 +71,49 @@
                             </div>
                         {% elseif not actualArrival %}
                             {% if isToday and startTimestamp < nowTimestamp %}
-                                <div class="presence-bar orange"
-                                     style="position: absolute; left: calc(({{ startPos }} / 13) * 100%); width: calc(({{ endPos - startPos }} / 13) * 100%); min-width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 20px;">
-                                    En retard
-                                </div>
+                                <a href="{{ path('app_presence_exceptional', { planning_id: planning.id }) }}" class="page-navigation-button">
+                                    <div class="presence-bar orange"
+                                         style="position: absolute; left: calc(({{ startPos }} / 13) * 100%); width: calc(({{ endPos - startPos }} / 13) * 100%); min-width: 60px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 20px;">
+                                        <span>En retard</span>
+                                    </div>
+                                </a>
                             {% else %}
-                                <div class="presence-bar primary"
-                                     style="position: absolute; left: calc(({{ startPos }} / 13) * 100%); width: calc(({{ endPos - startPos }} / 13) * 100%); min-width: 60px; height: 40px;">
-                                    Attente de pointage
-                                </div>
+                                <a href="{{ path('app_presence_exceptional', { planning_id: planning.id }) }}" class="page-navigation-button">
+                                    <div class="presence-bar primary"
+                                         style="position: absolute; left: calc(({{ startPos }} / 13) * 100%); width: calc(({{ endPos - startPos }} / 13) * 100%); min-width: 60px; height: 40px;">
+                                        <span>Attente de pointage</span>
+                                    </div>
+                                </a>
                             {% endif %}
                         {% else %}
-                        <div class="presence-bar-multi">
-                            {% if actualArrival and actualArrival > start %}
-                                <div class="bar-segment orange radius-left"
-                                     style="left: calc(({{ startPos }} / 13) * 100%); width: calc(({{ arrivalPos - startPos }} / 13) * 100%);">
-                                     <span class="real-hour real-hour-arrival">{{ actualArrival }}</span>
-                                     </div>
-                            {% endif %}
-                            <div class="bar-segment green{% if actualArrival and actualArrival > start %} no-radius-left{% endif %}{% if actualDeparture and actualDeparture > end %} no-radius-right{% endif %}"
-                                 style="left: calc(({{ arrivalPos }} / 13) * 100%); width: calc(({{ (actualDeparture and actualDeparture > end ? endPos : departurePos) - arrivalPos }} / 13) * 100%);">
-                                 <span class="planned-hours">{{ start }} - {{ end }}</span>
-                            </div>
-                            {% if actualDeparture and actualDeparture > end %}
-                                <div class="bar-segment orange radius-right"
-                                     style="left: calc(({{ endPos }} / 13) * 100%); width: calc(({{ departurePos - endPos }} / 13) * 100%);">
-                                    <span class="real-hour real-hour-departure">{{ actualDeparture }}</span>
+                        <a href="{{ path('app_presence_exceptional', { planning_id: planning.id }) }}" class="page-navigation-button">
+                            <div class="presence-bar-multi">
+                                {% if actualArrival and actualArrival > start %}
+                                    <div class="bar-segment orange radius-left"
+                                         style="left: calc(({{ startPos }} / 13) * 100%); width: calc(({{ arrivalPos - startPos }} / 13) * 100%);">
+                                         <span class="real-hour real-hour-arrival">{{ actualArrival }}</span>
+                                         </div>
+                                {% endif %}
+                                <div class="bar-segment green{% if actualArrival and actualArrival > start %} no-radius-left{% endif %}{% if actualDeparture and actualDeparture > end %} no-radius-right{% endif %}"
+                                     style="left: calc(({{ arrivalPos }} / 13) * 100%); width: calc(({{ (actualDeparture and actualDeparture > end ? endPos : departurePos) - arrivalPos }} / 13) * 100%);">
+                                     <span class="planned-hours">{{ start }} - {{ end }}</span>
                                 </div>
-                            {% elseif actualDeparture and actualDeparture < end %}
-                                <span class="real-hour real-hour-departure" style="color: #888;">{{ actualDeparture }}</span>
-                            {% endif %}
-                        </div>
+                                {% if actualDeparture and actualDeparture > end %}
+                                    <div class="bar-segment orange radius-right"
+                                         style="left: calc(({{ endPos }} / 13) * 100%); width: calc(({{ departurePos - endPos }} / 13) * 100%);">
+                                        <span class="real-hour real-hour-departure">{{ actualDeparture }}</span>
+                                    </div>
+                                {% elseif actualDeparture and actualDeparture < end %}
+                                    <span class="real-hour real-hour-departure" style="color: #888;">{{ actualDeparture }}</span>
+                                {% endif %}
+                            </div>
+                        </a>
                         {% endif %}
                     {% else %}
-                        <div class="presence-bar primary" style="width: 100%; background: var(--primary-bg); color: var(--primary); min-width: 60px; height: 40px;">
-                            Pas de présence prévue ce jour
+                        <div class="presence-bar primary" style="width: 100%; background: var(--primary-bg); color: var(--primary); min-width: 60px; height: 40px;_child">
+                            <a href="{{ path('app_presence_exceptional', { child_id: child.id, date: calendar.date|date('Y-m-d') }) }}" class="page-navigation-button-nodata">
+                                Pas de présence prévue ce jour
+                            </a>
                         </div>
                     {% endif %}
                 </div>

@@ -14,10 +14,70 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
-
 #[Route('/planning')]
 final class PlanningController extends AbstractController
 {
+    #[Route('/presence-exceptionnelle', name: 'app_presence_exceptional', methods: ['GET', 'POST'])]
+    public function presenceExceptional(
+        Request $request,
+        PlanningRepository $planningRepository,
+        \App\Repository\ChildRepository $childRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $planningId = $request->query->get('planning_id');
+        $childId = $request->query->get('child_id');
+        $dateString = $request->query->get('date');
+
+        if ($planningId) {
+            $planning = $planningRepository->find($planningId);
+            $child = $planning ? $planning->getChild() : null;
+            $date = $planning ? $planning->getDate() : null;
+        } else {
+            $planning = new Planning();
+            $child = $childId ? $childRepository->find($childId) : null;
+            $date = $dateString ? new \DateTime($dateString) : null;
+            if ($child) $planning->setChild($child);
+            if ($date) $planning->setDate($date);
+        }
+
+        $form = $this->createForm(PlanningForm::class, $planning, [
+            'disable_child' => (bool)$child,
+            'disable_date' => (bool)$date,
+            'exceptional_presence' => true,
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $planning->updateMealStatus();
+            $entityManager->persist($planning);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_planning_child', ['id' => $planning->getChild()->getId()]);
+        }
+
+        // Calcul des disponibilités si date connue
+        $availabilities = null;
+        if ($planning->getDate()) {
+            $availabilities = [];
+            $max = 20;
+            $start = new \DateTimeImmutable('07:00');
+            $end = new \DateTimeImmutable('19:00');
+            $interval = new \DateInterval('PT15M');
+            for ($time = $start; $time < $end; $time = $time->add($interval)) {
+                $quarter = $time->format('H:i');
+                $count = $planningRepository->countChildrenForQuarter($planning->getDate()->format('Y-m-d'), $quarter, $planning->getId());
+                $availabilities[$quarter] = $max - $count;
+            }
+        }
+
+        return $this->render('planning/presence_exceptional_new.html.twig', [
+            'child' => $child,
+            'date' => $date,
+            'availabilities' => $availabilities,
+            'form' => $form->createView(),
+        ]);
+    }
+
     #[Route(name: 'app_planning_index', methods: ['GET'])]
     public function index(PlanningRepository $planningRepository): Response
     {

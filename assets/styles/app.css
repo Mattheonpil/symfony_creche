@@ -729,6 +729,33 @@ h2 {
   text-align: center;
 }
 
+.page-navigation-button-nodata {
+  display: inline-block;
+  min-width: 110px;
+  padding: 0.5rem 1rem;
+  color: rgb(108, 116, 124);
+  text-decoration: none;
+  text-align: center;
+  border: 1px solid rgb(108, 116, 124);
+  border-radius: 20px;
+  transition: 0.4s ease-out;
+}
+.page-navigation-button-nodata:hover {
+  border: 2px solid rgb(253, 148, 67);
+  color: rgb(84.2586206897, 90.5, 96.7413793103);
+  font-weight: 500;
+}
+
+a.page-navigation-button:hover .presence-bar,
+a.page-navigation-button:hover .primary,
+a.page-navigation-button:hover .green,
+a.page-navigation-button:hover .orange {
+  filter: brightness(0.8);
+  cursor: pointer;
+  transition: filter 0.4s ease-out;
+  font-style: normal;
+}
+
 .planning-hours-grid {
   display: grid;
   grid-template-columns: 120px 1fr 1fr 120px;
@@ -1039,6 +1066,63 @@ h2 {
 
 .green-20 {
   background: #49c300;
+}
+
+.presence-exceptional-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  padding: 2rem 2.5rem;
+}
+
+.select-child-partial,
+.select-date-partial {
+  margin-bottom: 1.5rem;
+}
+.select-child-partial label,
+.select-date-partial label {
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+.select-child-partial select, .select-child-partial input[type=date],
+.select-date-partial select,
+.select-date-partial input[type=date] {
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.presence-form-partial {
+  margin-top: 1.5rem;
+}
+.presence-form-partial label {
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+.presence-form-partial input[type=time] {
+  margin-right: 1rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+.presence-form-partial button {
+  background: rgb(73, 195, 0);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 1rem;
+  transition: background 0.2s;
+}
+.presence-form-partial button:hover {
+  background: rgb(53.9076923077, 144, 0);
 }
 
 body {

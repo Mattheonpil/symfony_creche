@@ -1,0 +1,54 @@
+// Styles pour la page de présence exceptionnelle
+.presence-exceptional-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 2rem 2.5rem;
+}
+
+.select-child-partial,
+.select-date-partial {
+  margin-bottom: 1.5rem;
+  label {
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+  select, input[type="date"] {
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+  }
+}
+
+.presence-form-partial {
+  margin-top: 1.5rem;
+  label {
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+  input[type="time"] {
+    margin-right: 1rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+  }
+  button {
+    background: $green;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 1rem;
+    transition: background 0.2s;
+    &:hover {
+      background: darken($green, 10%);
+    }
+  }
+} 

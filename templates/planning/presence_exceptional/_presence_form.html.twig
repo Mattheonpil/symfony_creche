@@ -1,0 +1,12 @@
+<div class="presence-form-partial">
+    <h2>Ajouter une présence pour {{ child.firstName }} {{ child.name }} le {{ date|date('d/m/Y') }}</h2>
+    
+    {% if availabilities %}
+        {% include 'components/_availability_bar.html.twig' with { availabilities: availabilities, max: 20 } %}
+    {% endif %}
+    
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit">Ajouter la présence</button>
+    {{ form_end(form) }}
+</div> 

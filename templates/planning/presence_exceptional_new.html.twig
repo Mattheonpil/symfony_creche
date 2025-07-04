@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une présence exceptionnelle{% endblock %}
+
+{% block body %}
+<div class="presence-exceptional-container">
+    <h1>Ajouter une présence exceptionnelle</h1>
+    {% if not child %}
+        {% include 'planning/presence_exceptional/_select_child.html.twig' %}
+    {% endif %}
+    {% if not date %}
+        {% include 'planning/presence_exceptional/_select_date.html.twig' %}
+    {% endif %}
+    {% if child and date %}
+        {% include 'planning/presence_exceptional/_presence_form.html.twig' with { child: child, date: date, availabilities: availabilities, form: form } %}
+    {% endif %}
+</div>
+{% endblock %} 
