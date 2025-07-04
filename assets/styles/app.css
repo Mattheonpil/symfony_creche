@@ -725,6 +725,10 @@ h2 {
   font-style: italic;
 }
 
+.green {
+  text-align: center;
+}
+
 .planning-hours-grid {
   display: grid;
   grid-template-columns: 120px 1fr 1fr 120px;
@@ -879,6 +883,162 @@ h2 {
   .planning-hours-grid .day-label {
     margin-top: 1em;
   }
+}
+
+.availability-row {
+  display: flex;
+  margin: 1.5rem auto;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: rgb(247.7631578947, 248.75, 249.7368421053);
+  padding: 2rem 1rem;
+  border-radius: 8px;
+}
+
+.availability-title {
+  font-weight: 600;
+  color: rgb(108, 116, 124);
+  margin-left: 1rem;
+  font-size: 1.1rem;
+  width: 15%;
+}
+
+.availability-bar {
+  display: flex;
+  width: 100%;
+  height: 32px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.availability-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.availability-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #fff;
+  height: 100%;
+  position: relative;
+  transition: background 0.2s;
+}
+.availability-segment.green {
+  background: rgb(73, 195, 0);
+}
+.availability-segment.orange {
+  background: rgb(253, 148, 67);
+}
+.availability-segment.red {
+  background: rgb(255, 51, 54);
+}
+
+.availability-label {
+  z-index: 2;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.availability-hours {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+}
+
+.availability-hour-label {
+  font-size: 0.85rem;
+  color: rgb(108, 116, 124);
+  min-width: 36px;
+  text-align: center;
+}
+
+.green-1 {
+  background: black;
+}
+
+.green-2 {
+  background: black;
+}
+
+.green-3 {
+  background: black;
+}
+
+.green-4 {
+  background: black;
+}
+
+.green-5 {
+  background: black;
+}
+
+.green-6 {
+  background: black;
+}
+
+.green-7 {
+  background: black;
+}
+
+.green-8 {
+  background: rgb(4.2676923077, 11.4, 0);
+}
+
+.green-9 {
+  background: rgb(9.9953846154, 26.7, 0);
+}
+
+.green-10 {
+  background: rgb(15.7230769231, 42, 0);
+}
+
+.green-11 {
+  background: rgb(21.4507692308, 57.3, 0);
+}
+
+.green-12 {
+  background: rgb(27.1784615385, 72.6, 0);
+}
+
+.green-13 {
+  background: rgb(32.9061538462, 87.9, 0);
+}
+
+.green-14 {
+  background: rgb(38.6338461538, 103.2, 0);
+}
+
+.green-15 {
+  background: rgb(44.3615384615, 118.5, 0);
+}
+
+.green-16 {
+  background: rgb(50.0892307692, 133.8, 0);
+}
+
+.green-17 {
+  background: rgb(55.8169230769, 149.1, 0);
+}
+
+.green-18 {
+  background: rgb(61.5446153846, 164.4, 0);
+}
+
+.green-19 {
+  background: rgb(67.2723076923, 179.7, 0);
+}
+
+.green-20 {
+  background: #49c300;
 }
 
 body {
@@ -1080,7 +1240,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: #f8f9fa;
+  background: rgb(247.7631578947, 248.75, 249.7368421053);
   border-radius: 8px;
   margin-bottom: 2.5rem;
 }

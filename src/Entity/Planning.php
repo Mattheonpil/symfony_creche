@@ -5,7 +5,10 @@ namespace App\Entity;
 use App\Repository\PlanningRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator\MaxChildrenPerQuarterHour;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[MaxChildrenPerQuarterHour]
 #[ORM\Entity(repositoryClass: PlanningRepository::class)]
 class Planning
 {

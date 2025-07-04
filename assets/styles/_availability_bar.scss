@@ -1,0 +1,79 @@
+// Barre de disponibilités par quart d'heure
+.availability-row {
+  display: flex;
+//   flex-direction: column;
+  margin: 1.5rem auto;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+ background-color: lighten($primary-bg, 5%);
+ padding: 2rem 1rem;
+ border-radius: 8px;
+}
+
+.availability-title {
+  font-weight: 600;
+  color: $primary;
+  margin-left: 1rem;
+  font-size: 1.1rem;
+  width: 15%;
+
+}
+
+.availability-bar {
+  display: flex;
+  width: 100%;
+  height: 32px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f5f5f5;
+//   box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.availability-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.availability-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #fff;
+  height: 100%;
+  position: relative;
+  transition: background 0.2s;
+  &.green { background: $green; }
+  &.orange { background: $orange; }
+  &.red { background: $red; }
+}
+
+.availability-label {
+  z-index: 2;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.availability-hours {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+}
+
+.availability-hour-label {
+  font-size: 0.85rem;
+  color: $primary;
+  min-width: 36px;
+  text-align: center;
+}
+
+// Dégradés de vert selon le nombre de places restantes (20 = max)
+@for $i from 1 through 20 {
+  .green-#{$i} {
+    background: darken($green, (20 - $i) * 3%);
+  }
+} 

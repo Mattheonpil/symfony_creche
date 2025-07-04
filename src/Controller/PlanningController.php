@@ -74,10 +74,23 @@ final class PlanningController extends AbstractController
             ->getQuery()
             ->getResult();
 
+        // Calcul des disponibilités par quart d'heure (7h00 à 19h00)
+        $availabilities = [];
+        $max = 20;
+        $start = new \DateTimeImmutable('07:00');
+        $end = new \DateTimeImmutable('19:00');
+        $interval = new \DateInterval('PT15M');
+        for ($time = $start; $time < $end; $time = $time->add($interval)) {
+            $quarter = $time->format('H:i');
+            $count = $planningRepository->countChildrenForQuarter($date->format('Y-m-d'), $quarter, null);
+            $availabilities[$quarter] = $max - $count;
+        }
+
         return $this->render('planning/day.html.twig', [
             'date' => $date,
             'weekDays' => $weekDays,
             'plannings' => $planningRepository->findDayPlanningsWithChildren($date),
+            'availabilities' => $availabilities,
         ]);
     }
 

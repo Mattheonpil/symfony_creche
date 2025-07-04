@@ -147,4 +147,28 @@ public function findLastPlanningDate(Child $child): ?\DateTime
 
     return $result['date'] instanceof \DateTime ? $result['date'] : null;
 }
+
+    /**
+     * Compte le nombre d'enfants présents à un quart d'heure donné sur une journée.
+     * @param string $date Format 'Y-m-d'
+     * @param string $quarter Format 'H:i'
+     * @param int|null $excludePlanningId
+     * @return int
+     */
+    public function countChildrenForQuarter(string $date, string $quarter, ?int $excludePlanningId = null): int
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('COUNT(DISTINCT p.child)')
+            ->where('p.date = :date')
+            ->andWhere('p.absence = false')
+            ->andWhere('p.start_time <= :quarter')
+            ->andWhere('p.end_time > :quarter')
+            ->setParameter('date', $date)
+            ->setParameter('quarter', $quarter);
+        if ($excludePlanningId) {
+            $qb->andWhere('p.id != :excludeId')
+               ->setParameter('excludeId', $excludePlanningId);
+        }
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
 }

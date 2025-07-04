@@ -71,6 +71,7 @@
 
 
 
+            {% include 'components/_availability_bar.html.twig' with { availabilities: availabilities, max: 20 } %}
         <div class="planning-grid" data-controller="planning-editor">
             <div class="timeline-header">
                 <div class="empty-cell"></div>

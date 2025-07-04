@@ -1,0 +1,67 @@
+{#
+  Partial: Affiche la barre de disponibilités par quart d'heure, fusionne les segments contigus
+  Variables attendues :
+    - availabilities : tableau ["H:i" => places restantes]
+    - max : nombre maximum de places (20)
+#}
+<div class="availability-row">
+    <div class="availability-title">Disponibilités</div>
+    <div class="availability-container">
+        <div class="availability-hours">
+            {% for hour, places in availabilities %}
+                {% if loop.first or hour ends with ':00' %}
+                    <span class="availability-hour-label">{{ hour }}</span>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="availability-bar">
+            {# Fusion des segments contigus #}
+            {% set last_places = null %}
+            {% set last_color = null %}
+            {% set last_start = null %}
+            {% set segments = [] %}
+            {% set keys = availabilities|keys %}
+            {% for i in 0..(availabilities|length - 1) %}
+                {% set hour = keys[i] %}
+                {% set places = availabilities[hour] %}
+                {% set color = places == 0 ? 'red' : (places <= 3 ? 'orange' : 'green') %}
+                {% if last_places is not same as(null) and (places != last_places or color != last_color) %}
+                    {% set segments = segments|merge([{
+                        'start': last_start,
+                        'end': keys[i-1],
+                        'places': last_places,
+                        'color': last_color,
+                        'length': i - last_start
+                    }]) %}
+                    {% set last_start = i %}
+                {% endif %}
+                {% if last_places is same as(null) %}
+                    {% set last_start = i %}
+                {% endif %}
+                {% set last_places = places %}
+                {% set last_color = color %}
+            {% endfor %}
+            {# Ajouter le dernier segment #}
+            {% if last_places is not same as(null) %}
+                {% set segments = segments|merge([{
+                    'start': last_start,
+                    'end': keys[availabilities|length - 1],
+                    'places': last_places,
+                    'color': last_color,
+                    'length': availabilities|length - last_start
+                }]) %}
+            {% endif %}
+
+            {# Affichage des segments fusionnés #}
+            {% for segment in segments %}
+                {% set width = 100 * segment.length / availabilities|length %}
+                {% set green_class = segment.color == 'green' ? 'green-' ~ segment.places : segment.color %}
+                <div class="availability-segment {{ green_class }}"
+                     style="width: {{ width }}%;"
+                     title="{{ keys[segment.start] }} à {{ segment.end }} ({{ segment.places }} places)">
+                    <span class="availability-label">{{ segment.places }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div> 
