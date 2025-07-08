@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   padding: 0;
   margin: 0;
@@ -421,6 +422,30 @@
   font-weight: 600;
 }
 
+.date-style {
+  color: rgb(84.2586206897, 90.5, 96.7413793103);
+}
+.date-style .date-style-number {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: rgb(253, 148, 67);
+}
+.date-style .date-style-year {
+  color: rgb(60.5172413793, 65, 69.4827586207);
+}
+
+.firstname-name-style {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.firstname-name-style .firstname-style {
+  color: rgb(72.3879310345, 77.75, 83.1120689655);
+}
+.firstname-name-style .name-style {
+  text-transform: uppercase;
+  color: rgb(253, 148, 67);
+}
+
 .main-nav {
   position: fixed;
   width: 100%;
@@ -711,10 +736,6 @@ h2 {
   color: rgb(253, 148, 67);
 }
 
-.day-label {
-  margin-left: 1rem;
-  color: rgb(108, 116, 124);
-}
 .day-label span:nth-child(2) {
   color: rgb(253, 148, 67);
   font-weight: 700;
@@ -798,6 +819,8 @@ a.page-navigation-button:hover .orange {
   align-items: center;
   justify-content: center;
   height: 100%;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 .planning-hours-grid .input-group {
   grid-column: 2/span 2;
@@ -914,6 +937,7 @@ a.page-navigation-button:hover .orange {
 
 .availability-row {
   display: flex;
+  gap: 3rem;
   margin: 1.5rem auto;
   align-items: center;
   justify-content: center;
@@ -927,9 +951,10 @@ a.page-navigation-button:hover .orange {
 .availability-title {
   font-weight: 600;
   color: rgb(108, 116, 124);
-  margin-left: 1rem;
+  margin: 1.5rem 0 0 1rem;
   font-size: 1.1rem;
   width: 15%;
+  text-align: center;
 }
 
 .availability-bar {
@@ -945,6 +970,7 @@ a.page-navigation-button:hover .orange {
   display: flex;
   flex-direction: column;
   width: 100%;
+  gap: 0.5rem;
 }
 
 .availability-segment {
@@ -1069,12 +1095,15 @@ a.page-navigation-button:hover .orange {
 }
 
 .presence-exceptional-container {
-  max-width: 700px;
-  margin: 2rem auto;
-  background: #fff;
+  max-width: 900px;
+  margin: 4rem auto;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   padding: 2rem 2.5rem;
+  background-color: rgb(233, 236, 239);
+}
+.presence-exceptional-container h1 {
+  color: rgb(84.2586206897, 90.5, 96.7413793103);
 }
 
 .select-child-partial,
@@ -1102,6 +1131,10 @@ a.page-navigation-button:hover .orange {
   font-weight: 600;
   margin-right: 0.5rem;
 }
+.presence-form-partial h2 {
+  color: rgb(108, 116, 124);
+  text-align: center;
+}
 .presence-form-partial input[type=time] {
   margin-right: 1rem;
   padding: 0.3rem 0.6rem;
@@ -1109,20 +1142,164 @@ a.page-navigation-button:hover .orange {
   border: 1px solid #ddd;
   font-size: 1rem;
 }
-.presence-form-partial button {
-  background: rgb(73, 195, 0);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.5rem 1.2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-left: 1rem;
-  transition: background 0.2s;
+
+.presence-form-time {
+  display: flex;
+  width: 100%;
+  background-color: rgb(247.7631578947, 248.75, 249.7368421053);
+  border-radius: 8px;
+  padding: 2rem 0;
+  justify-content: space-around;
+  margin-bottom: 2rem;
 }
-.presence-form-partial button:hover {
-  background: rgb(53.9076923077, 144, 0);
+.presence-form-time > div {
+  display: flex;
+  color: rgb(108, 116, 124);
+  gap: 1rem;
+  align-items: center;
+}
+.presence-form-time > div > div > select {
+  color: rgb(84.2586206897, 90.5, 96.7413793103);
+  outline: none;
+  font-size: 1.1rem;
+  padding: 0.2rem 0.5rem;
+  border: 2px solid rgb(73, 195, 0);
+  border-radius: 8px;
+  transition: 0.3s ease-in-out;
+}
+.presence-form-time > div > div > select:hover {
+  background-color: rgb(233.4153846154, 255, 220.5);
+  border: 2px solid rgb(123, 218, 67);
+}
+.presence-form-time > div > div > select:focus {
+  background-color: rgb(233.4153846154, 255, 220.5);
+}
+
+.list-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 3rem auto;
+  justify-content: left;
+  border-radius: 8px;
+}
+
+.list-title {
+  font-size: 2rem;
+  width: 90%;
+  margin: 3rem auto;
+  color: rgb(108, 116, 124);
+  font-weight: 500;
+}
+
+.list-grid {
+  width: 90%;
+  margin: 2rem auto;
+  border-radius: 8px;
+  overflow-x: auto;
+  background: #fff;
+}
+
+.list-header {
+  display: grid;
+  grid-template-columns: repeat(var(--list-columns, 5), 1fr);
+  font-weight: bold;
+  background-color: rgb(233, 236, 239);
+  padding: 1rem 0;
+}
+
+.list-header > div {
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgb(84.2586206897, 90.5, 96.7413793103);
+  font-size: 1.1rem;
+}
+
+.list-row {
+  display: grid;
+  grid-template-columns: repeat(var(--list-columns, 5), 1fr);
+  transition: background 0.2s;
+  cursor: pointer;
+  background: rgb(247.7631578947, 248.75, 249.7368421053);
+  color: rgb(96.1293103448, 103.25, 110.3706896552);
+}
+
+.list-row:hover {
+  background: rgb(233, 236, 239);
+}
+
+.list-row > div {
+  padding: 1rem 0 1rem 1.5rem;
+}
+
+.sort-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  margin-left: 0.3em;
+  color: rgb(108, 116, 124);
+  transition: color 0.2s;
+  position: relative;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.sort-btn::before,
+.sort-btn::after {
+  display: block;
+  font-size: 0.9em;
+  line-height: 1;
+  transition: opacity 0.2s;
+  color: rgb(108, 116, 124);
+}
+
+.sort-btn::before {
+  content: "▲";
+  opacity: 0.5;
+}
+
+.sort-btn::after {
+  content: "▼";
+  opacity: 0.5;
+}
+
+.sort-btn.asc::before {
+  opacity: 1;
+  color: rgb(253, 148, 67);
+}
+
+.sort-btn.asc::after {
+  opacity: 0.2;
+}
+
+.sort-btn.desc::before {
+  opacity: 0.2;
+}
+
+.sort-btn.desc::after {
+  opacity: 1;
+  color: rgb(253, 148, 67);
+}
+
+.list-grid.list-child-grid .list-row > div {
+  padding: 1rem 0 1rem 1.5rem;
+  font-size: 600;
+}
+.list-grid.list-child-grid .list-row :first-child {
+  color: rgb(43, 146, 255);
+}
+.list-grid.list-child-grid .list-row :nth-child(2) {
+  font-weight: 700;
+  color: rgb(43, 146, 255);
 }
 
 body {
@@ -1258,7 +1435,7 @@ body {
   z-index: 1;
   text-align: left;
   padding: 0 1.5rem 0 0.5rem;
-  color: rgb(60.5172413793, 65, 69.4827586207);
+  color: rgb(108, 116, 124);
   display: flex;
   align-items: center;
   justify-content: space-between;

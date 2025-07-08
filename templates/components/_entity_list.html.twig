@@ -1,0 +1,46 @@
+{#
+  columns: [ ... ]
+  items: liste d'entités (enfants, users, etc.)
+  row_link: chemin de la page d’info (ex: 'app_child_show')
+  row_link_param: nom du paramètre d’URL (ex: 'id')
+  empty_message: message si aucun résultat
+  class: classe CSS optionnelle pour personnalisation
+#}
+
+<div class="list-container">
+  {% if title is defined %}
+    <h2 class="{{ title_class|default('') }}">{{ title }}</h2>
+  {% endif %}
+  <div class="list-grid {{ class|default('') }}" style="--list-columns: {{ columns|length }};">
+    <div class="list-header">
+      {% for col in columns %}
+        <div>
+          {{ col.label }}
+          {% if col.sortable %}
+            <button class="sort-btn" data-field="{{ col.field }}" data-type="{{ col.type|default('alpha') }}"></button>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    {% for item in items %}
+      <div class="list-row" data-href="{{ path(row_link, { (row_link_param): attribute(item, 'id') }) }}">
+        {% for col in columns %}
+          <div>
+            {% set value = attribute(item, col.field) %}
+            {% if col.type == 'date' %}
+              {{ value ? value|date('d/m/Y') : '' }}
+            {% else %}
+              {{ value }}
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="list-row">
+        <div style="grid-column: 1 / span {{ columns|length }};">
+          {{ empty_message|default('Aucun résultat trouvé') }}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div> 

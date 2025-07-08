@@ -1,12 +1,34 @@
 <div class="presence-form-partial">
-    <h2>Ajouter une présence pour {{ child.firstName }} {{ child.name }} le {{ date|date('d/m/Y') }}</h2>
+
+    <h2>Pour <span class="firstname-name-style"><span class="firstname-style">{{ child.firstName }}</span> <span class="name-style">{{ child.name }}</span></span> le 
+                    <div class="date-style">
+                        <span class="date-style-day">{{ date|format_datetime(pattern="EEEE", locale="fr")|capitalize }}</span>
+                        <span class="date-style-number">{{ date|date('d') }}</span>
+                        <span class="date-style-month">{{ date|format_datetime(pattern="MMMM", locale="fr")|capitalize }}</span>
+                        <span class="date-style-year">{{ date|date('Y') }}</span>
+                    </div>
+            
+            </h2>
     
     {% if availabilities %}
         {% include 'components/_availability_bar.html.twig' with { availabilities: availabilities, max: 20 } %}
     {% endif %}
     
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button type="submit">Ajouter la présence</button>
+       
+        <div class="presence-form-time">
+            {{ form_row(form.start_time, {
+                label: 'Heure de début'
+            }) }}
+            {{ form_row(form.end_time, {
+                label: 'Heure de fin'
+            }) }}
+        </div>
+
+ <div class="form-buttons">
+        <button type="submit" class="form-button form-button--submit">Valider</button>
+        <button type="button" class="form-button form-button--cancel" onclick="window.history.back();">Annuler</button>
+    </div>
     {{ form_end(form) }}
+   
 </div> 

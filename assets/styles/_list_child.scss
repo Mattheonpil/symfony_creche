@@ -1,0 +1,16 @@
+.list-grid.list-child-grid .list-row{
+    > div {
+         padding: 1rem 0 1rem 1.5rem;
+          font-size: 600;
+    }
+    & :first-child {
+        color: $blue;
+    }
+    & :nth-child(2) {
+        font-weight: 700;
+        color: $blue;
+    }
+   
+  }
+  
+  

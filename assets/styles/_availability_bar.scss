@@ -1,7 +1,7 @@
 // Barre de disponibilités par quart d'heure
 .availability-row {
   display: flex;
-//   flex-direction: column;
+  gap: 3rem;
   margin: 1.5rem auto;
   align-items: center;
   justify-content: center;
@@ -15,10 +15,10 @@
 .availability-title {
   font-weight: 600;
   color: $primary;
-  margin-left: 1rem;
+  margin: 1.5rem 0 0 1rem;
   font-size: 1.1rem;
   width: 15%;
-
+  text-align: center;
 }
 
 .availability-bar {
@@ -34,6 +34,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  gap: 0.5rem;
 }
 
 .availability-segment {

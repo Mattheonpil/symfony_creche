@@ -427,3 +427,30 @@
     }
  }
 
+// Standard date view
+.date-style {
+    color: darken($primary, 10%);
+    .date-style-number {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: $orange;
+    }
+    .date-style-year {
+        color: darken($primary, 20%);
+    }
+}
+
+// standard childname view 
+.firstname-name-style {
+  
+    font-weight: 600;
+    font-size: 1.5rem;
+        .firstname-style {
+          color: darken($primary, 15%);
+        }
+        .name-style {
+          text-transform: uppercase;
+          color: $orange;
+        }
+  }
+

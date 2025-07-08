@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listing des enfants{% endblock %}
+
+{% block body %}
+  {% set columns = [
+    { label: 'Prénom', field: 'firstName', sortable: true, type: 'alpha' },
+    { label: 'Nom', field: 'name', sortable: true, type: 'alpha' },
+    { label: 'Date de naissance', field: 'birthDate', sortable: true, type: 'date' },
+    { label: 'Genre', field: 'genre', sortable: true, type: 'genre' },
+    { label: "Date d'inscription", field: 'registrationDate', sortable: true, type: 'date' }
+  ] %}
+  {% include 'components/_entity_list.html.twig' with {
+    title: 'Liste des enfants',
+    title_class: 'list-title',
+    columns: columns,
+    items: children,
+    row_link: 'app_child_show',
+    row_link_param: 'id',
+    empty_message: "Pas d'enfant trouvé",
+    class: 'list-child-grid'
+  } %}
+  
+  <a href="{{ path('app_child_new') }}">Créer un nouvel enfant</a>
+{% endblock %}

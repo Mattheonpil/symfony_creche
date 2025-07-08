@@ -1,7 +1,8 @@
 import './bootstrap.js';
 import './styles/app.css';
+import { setupEntityListSorting } from './entityList.js';
 
-// ... autres éventuels imports ou code ...
+document.addEventListener('DOMContentLoaded', setupEntityListSorting);
 
 
 

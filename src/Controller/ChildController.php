@@ -22,6 +22,14 @@ final class ChildController extends AbstractController
         ]);
     }
 
+    #[Route('/list', name: 'app_child_list', methods: ['GET'])]
+    public function list(ChildRepository $childRepository): Response
+    {
+        return $this->render('child/list.html.twig', [
+            'children' => $childRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_child_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

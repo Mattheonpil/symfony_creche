@@ -1,0 +1,119 @@
+//   START Squelette list grid
+.list-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 3rem auto;
+  justify-content: left;
+  border-radius: 8px;
+}
+
+.list-title {
+    font-size: 2rem;
+    width: 90%;
+    margin: 3rem auto;
+    color: $primary;
+    font-weight: 500;
+}
+
+.list-grid {
+  width: 90%;
+  margin: 2rem auto;
+  border-radius: 8px;
+  overflow-x: auto;
+  background: #fff;
+  // border: 4px solid black;
+}
+
+.list-header {
+  display: grid;
+  grid-template-columns: repeat(var(--list-columns, 5), 1fr);
+  font-weight: bold;
+  background-color: $primary-bg;
+  padding: 1rem 0;
+
+}
+
+.list-header > div {
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: darken($primary, 10%);
+  font-size: 1.1rem;
+}
+
+.list-row {
+  display: grid;
+  grid-template-columns: repeat(var(--list-columns, 5), 1fr);
+  transition: background 0.2s;
+  cursor: pointer;
+  background: lighten($primary-bg, 5%);
+  color: darken($primary, 5%);
+}
+.list-row:hover {
+  background: $primary-bg;
+}
+.list-row > div {
+  padding: 1rem 0 1rem 1.5rem;
+  
+ 
+}
+
+.sort-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  margin-left: 0.3em;
+  color: $primary;
+  transition: color 0.2s;
+  position: relative;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.sort-btn::before,
+.sort-btn::after {
+  display: block;
+  font-size: 0.9em;
+  line-height: 1;
+  transition: opacity 0.2s;
+  color: $primary;
+}
+
+.sort-btn::before {
+  content: "▲";
+  opacity: 0.5;
+}
+
+.sort-btn::after {
+  content: "▼";
+  opacity: 0.5;
+}
+
+.sort-btn.asc::before {
+  opacity: 1;
+  color: $orange; // ou une couleur d'accent
+}
+.sort-btn.asc::after {
+  opacity: 0.2;
+}
+
+.sort-btn.desc::before {
+  opacity: 0.2;
+}
+.sort-btn.desc::after {
+  opacity: 1;
+  color: $orange; // ou une couleur d'accent
+}
+
+
+
+//   END Squelette list grid

@@ -6,6 +6,9 @@
 @import 'planning-hours-table';
 @import 'availability_bar';
 @import 'presence_exceptional';
+@import 'list';
+@import 'list_child';
+
 
 body {
     font-family: "Inter", sans-serif;
@@ -161,7 +164,7 @@ body {
                 z-index: 1;
                 text-align: left;
                 padding: 0 1.5rem 0 0.5rem;
-                color: darken($primary, 20%);
+                color: $primary;
                 display: flex; 
                 align-items: center; 
                 justify-content: space-between;
