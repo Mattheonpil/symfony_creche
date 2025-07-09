@@ -1,0 +1,139 @@
+<div class="recap-wrapper">
+    <h1>{{ title|default("Fiche de l'enfant") }}</h1>
+    {% if subtitle is defined %}
+        <h2>{{ subtitle }}</h2>
+    {% endif %}
+
+    <div class="recap-section recap-section--user">
+        <div class="section-header">
+            <h2>Informations responsable principal</h2>
+            {% if show_edit_user %}
+                <a href="{{ path('app_inscription_edit_user', {'id': user.id}) }}" class="form-button form-button--edit">
+                    <i class="fas fa-edit"></i> Modifier
+                </a>
+            {% endif %}
+        </div>
+        <div class="section-content section-content--user">
+            <p><span>Nom :</span> {{ user.name }}</p>
+            <p><span>Prénom :</span> {{ user.firstName }}</p>
+            <p><span>Email :</span> {{ user.email }}</p>
+            <p><span>Téléphone :</span> {{ user.phone }}</p>
+            <p><span>Lien avec l'enfant :</span> {{ userChild.relation }}</p>
+        </div>
+    </div>
+
+    {# --- RESPONSABLES LEGAUX ET ACCOMPAGNATEURS --- #}
+    {% if use_recovery_groups %}
+        {# Encarts responsables légaux #}
+        {% set legal_recoveries = recoveryChildren|filter(rc => rc.isResponsable) %}
+        {% if legal_recoveries|length > 0 %}
+            <div class="recap-section recap-section--user">
+                <div class="section-header">
+                    <h2>Responsables légaux</h2>
+                </div>
+                <div class="section-content section-content--user">
+                    {% for rc in legal_recoveries %}
+                        <p><span>Nom :</span> {{ rc.recovery.name }}</p>
+                        <p><span>Prénom :</span> {{ rc.recovery.firstName }}</p>
+                        <p><span>Email :</span> {{ rc.recovery.email }}</p>
+                        <p><span>Téléphone :</span> {{ rc.recovery.phone }}</p>
+                        <p><span>Lien avec l'enfant :</span> {{ rc.relation }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {# Encarts accompagnateurs simples #}
+        {% set simple_recoveries = recoveryChildren|filter(rc => not rc.isResponsable) %}
+        {% if simple_recoveries|length > 0 %}
+            <div class="recap-section recap-section--user">
+                <div class="section-header">
+                    <h2>Accompagnateurs autorisés à récupérer l'enfant</h2>
+                </div>
+                <div class="section-content section-content--user">
+                    {% for rc in simple_recoveries %}
+                        <p><span>Nom :</span> {{ rc.recovery.name }}</p>
+                        <p><span>Prénom :</span> {{ rc.recovery.firstName }}</p>
+                        <p><span>Email :</span> {{ rc.recovery.email }}</p>
+                        <p><span>Téléphone :</span> {{ rc.recovery.phone }}</p>
+                        <p><span>Lien avec l'enfant :</span> {{ rc.relation }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        {# Affichage classique : premier recoveryChild seulement #}
+        {% if recovery and recoveryChild %}
+            <div class="recap-section recap-section--user">
+                <div class="section-header">
+                    <h2>Informations accompagnateur</h2>
+                    {% if show_edit_recovery %}
+                        <a href="{{ path('app_inscription_edit_recovery', {'id': recovery.id}) }}" class="form-button form-button--edit">
+                            <i class="fas fa-edit"></i> Modifier
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="section-content section-content--user">
+                    <p><span>Nom :</span> {{ recovery.name }}</p>
+                    <p><span>Prénom :</span> {{ recovery.firstName }}</p>
+                    <p><span>Email :</span> {{ recovery.email }}</p>
+                    <p><span>Téléphone :</span> {{ recovery.phone }}</p>
+                    <p><span>Lien avec l'enfant :</span> {{ recoveryChild.relation }}</p>
+                    <p><span>Responsable légal :</span> {{ recoveryChild.isResponsable ? 'Oui' : 'Non' }}</p>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <div class="recap-section recap-section--child">
+        <div class="section-header">
+            <h2>Informations enfant</h2>
+            {% if show_edit_child %}
+                <a href="{{ path('app_inscription_edit_child', {'id': child.id}) }}" class="form-button form-button--edit">
+                    <i class="fas fa-edit"></i> Modifier
+                </a>
+            {% endif %}
+        </div>
+        <div class="section-content section-content--child">
+            <p><span>Nom :</span> {{ child.name }}</p>
+            <p><span>Prénom :</span> {{ child.firstName }}</p>
+            <p><span>Date de naissance :</span> {{ child.birthDate|date('d/m/Y') }}</p>
+            <p><span>Genre :</span> {{ child.genre }}</p>
+            <p><span>Allergies :</span> {{ child.allergy ?? 'Aucune' }}</p>
+            <p><span>Spécificités médicales :</span> {{ child.medicalSpecificity ?? 'Aucune' }}</p>
+        </div>
+
+        <div class="recap-section recap-section--planning">
+            <h2>Planning hebdomadaire</h2>
+            <div class="planning-grid-recap">
+                <div class="grid-header">Jour</div>
+                <div class="grid-header">Arrivée</div>
+                <div class="grid-header">Départ</div>
+
+                <div class="grid-row grid-row-day">Lundi</div>
+                <div class="grid-row">{{ child.lundiA ? child.lundiA|date('H:i') : '-' }}</div>
+                <div class="grid-row">{{ child.lundiD ? child.lundiD|date('H:i') : '-' }}</div>
+
+                <div class="grid-row grid-row-day">Mardi</div>
+                <div class="grid-row">{{ child.mardiA ? child.mardiA|date('H:i') : '-' }}</div>
+                <div class="grid-row">{{ child.mardiD ? child.mardiD|date('H:i') : '-' }}</div>
+
+                <div class="grid-row grid-row-day">Mercredi</div>
+                <div class="grid-row">{{ child.mercrediA ? child.mercrediA|date('H:i') : '-' }}</div>
+                <div class="grid-row">{{ child.mercrediD ? child.mercrediD|date('H:i') : '-' }}</div>
+
+                <div class="grid-row grid-row-day">Jeudi</div>
+                <div class="grid-row">{{ child.jeudiA ? child.jeudiA|date('H:i') : '-' }}</div>
+                <div class="grid-row">{{ child.jeudiD ? child.jeudiD|date('H:i') : '-' }}</div>
+
+                <div class="grid-row grid-row-day">Vendredi</div>
+                <div class="grid-row">{{ child.vendrediA ? child.vendrediA|date('H:i') : '-' }}</div>
+                <div class="grid-row">{{ child.vendrediD ? child.vendrediD|date('H:i') : '-' }}</div>
+            </div>
+        </div>
+    </div>
+    {% if show_end_button %}
+        <div class="button-group">
+            <a href="{{ path('app_administration') }}" class="form-button form-button--submit">Terminer l'inscription</a>
+        </div>
+    {% endif %}
+</div> 

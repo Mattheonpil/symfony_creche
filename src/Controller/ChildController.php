@@ -51,10 +51,20 @@ final class ChildController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_child_show', methods: ['GET'])]
-    public function show(Child $child): Response
-    {
+    public function show(
+        Child $child,
+        \App\Repository\UserChildRepository $userChildRepository,
+        \App\Repository\RecoveryChildRepository $recoveryChildRepository
+    ): Response {
+        $userChild = $userChildRepository->findOneBy(['child' => $child]);
+        $recoveryChild = $recoveryChildRepository->findOneBy(['child' => $child]);
+
         return $this->render('child/show.html.twig', [
             'child' => $child,
+            'user' => $userChild?->getUser(),
+            'userChild' => $userChild,
+            'recovery' => $recoveryChild?->getRecovery(),
+            'recoveryChild' => $recoveryChild,
         ]);
     }
 
@@ -85,5 +95,25 @@ final class ChildController extends AbstractController
         }
 
         return $this->redirectToRoute('app_child_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/profile', name: 'app_child_profile', methods: ['GET'])]
+    public function profile(
+        Child $child,
+        \App\Repository\UserChildRepository $userChildRepository,
+        \App\Repository\RecoveryChildRepository $recoveryChildRepository
+    ): Response {
+        $userChild = $userChildRepository->findOneBy(['child' => $child]);
+        $recoveryChild = $recoveryChildRepository->findOneBy(['child' => $child]);
+        $recoveryChildren = $recoveryChildRepository->findBy(['child' => $child]);
+
+        return $this->render('child/child_profile.html.twig', [
+            'child' => $child,
+            'user' => $userChild?->getUser(),
+            'userChild' => $userChild,
+            'recovery' => $recoveryChild?->getRecovery(),
+            'recoveryChild' => $recoveryChild,
+            'recoveryChildren' => $recoveryChildren,
+        ]);
     }
 }
