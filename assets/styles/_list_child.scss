@@ -1,14 +1,24 @@
+.list-grid.list-child-grid {
+    border: 3px solid $blue-stroke;
+    padding: 3rem 2rem;
+}
+
 .list-grid.list-child-grid .list-row{
     > div {
          padding: 1rem 0 1rem 1.5rem;
           font-size: 600;
     }
     & :first-child {
-        color: $blue;
+        color: darken($blue, 5%);
     }
     & :nth-child(2) {
         font-weight: 700;
         color: $blue;
+    }
+    & :nth-child(4) {
+        text-align: center;
+        padding: 1rem 0;
+        color: darker($primary, 10%);
     }
    
   }
