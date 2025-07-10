@@ -39,9 +39,14 @@ final class InscriptionController extends AbstractController
         $child = new Child();
         $user = new User();
 
+        $recoveryChildren = [];
+        if ($request->isMethod('GET')) {
+            $recoveryChildren[] = new RecoveryChild();
+        }
+
         $form = $this->createForm(InscriptionForm::class, null, [
             'child' => $child,
-            'recovery' => null,  // On passe null par défaut
+            'recoveryChildren' => $recoveryChildren,
             'user' => $user,
         ]);
 
@@ -62,24 +67,21 @@ final class InscriptionController extends AbstractController
                 $entityManager->flush();
 
                 // Créer la relation UserChild
-                $userChild = new UserChild();
+                $userChild = new \App\Entity\UserChild();
                 $userChild->setChild($child);
                 $userChild->setUser($user);
                 $userChild->setRelation($form->get('user')->get('relation')->getData());
                 $entityManager->persist($userChild);
                 $entityManager->flush();
 
-                // Vérifier si un recovery a été soumis et n'est pas vide
-                $recoveryData = $form->get('recovery')->getData();
-                if ($recoveryData && !empty($recoveryData->getName())) {
-                    $entityManager->persist($recoveryData);
+                // Gérer tous les RecoveryChild soumis
+                $recoveryChildren = $form->get('recoveryChildren')->getData();
+                foreach ($recoveryChildren as $recoveryChild) {
+                    $recovery = $recoveryChild->getRecovery();
+                    $entityManager->persist($recovery);
                     $entityManager->flush();
-                    
-                    $recoveryChild = new RecoveryChild();
                     $recoveryChild->setChild($child);
-                    $recoveryChild->setRecovery($recoveryData);
-                    $recoveryChild->setIsResponsable($form->get('recovery')->get('is_legal_guardian')->getData());
-                    $recoveryChild->setRelation($form->get('recovery')->get('relation')->getData());
+                    $recoveryChild->setRecovery($recovery);
                     $entityManager->persist($recoveryChild);
                     $entityManager->flush();
                 }

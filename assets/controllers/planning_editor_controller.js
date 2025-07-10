@@ -48,9 +48,9 @@ export default class extends Controller {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Recharge la page pour garantir la cohérence de l'affichage (plus simple et robuste)
+
                 window.location.reload();
-                // Si tu veux un rechargement partiel, il faudrait fetch la page et remplacer la cellule, mais le reload est le plus fiable ici.
+
             } else {
                 // Affiche le formulaire avec erreurs
                 editor.innerHTML = data.form;

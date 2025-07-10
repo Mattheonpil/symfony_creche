@@ -8,6 +8,8 @@ use App\Form\RecoveryForm;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use App\Form\RecoveryChildForm;
 
 class InscriptionForm extends AbstractType
 {
@@ -18,10 +20,13 @@ class InscriptionForm extends AbstractType
                 'label' => false,
                 'data' => $options['user']
             ])
-            ->add('recovery', RecoveryForm::class, [
-                'label' => 'Autre responsable',
+            ->add('recoveryChildren', CollectionType::class, [
+                'entry_type' => RecoveryChildForm::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => false,
                 'required' => false,
-                'data' => $options['recovery']
             ])
             ->add('child', ChildForm::class, [
                 'label' => false,
@@ -36,10 +41,10 @@ class InscriptionForm extends AbstractType
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'inscription_form',
             'child' => null,
-            'recovery' => null,
+            'recoveryChildren' => null,
             'user' => null,
         ]);
 
-        $resolver->setRequired(['child', 'recovery', 'user']);
+        $resolver->setRequired(['child', 'recoveryChildren', 'user']);
     }
 }

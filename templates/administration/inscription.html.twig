@@ -16,7 +16,7 @@
                 {{ form_widget(form.user) }}
             </div>
 
-            <div class="form-section form-section--user">
+            {# <div class="form-section form-section--user">
                 <h2>Ajouter un responsable</h2>
                 <div class="form-rows-container">
                     {{ form_row(form.recovery.first_name) }}
@@ -26,7 +26,44 @@
                     {{ form_row(form.recovery.email) }}
                     {{ form_row(form.recovery.relation) }}
                 </div>
+            </div> #}
+
+            <div class="form-section form-section--user">
+                <h2>Responsables et accompagnateurs</h2>
+                <div id="recovery-collection" data-prototype="{{ form_widget(form.recoveryChildren.vars.prototype)|e('html_attr') }}">
+                    {% for recoveryChildForm in form.recoveryChildren %}
+                        <div class="recovery-item">
+                            <div>
+                                {{ form_label(recoveryChildForm.isResponsable) }}
+                                {{ form_widget(recoveryChildForm.isResponsable) }}
+                            </div>
+                            <div>
+                                {{ form_label(recoveryChildForm.relation) }}
+                                {{ form_widget(recoveryChildForm.relation) }}
+                            </div>
+                            <div>
+                                {{ form_label(recoveryChildForm.recovery.first_name) }}
+                                {{ form_widget(recoveryChildForm.recovery.first_name) }}
+                            </div>
+                            <div>
+                                {{ form_label(recoveryChildForm.recovery.name) }}
+                                {{ form_widget(recoveryChildForm.recovery.name) }}
+                            </div>
+                            <div>
+                                {{ form_label(recoveryChildForm.recovery.phone) }}
+                                {{ form_widget(recoveryChildForm.recovery.phone) }}
+                            </div>
+                            <div>
+                                {{ form_label(recoveryChildForm.recovery.email) }}
+                                {{ form_widget(recoveryChildForm.recovery.email) }}
+                            </div>
+                            <button type="button" class="form-button form-button--delete">Supprimer</button>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="button" id="add-recovery-btn" class="form-button form-button--edit" >Ajouter un responsable/accompagnateur</button>
             </div>
+
 
             <div class="form-section form-section--child">
                 <h2>Informations sur l'enfant</h2>
@@ -163,9 +200,4 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        document.querySelector('form').addEventListener('submit', function(e) {
-            this.querySelector('button[type="submit"]').disabled = true;
-        });
-    </script>
 {% endblock %}

@@ -427,6 +427,79 @@
     }
  }
 
+.recovery-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border: 1px solid $orange;
+    border-radius: 8px;
+    background: #fff;
+    align-items: center;
+    > div {
+        width: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: $primary;
+        select {
+            outline: none;
+            border: 1px solid $primary;
+            padding: 0.5rem 1rem;
+            border-radius: 4px ;
+            color: $primary;
+    
+            &:hover {
+                border: 1px solid $orange;
+                background-color: rgba($orange, 0.02);
+            }
+            &:focus {
+                border: 1px solid $orange;
+                background-color: rgba($orange, 0.02);
+            }
+        }
+    }
+    >div>div {
+        width: 100%;
+    }
+    > div > div > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 0.5rem;
+        input {
+            outline: none;
+            border: 1px solid $primary;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            text-align: end;
+            color: $primary;
+            &:hover {
+                border: 1px solid $orange;
+                background-color: rgba($orange, 0.02);
+            }
+            &:focus {
+                border: 1px solid $orange;
+                background-color: rgba($orange, 0.02);
+            }
+        }
+    }
+    label {
+        min-width: 120px;
+        font-weight: 600;
+    }
+    
+    .btn-position {
+        margin-top: 2rem;
+        align-self: flex-end;
+    }
+
+}
+
 // Standard date view
 .date-style {
     color: darken($primary, 10%);
@@ -453,4 +526,6 @@
           color: $orange;
         }
   }
+
+
 
