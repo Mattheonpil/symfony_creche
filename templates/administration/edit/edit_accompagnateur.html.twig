@@ -1,29 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier le responsable{% endblock %}
+{% block title %}Modifier les accompagnateurs autorisés{% endblock %}
 
 {% block body %}
     <div class="form-wrapper">
-        <h1>Modifier les informations du responsable principal</h1>
-        {{ form_start(form, {'attr': {'class': 'edit-form'}}) }}
-        <div class="form-section form-style-general ">
-            {{ form_row(form.name) }}
-            {{ form_row(form.first_name) }}
-            {{ form_row(form.email) }}
-            {{ form_row(form.phone) }}
-            {{ form_row(form.relation) }}
-        </div>
-        <div class="button-group">
-            <button type="submit" class="form-button form-button--submit">Enregistrer</button>
-            <a href="{{ path('app_inscription_show', {'childId': child.id}) }}" class="form-button form-button--cancel">Annuler</a>
-            {# Supprimer désactivé pour le user principal, à gérer plus tard #}
-        </div>
-        {{ form_end(form) }}
-    </div>
-
-    <div class="form-wrapper">
-        <h2>Autres responsables légaux</h2>
-        {% for recoveryChild in legalRecoveryChildren %}
+        <h1>Modifier les accompagnateurs autorisés</h1>
+        {% for recoveryChild in accompagnateurs %}
             <form method="post" action="{{ path('app_edit_recovery_child', {'id': recoveryChild.id}) }}" class="edit-form">
                 <div class="form-section form-style-general ">
                     <div class="form-group">
@@ -36,7 +18,7 @@
                     </div>
                     <div class="form-group">
                         <label for="recovery_email_{{ recoveryChild.id }}">Email</label>
-                        <input type="email" id="recovery_email_{{ recoveryChild.id }}" name="email" class="form-control" value="{{ recoveryChild.recovery.email }}" required>
+                        <input type="email" id="recovery_email_{{ recoveryChild.id }}" name="email" class="form-control" value="{{ recoveryChild.recovery.email }}">
                     </div>
                     <div class="form-group">
                         <label for="recovery_phone_{{ recoveryChild.id }}">Téléphone</label>
@@ -55,11 +37,11 @@
                 <div class="button-group">
                     <button type="submit" class="form-button form-button--submit">Enregistrer</button>
                     <a href="{{ path('app_inscription_show', {'childId': child.id}) }}" class="form-button form-button--cancel">Annuler</a>
-                    <button type="submit" formaction="{{ path('app_delete_recovery_child', {'id': recoveryChild.id}) }}" formmethod="post" class="form-button form-button--delete" onclick="return confirm('Supprimer ce responsable ?');">Supprimer</button>
+                    <button type="submit" formaction="{{ path('app_delete_recovery_child', {'id': recoveryChild.id}) }}" formmethod="post" class="form-button form-button--delete" onclick="return confirm('Supprimer cet accompagnateur ?');">Supprimer</button>
                 </div>
             </form>
         {% else %}
-            <p>Aucun autre responsable légal.</p>
+            <p>Aucun accompagnateur autorisé.</p>
         {% endfor %}
     </div>
-{% endblock %}
+{% endblock %} 

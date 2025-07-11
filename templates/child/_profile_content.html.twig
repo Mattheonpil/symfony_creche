@@ -51,11 +51,13 @@
                 </div>
                 <div class="section-content section-content--user">
                     {% for rc in simple_recoveries %}
-                        <p><span>Nom :</span> {{ rc.recovery.name }}</p>
-                        <p><span>Prénom :</span> {{ rc.recovery.firstName }}</p>
-                        <p><span>Email :</span> {{ rc.recovery.email }}</p>
-                        <p><span>Téléphone :</span> {{ rc.recovery.phone }}</p>
-                        <p><span>Lien avec l'enfant :</span> {{ rc.relation }}</p>
+                        <div class="section-separation">
+                            <p><span>Nom :</span> {{ rc.recovery.name }}</p>
+                            <p><span>Prénom :</span> {{ rc.recovery.firstName }}</p>
+                            <p><span>Email :</span> {{ rc.recovery.email }}</p>
+                            <p><span>Téléphone :</span> {{ rc.recovery.phone }}</p>
+                            <p><span>Lien avec l'enfant :</span> {{ rc.relation }}</p>
+                        </div>
                     {% endfor %}
                 </div>
             </div>

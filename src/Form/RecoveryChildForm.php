@@ -14,11 +14,13 @@ class RecoveryChildForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('isResponsable', CheckboxType::class, [
+        if ($options['show_is_responsable']) {
+            $builder->add('isResponsable', CheckboxType::class, [
                 'label' => 'Responsable légal ?',
                 'required' => false,
-            ])
+            ]);
+        }
+        $builder
             ->add('relation', ChoiceType::class, [
                 'label' => 'Lien avec l\'enfant',
                 'choices' => [
@@ -38,6 +40,7 @@ class RecoveryChildForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => RecoveryChild::class,
+            'show_is_responsable' => true,
         ]);
     }
 } 

@@ -134,15 +134,24 @@ final class InscriptionController extends AbstractController
             throw $this->createNotFoundException('Enfant non trouvé');
         }
 
-        $userChild = $userChildRepository->findOneBy(['child' => $child]);
-        $recoveryChild = $recoveryChildRepository->findOneBy(['child' => $child]);
+        $userChildren = $userChildRepository->findBy(['child' => $child]);
+        $recoveryChildren = $recoveryChildRepository->findBy(['child' => $child]);
+
+        // Responsables légaux : user principal + RecoveryChild responsables légaux
+        $legalRecoveryChildren = array_values(array_filter($recoveryChildren, function($rc) {
+            return $rc->isResponsable();
+        }));
+
+        // Accompagnateurs autorisés : RecoveryChild non responsables légaux
+        $otherRecoveryChildren = array_values(array_filter($recoveryChildren, function($rc) {
+            return !$rc->isResponsable();
+        }));
 
         return $this->render('administration/show_inscription.html.twig', [
             'child' => $child,
-            'user' => $userChild->getUser(),
-            'userChild' => $userChild,
-            'recovery' => $recoveryChild ? $recoveryChild->getRecovery() : null,
-            'recoveryChild' => $recoveryChild,
+            'userChildren' => $userChildren,
+            'legalRecoveryChildren' => $legalRecoveryChildren,
+            'recoveryChildren' => $otherRecoveryChildren,
         ]);
     }
 
@@ -151,21 +160,24 @@ final class InscriptionController extends AbstractController
         User $user,
         Request $request, 
         EntityManagerInterface $entityManager,
-        UserChildRepository $userChildRepository
+        UserChildRepository $userChildRepository,
+        RecoveryChildRepository $recoveryChildRepository
     ): Response {
         $form = $this->createForm(UserForm::class, $user, [
             'edit_mode' => true
         ]);
         $form->handleRequest($request);
 
+        $userChild = $userChildRepository->findOneBy(['user' => $user]);
+        $child = $userChild->getChild();
+        $legalRecoveryChildren = $recoveryChildRepository->findBy(['child' => $child, 'is_responsable' => true]);
+
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $userChild = $userChildRepository->findOneBy(['user' => $user]);
                 $entityManager->flush();
-                
                 $this->addFlash('success', 'Informations du responsable mises à jour');
                 return $this->redirectToRoute('app_inscription_show', [
-                    'childId' => $userChild->getChild()->getId()
+                    'childId' => $child->getId()
                 ]);
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Erreur lors de la mise à jour');
@@ -175,7 +187,8 @@ final class InscriptionController extends AbstractController
         return $this->render('administration/edit/edit_user.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
-            'child' => $userChildRepository->findOneBy(['user' => $user])->getChild()
+            'child' => $child,
+            'legalRecoveryChildren' => $legalRecoveryChildren
         ]);
     }
 
@@ -186,7 +199,8 @@ final class InscriptionController extends AbstractController
         EntityManagerInterface $entityManager,
         RecoveryChildRepository $recoveryChildRepository
     ): Response {
-        $form = $this->createForm(RecoveryForm::class, $recovery);
+        $recoveryChild = $recoveryChildRepository->findOneBy(['recovery' => $recovery]);
+        $form = $this->createForm(RecoveryChildForm::class, $recoveryChild);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -273,6 +287,130 @@ final class InscriptionController extends AbstractController
         return $this->render('administration/edit/edit_child.html.twig', [
             'form' => $form->createView(),
             'child' => $child
+        ]);
+    }
+
+    #[Route('/inscription/add-responsable/{childId}', name: 'app_responsable_add')]
+    public function addResponsable(
+        int $childId,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        ChildRepository $childRepository
+    ): Response {
+        $child = $childRepository->find($childId);
+        if (!$child) {
+            throw $this->createNotFoundException('Enfant non trouvé');
+        }
+        $recoveryChild = new \App\Entity\RecoveryChild();
+        $recoveryChild->setChild($child);
+        $form = $this->createForm(\App\Form\RecoveryChildForm::class, $recoveryChild, [
+            'show_is_responsable' => false
+        ]);
+        $form->handleRequest($request);
+        $recoveryChild->setIsResponsable(true);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $recovery = $recoveryChild->getRecovery();
+            $entityManager->persist($recovery);
+            $entityManager->flush();
+            $recoveryChild->setRecovery($recovery);
+            $entityManager->persist($recoveryChild);
+            $entityManager->flush();
+            $this->addFlash('success', 'Responsable légal ajouté.');
+            return $this->redirectToRoute('app_inscription_show', ['childId' => $childId]);
+        }
+        return $this->render('administration/edit/add_responsable.html.twig', [
+            'form' => $form->createView(),
+            'child' => $child
+        ]);
+    }
+
+    #[Route('/inscription/add-accompagnateur/{childId}', name: 'app_accompagnateur_add')]
+    public function addAccompagnateur(
+        int $childId,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        ChildRepository $childRepository
+    ): Response {
+        $child = $childRepository->find($childId);
+        if (!$child) {
+            throw $this->createNotFoundException('Enfant non trouvé');
+        }
+        $recoveryChild = new \App\Entity\RecoveryChild();
+        $recoveryChild->setChild($child);
+        $form = $this->createForm(\App\Form\RecoveryChildForm::class, $recoveryChild, [
+            'show_is_responsable' => false
+        ]);
+        $form->handleRequest($request);
+        $recoveryChild->setIsResponsable(false);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $recovery = $recoveryChild->getRecovery();
+            $entityManager->persist($recovery);
+            $entityManager->flush();
+            $recoveryChild->setRecovery($recovery);
+            $entityManager->persist($recoveryChild);
+            $entityManager->flush();
+            $this->addFlash('success', 'Accompagnateur autorisé ajouté.');
+            return $this->redirectToRoute('app_inscription_show', ['childId' => $childId]);
+        }
+        return $this->render('administration/edit/add_accompagnateur.html.twig', [
+            'form' => $form->createView(),
+            'child' => $child
+        ]);
+    }
+
+    #[Route('/inscription/edit-recovery-child/{id}', name: 'app_edit_recovery_child', methods: ['POST'])]
+    public function editRecoveryChild(
+        int $id,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        RecoveryChildRepository $recoveryChildRepository
+    ): Response {
+        $recoveryChild = $recoveryChildRepository->find($id);
+        if (!$recoveryChild) {
+            throw $this->createNotFoundException('Responsable légal non trouvé');
+        }
+        $recovery = $recoveryChild->getRecovery();
+        $recovery->setFirstName($request->request->get('first_name'));
+        $recovery->setName($request->request->get('name'));
+        $recovery->setEmail($request->request->get('email'));
+        $recovery->setPhone($request->request->get('phone'));
+        $recoveryChild->setRelation($request->request->get('relation'));
+        $entityManager->flush();
+        $this->addFlash('success', 'Responsable légal modifié.');
+        return $this->redirectToRoute('app_inscription_show', ['childId' => $recoveryChild->getChild()->getId()]);
+    }
+
+    #[Route('/inscription/delete-recovery-child/{id}', name: 'app_delete_recovery_child', methods: ['POST'])]
+    public function deleteRecoveryChild(
+        int $id,
+        EntityManagerInterface $entityManager,
+        RecoveryChildRepository $recoveryChildRepository
+    ): Response {
+        $recoveryChild = $recoveryChildRepository->find($id);
+        if (!$recoveryChild) {
+            throw $this->createNotFoundException('Responsable légal non trouvé');
+        }
+        $childId = $recoveryChild->getChild()->getId();
+        $entityManager->remove($recoveryChild);
+        $entityManager->flush();
+        $this->addFlash('success', 'Responsable légal supprimé.');
+        return $this->redirectToRoute('app_inscription_show', ['childId' => $childId]);
+    }
+
+    #[Route('/inscription/edit-accompagnateurs/{childId}', name: 'app_edit_accompagnateurs')]
+    public function editAccompagnateurs(
+        int $childId,
+        RecoveryChildRepository $recoveryChildRepository,
+        ChildRepository $childRepository
+    ): Response {
+        $child = $childRepository->find($childId);
+        if (!$child) {
+            throw $this->createNotFoundException('Enfant non trouvé');
+        }
+        $accompagnateurs = $recoveryChildRepository->findBy(['child' => $child, 'is_responsable' => false]);
+        return $this->render('administration/edit/edit_accompagnateur.html.twig', [
+            'child' => $child,
+            'accompagnateurs' => $accompagnateurs
         ]);
     }
 

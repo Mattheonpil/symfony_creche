@@ -7,40 +7,70 @@
     <div class="recap-wrapper">
         <h1>Récapitulatif de l'inscription</h1>
 
+        {# Encarts responsables #}
         <div class="recap-section recap-section--user">
             <div class="section-header">
-                <h2>Informations responsable principal</h2>
-                <a href="{{ path('app_inscription_edit_user', {'id': user.id}) }}" class="form-button form-button--edit">
-                    <i class="fas fa-edit"></i> Modifier
-                </a>
+                <h2>Responsable(s) légal(aux)</h2>
+                <div style="display: flex; gap: 0.5rem;">
+                    <a href="{{ path('app_responsable_add', {'childId': child.id}) }}" class="form-button form-button--add">Ajouter</a>
+                    {% if userChildren|length > 0 %}
+                        <a href="{{ path('app_inscription_edit_user', {'id': userChildren[0].user.id}) }}" class="form-button form-button--edit">
+                            <i class="fas fa-edit"></i> Modifier</a>
+                    {% endif %}
+                </div>
             </div>
-            <div class="section-content section-content--user">
-                <p><span>Nom :</span> {{ user.name }}</p>
-                <p><span>Prénom :</span> {{ user.firstName }}</p>
-                <p><span>Email :</span> {{ user.email }}</p>
-                <p><span>Téléphone :</span> {{ user.phone }}</p>
-                <p><span>Lien avec l'enfant :</span> {{ userChild.relation }}</p>
+            <div class="section-content ">
+                {% for userChild in userChildren %}
+                    <div class="border-block section-content--user">
+                        <p><span>Nom :</span> {{ userChild.user.name }}</p>
+                        <p><span>Prénom :</span> {{ userChild.user.firstName }}</p>
+                        <p><span>Email :</span> {{ userChild.user.email }}</p>
+                        <p><span>Téléphone :</span> {{ userChild.user.phone }}</p>
+                        <p><span>Lien avec l'enfant :</span> {{ userChild.relation }}</p>
+                    </div>
+                {% endfor %}
+                {% for recoveryChild in legalRecoveryChildren %}
+                    <div class="border-block section-content--user">
+                        <p><span>Nom :</span> {{ recoveryChild.recovery.name }}</p>
+                        <p><span>Prénom :</span> {{ recoveryChild.recovery.firstName }}</p>
+                        <p><span>Email :</span> {{ recoveryChild.recovery.email }}</p>
+                        <p><span>Téléphone :</span> {{ recoveryChild.recovery.phone }}</p>
+                        <p><span>Lien avec l'enfant :</span> {{ recoveryChild.relation }}</p>
+                    </div>
+                {% endfor %}
+                {% if userChildren|length == 0 and legalRecoveryChildren|length == 0 %}
+                    <p>Aucun responsable trouvé.</p>
+                {% endif %}
             </div>
         </div>
 
-        {% if recovery %}
-            <div class="recap-section recap-section--user">
-                <div class="section-header">
-                    <h2>Informations accompagnateur</h2>
-                    <a href="{{ path('app_inscription_edit_recovery', {'id': recovery.id}) }}" class="form-button form-button--edit">
-                        <i class="fas fa-edit"></i> Modifier
-                    </a>
-                </div>
-                <div class="section-content section-content--user">
-                    <p><span>Nom :</span> {{ recovery.name }}</p>
-                    <p><span>Prénom :</span> {{ recovery.firstName }}</p>
-                    <p><span>Email :</span> {{ recovery.email }}</p>
-                    <p><span>Téléphone :</span> {{ recovery.phone }}</p>
-                    <p><span> lien avec l'enfant :</span> {{ recoveryChild.relation }}</p>
-                    <p><span>Responsable légal :</span> {{ recoveryChild.isResponsable ? 'Oui' : 'Non' }}</p>
+        {# Encarts accompagnateurs #}
+        <div class="recap-section recap-section--user">
+            <div class="section-header">
+                <h2>Accompagnateur(s) autorisé(s)</h2>
+                <div style="display: flex; gap: 0.5rem;">
+                    <a href="{{ path('app_accompagnateur_add', {'childId': child.id}) }}" class="form-button form-button--add">Ajouter</a>
+                    {% if recoveryChildren|length > 0 %}
+                        <a href="{{ path('app_edit_accompagnateurs', {'childId': child.id}) }}" class="form-button form-button--edit">
+                        <i class="fas fa-edit"></i> Modifier</a>
+                    {% endif %}
                 </div>
             </div>
-        {% endif %}
+            <div class="section-content">
+                {% for recoveryChild in recoveryChildren %}
+                    <div class="border-block section-content--user">
+                        <p><span>Nom :</span> {{ recoveryChild.recovery.name }}</p>
+                        <p><span>Prénom :</span> {{ recoveryChild.recovery.firstName }}</p>
+                        <p><span>Email :</span> {{ recoveryChild.recovery.email }}</p>
+                        <p><span>Téléphone :</span> {{ recoveryChild.recovery.phone }}</p>
+                        <p><span>Lien avec l'enfant :</span> {{ recoveryChild.relation }}</p>
+                        <p><span>Responsable légal :</span> {{ recoveryChild.isResponsable ? 'Oui' : 'Non' }}</p>
+                    </div>
+                {% else %}
+                    <p>Aucun accompagnateur trouvé.</p>
+                {% endfor %}
+            </div>
+        </div>
 
         <div class="recap-section recap-section--child">
             <div class="section-header">

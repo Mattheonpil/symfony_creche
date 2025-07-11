@@ -287,11 +287,12 @@
 
 .form-button {
   padding: 0.5rem 1.5rem;
-  border-radius: 4px;
+  border-radius: 8px;
   font-weight: 500;
   font-size: 1rem;
   transition: all 0.3s ease;
   cursor: pointer;
+  text-decoration: none;
 }
 .form-button--submit {
   background-color: rgb(73, 195, 0);
@@ -332,6 +333,15 @@
 }
 .form-button--delete:hover {
   background-color: rgb(255, 0, 3.75);
+}
+.form-button--add {
+  background-color: white;
+  color: rgb(43, 146, 255);
+  border: 2px solid rgb(43, 146, 255);
+}
+.form-button--add:hover {
+  background-color: rgb(236.8, 245.6424528302, 255);
+  color: rgb(43, 146, 255);
 }
 
 .main-nav {
@@ -707,6 +717,7 @@
   width: 30%;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 }
 .section-content h2 {
   color: rgb(108, 116, 124);
@@ -725,6 +736,12 @@
 }
 .section-content--child > p {
   color: rgb(0, 74, 154);
+}
+
+.border-block {
+  padding: 1rem 1rem;
+  border: 1px solid rgb(253, 148, 67);
+  border-radius: 8px;
 }
 
 .planning-grid-recap {
