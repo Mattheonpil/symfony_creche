@@ -111,6 +111,11 @@
             color: $primary;
             margin-bottom: 2rem;
         }
+
+        h2 {
+            color: $primary;
+            margin-bottom: 1.5rem;
+        }
     }
 
     &-section {
@@ -436,6 +441,13 @@
         // align-content: center;
         font-weight: 600;
     }
+ }
+
+ .edit-form {
+    border: 2px solid $orange;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
  }
 
 .recovery-item {

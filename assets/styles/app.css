@@ -143,6 +143,10 @@
   color: rgb(108, 116, 124);
   margin-bottom: 2rem;
 }
+.form-wrapper h2 {
+  color: rgb(108, 116, 124);
+  margin-bottom: 1.5rem;
+}
 .form-section {
   margin-bottom: 2rem;
   padding: 2rem;
@@ -430,6 +434,13 @@
 }
 .form-style-general label {
   font-weight: 600;
+}
+
+.edit-form {
+  border: 2px solid rgb(253, 148, 67);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
 }
 
 .recovery-item {
@@ -731,8 +742,15 @@
   font-weight: 500;
   color: rgb(60.5172413793, 65, 69.4827586207);
 }
+.section-content .section-separation:not(:last-child) {
+  border-bottom: 2px solid rgb(215.7052631579, 95.2315789474, 2.2947368421);
+}
 .section-content--user > p {
   color: rgb(215.7052631579, 95.2315789474, 2.2947368421);
+}
+.section-content--user > div > p {
+  color: rgb(215.7052631579, 95.2315789474, 2.2947368421);
+  margin-bottom: 1rem;
 }
 .section-content--child > p {
   color: rgb(0, 74, 154);
@@ -1261,7 +1279,6 @@ a.page-navigation-button:hover .orange {
 }
 
 .list-grid {
-  width: 90%;
   margin: 2rem auto;
   border-radius: 8px;
   overflow-x: auto;
@@ -1386,6 +1403,14 @@ a.page-navigation-button:hover .orange {
   text-align: center;
   padding: 1rem 0;
   color: darker(rgb(108, 116, 124), 10%);
+}
+
+.list-child-button {
+  width: 1200px;
+  margin: 0 auto;
+}
+.list-child-button > a {
+  display: inline;
 }
 
 body {

@@ -8,23 +8,23 @@
         {% for recoveryChild in accompagnateurs %}
             <form method="post" action="{{ path('app_edit_recovery_child', {'id': recoveryChild.id}) }}" class="edit-form">
                 <div class="form-section form-style-general ">
-                    <div class="form-group">
+                    <div>
                         <label for="recovery_first_name_{{ recoveryChild.id }}">Prénom</label>
                         <input type="text" id="recovery_first_name_{{ recoveryChild.id }}" name="first_name" class="form-control" value="{{ recoveryChild.recovery.firstName }}" required>
                     </div>
-                    <div class="form-group">
+                    <div>
                         <label for="recovery_name_{{ recoveryChild.id }}">Nom</label>
                         <input type="text" id="recovery_name_{{ recoveryChild.id }}" name="name" class="form-control" value="{{ recoveryChild.recovery.name }}" required>
                     </div>
-                    <div class="form-group">
+                    <div>
                         <label for="recovery_email_{{ recoveryChild.id }}">Email</label>
                         <input type="email" id="recovery_email_{{ recoveryChild.id }}" name="email" class="form-control" value="{{ recoveryChild.recovery.email }}">
                     </div>
-                    <div class="form-group">
+                    <div>
                         <label for="recovery_phone_{{ recoveryChild.id }}">Téléphone</label>
                         <input type="text" id="recovery_phone_{{ recoveryChild.id }}" name="phone" class="form-control" value="{{ recoveryChild.recovery.phone }}" required>
                     </div>
-                    <div class="form-group">
+                    <div>
                         <label for="recovery_relation_{{ recoveryChild.id }}">Lien avec l'enfant</label>
                         <select id="recovery_relation_{{ recoveryChild.id }}" name="relation" class="form-control">
                             <option value="père" {% if recoveryChild.relation == 'père' %}selected{% endif %}>Père</option>
