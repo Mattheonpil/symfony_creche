@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un enfant à un utilisateur{% endblock %}
+
+{% block body %}
+    <div data-controller="add-child-to-user">
+        <h1>Ajouter un enfant à un utilisateur existant</h1>
+        {{ form_start(form) }}
+            <div data-add-child-to-user-target="userSelect">
+                {{ form_row(form.user) }}
+            </div>
+            <div data-add-child-to-user-target="userInfo"></div>
+            <h2>Informations sur l'enfant</h2>
+            {{ form_row(form.child) }}
+            <button class="form-button form-button--submit">Ajouter l'enfant</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

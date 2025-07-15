@@ -1,0 +1,14 @@
+<div class="parent-info-fragment">
+    <h2>Fiche parent</h2>
+    <p><strong>Nom :</strong> {{ user.name }}</p>
+    <p><strong>Email :</strong> {{ user.email }}</p>
+    <p><strong>Téléphone :</strong> {{ user.phone }}</p>
+    <h3>Enfants existants :</h3>
+    <ul>
+        {% for uc in userChildren %}
+            <li>{{ uc.child.firstName }} {{ uc.child.name }}</li>
+        {% else %}
+            <li>Aucun enfant pour ce parent.</li>
+        {% endfor %}
+    </ul>
+</div> 

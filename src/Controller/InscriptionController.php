@@ -16,6 +16,7 @@ use App\Entity\UserChild;
 use App\Form\RecoveryForm;
 use App\Entity\RecoveryChild;
 use App\Form\InscriptionForm;
+use App\Form\RecoveryChildForm;
 use App\Repository\ChildRepository;
 use App\Repository\PlanningRepository;
 use App\Repository\UserChildRepository;
@@ -27,6 +28,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Form\AddChildToUserForm;
+use App\Repository\UserRepository;
 
 final class InscriptionController extends AbstractController
 {
@@ -411,6 +414,57 @@ final class InscriptionController extends AbstractController
         return $this->render('administration/edit/edit_accompagnateur.html.twig', [
             'child' => $child,
             'accompagnateurs' => $accompagnateurs
+        ]);
+    }
+
+    #[Route('/ajouter-enfant-utilisateur', name: 'app_add_child_to_user')]
+    public function addChildToUser(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $form = $this->createForm(AddChildToUserForm::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $user = $data['user'];
+            $child = $data['child'];
+
+            // Lier l'enfant à l'utilisateur
+            $entityManager->persist($child);
+
+            $userChild = new \App\Entity\UserChild();
+            $userChild->setUser($user);
+            $userChild->setChild($child);
+            // Optionnel: $userChild->setRelation('Parent'); // ou autre
+
+            $entityManager->persist($userChild);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Enfant ajouté à l\'utilisateur !');
+            // Rediriger vers la fiche utilisateur ou autre
+            return $this->redirectToRoute('app_user_show', ['id' => $user->getId()]);
+        }
+
+        return $this->render('administration/edit/add_child_to_user.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/ajax/parent-info/{userId}', name: 'ajax_parent_info', methods: ['GET'])]
+    public function ajaxParentInfo(
+        int $userId,
+        UserRepository $userRepository,
+        UserChildRepository $userChildRepository
+    ): Response {
+        $user = $userRepository->find($userId);
+        if (!$user) {
+            return new Response('<div class="error">Parent non trouvé</div>', 404);
+        }
+        $userChildren = $userChildRepository->findBy(['user' => $user]);
+        return $this->render('administration/edit/_parent_info_fragment.html.twig', [
+            'user' => $user,
+            'userChildren' => $userChildren,
         ]);
     }
 
