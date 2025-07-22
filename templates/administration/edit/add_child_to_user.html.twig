@@ -3,16 +3,111 @@
 {% block title %}Ajouter un enfant à un utilisateur{% endblock %}
 
 {% block body %}
-    <div data-controller="add-child-to-user">
-        <h1>Ajouter un enfant à un utilisateur existant</h1>
-        {{ form_start(form) }}
-            <div data-add-child-to-user-target="userSelect">
-                {{ form_row(form.user) }}
-            </div>
-            <div data-add-child-to-user-target="userInfo"></div>
-            <h2>Informations sur l'enfant</h2>
-            {{ form_row(form.child) }}
-            <button class="form-button form-button--submit">Ajouter l'enfant</button>
-        {{ form_end(form) }}
+    <div class="form-wrapper">
+        <div data-controller="add-child-to-user">
+            <h1>Ajouter un enfant à un utilisateur existant</h1>
+            {{ form_start(form, {'attr': {'id': 'add-child-to-user-form'}}) }}
+                <div data-add-child-to-user-target="userSelect">
+                    {{ form_row(form.user) }}
+                </div>
+
+                {% if userChildren is defined and userChildren|length > 0 %}
+                    <div class="user-children-list">
+                        <h3>Enfants de cet utilisateur :</h3>
+                        <ul>
+                            {% for uc in userChildren %}
+                                <li>
+                                    {{ uc.child.firstName }} {{ uc.child.name }}
+                                    {# Tu peux ajouter d'autres infos si besoin #}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                {# Fiche parent et responsable principal #}
+                {% if mainUserChild is defined and mainUserChild %}
+                    <div class="recap-section recap-section--user">
+                        <div class="section-header">
+                            <h2>Responsable principal</h2>
+                        </div>
+                        <div class="section-content section-content--user">
+                            <p><span>Nom :</span> {{ mainUserChild.user.name }}</p>
+                            <p><span>Prénom :</span> {{ mainUserChild.user.firstName }}</p>
+                            <p><span>Email :</span> {{ mainUserChild.user.email }}</p>
+                            <p><span>Téléphone :</span> {{ mainUserChild.user.phone }}</p>
+                            <p><span>Lien avec l'enfant :</span> {{ mainUserChild.relation }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {# Responsables légaux existants #}
+                {% if legalRecoveryChildren is defined and legalRecoveryChildren|length > 0 %}
+                    <div class="recap-section recap-section--user">
+                        <div class="section-header">
+                            <h2>Responsables légaux existants</h2>
+                        </div>
+                        <div class="section-content section-content--user">
+                            {% for rc in legalRecoveryChildren %}
+                                <div class="border-block section-content--user removable-responsable" data-responsable-id="{{ rc.id }}">
+                                    <p><span>Nom :</span> {{ rc.recovery.name }}</p>
+                                    <p><span>Prénom :</span> {{ rc.recovery.firstName }}</p>
+                                    <p><span>Email :</span> {{ rc.recovery.email }}</p>
+                                    <p><span>Téléphone :</span> {{ rc.recovery.phone }}</p>
+                                    <p><span>Lien avec l'enfant :</span> {{ rc.relation }}</p>
+                                </div>
+                                <button type="button" class="form-button form-button--delete toggle-remove-btn" data-responsable-id="{{ rc.id }}">Supprimer pour ce nouvel enfant</button>
+                            {% endfor %}
+                        </div>
+                        <div class="info-message">Les modifications seront prises en compte à la validation du formulaire.</div>
+                    </div>
+                {% endif %}
+
+                {# Accompagnateurs autorisés existants #}
+                {% if simpleRecoveryChildren is defined and simpleRecoveryChildren|length > 0 %}
+                    <div class="recap-section recap-section--user">
+                        <div class="section-header">
+                            <h2>Accompagnateurs autorisés existants</h2>
+                        </div>
+                        <div class="section-content section-content--user">
+                            {% for rc in simpleRecoveryChildren %}
+                                <div class="border-block section-content--user removable-responsable" data-responsable-id="{{ rc.id }}">
+                                    <p><span>Nom :</span> {{ rc.recovery.name }}</p>
+                                    <p><span>Prénom :</span> {{ rc.recovery.firstName }}</p>
+                                    <p><span>Email :</span> {{ rc.recovery.email }}</p>
+                                    <p><span>Téléphone :</span> {{ rc.recovery.phone }}</p>
+                                    <p><span>Lien avec l'enfant :</span> {{ rc.relation }}</p>
+                                </div>
+                                <button type="button" class="form-button form-button--delete toggle-remove-btn" data-responsable-id="{{ rc.id }}">Supprimer pour ce nouvel enfant</button>
+                            {% endfor %}
+                        </div>
+                        <div class="info-message">Les modifications seront prises en compte à la validation du formulaire.</div>
+                    </div>
+                {% endif %}
+
+                {# Formulaire de création d'enfant #}
+                <div class="creation-enfant">
+                    <h2>Informations sur l'enfant</h2>
+                    <input type="hidden" id="excluded_responsables" name="excluded_responsables" value="">
+                    {% include 'administration/_child_inscription_form.html.twig' with { form: form.child } %}
+                    <button class="form-button form-button--submit">Ajouter l'enfant</button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userSelect = document.getElementById('add_child_to_user_form_user');
+            if (userSelect) {
+                userSelect.addEventListener('change', function() {
+                    const userId = userSelect.value;
+                    if (userId) {
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('user', userId);
+                        window.location.href = url.toString();
+                    }
+                });
+            }
+        });
+        </script>
     </div>
 {% endblock %}

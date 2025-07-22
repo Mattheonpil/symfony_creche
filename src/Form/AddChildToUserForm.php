@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\Autocomplete\Form\AsEntityAutocompleteField;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class AddChildToUserForm extends AbstractType
 {
@@ -33,6 +34,7 @@ class AddChildToUserForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => null,
+            'relation' => null,
         ]);
     }
 }

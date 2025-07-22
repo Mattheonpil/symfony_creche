@@ -1,3 +1,7 @@
+{# <pre>
+user: {{ dump(user) }}
+userChild: {{ dump(userChild) }}
+</pre> #}
 <div class="recap-wrapper">
     <h1>{{ title|default("Fiche de l'enfant") }}</h1>
     {% if subtitle is defined %}
@@ -13,13 +17,19 @@
                 </a>
             {% endif %}
         </div>
-        <div class="section-content section-content--user">
-            <p><span>Nom :</span> {{ user.name }}</p>
-            <p><span>Prénom :</span> {{ user.firstName }}</p>
-            <p><span>Email :</span> {{ user.email }}</p>
-            <p><span>Téléphone :</span> {{ user.phone }}</p>
-            <p><span>Lien avec l'enfant :</span> {{ userChild.relation }}</p>
-        </div>
+        {% if userChild is defined and userChild and userChild.user is defined and userChild.user %}
+            <div class="section-content section-content--user">
+                <p><span>Nom :</span> {{ userChild.user.name }}</p>
+                <p><span>Prénom :</span> {{ userChild.user.firstName }}</p>
+                <p><span>Email :</span> {{ userChild.user.email }}</p>
+                <p><span>Téléphone :</span> {{ userChild.user.phone }}</p>
+                <p><span>Lien avec l'enfant :</span> {{ userChild.relation }}</p>
+            </div>
+        {% else %}
+            <div class="section-content section-content--user">
+                <p>Aucun responsable principal renseigné.</p>
+            </div>
+        {% endif %}
     </div>
 
     {# --- RESPONSABLES LEGAUX ET ACCOMPAGNATEURS --- #}

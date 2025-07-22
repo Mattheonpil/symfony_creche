@@ -47,4 +47,5 @@
             <h3>{{ childrenCount|default(0) }}</h3>
         </card>
     </section>
+    <div class="index-availability">{% include 'components/_availability_bar.html.twig' with { availabilities: availabilities, max: max } %}</div>
 {% endblock %}

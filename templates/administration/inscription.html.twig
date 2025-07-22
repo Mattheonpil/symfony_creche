@@ -65,7 +65,7 @@
             </div>
 
 
-            <div class="form-section form-section--child">
+            {# <div class="form-section form-section--child">
                 <h2>Informations sur l'enfant</h2>
                 <div class="child-info">
                     {{ form_row(form.child.name) }}
@@ -187,8 +187,13 @@
                 <button type="submit" class="form-button form-button--submit">Valider l'inscription</button>
             </div>
         {{ form_end(form) }}
-    </div>
+    </div> #}
+    {% include 'administration/_child_inscription_form.html.twig' with { form: form.child } %}
 
+        <div>
+            <button type="submit" class="form-button form-button--submit">Valider l'inscription</button>
+        </div>
+    {{ form_end(form) }}
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ label }}">

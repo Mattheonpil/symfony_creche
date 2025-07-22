@@ -537,6 +537,25 @@
   color: rgb(253, 148, 67);
 }
 
+.to-be-removed {
+  opacity: 0.5;
+  background: #eee !important;
+  filter: grayscale(0.7);
+  position: relative;
+}
+.to-be-removed .form-button--cancel {
+  opacity: 1;
+  filter: none;
+  background: rgb(253, 148, 67);
+  color: white;
+  font-weight: bold;
+  border: 2px solid rgb(253, 148, 67);
+  z-index: 1;
+  position: relative;
+  transition: none;
+  pointer-events: auto;
+}
+
 .main-nav {
   position: fixed;
   width: 100%;
@@ -695,6 +714,21 @@
     opacity: 0;
   }
 }
+.index-availability {
+  width: 80%;
+  margin: 1.5rem auto;
+  border: 2px solid rgb(73, 195, 0);
+  border-radius: 8px;
+  padding: 0 2rem;
+}
+.index-availability .availability-row {
+  flex-direction: column;
+  width: 100%;
+}
+.index-availability .availability-title {
+  font-size: 2rem;
+}
+
 .recap-wrapper {
   max-width: 1200px;
   margin: 2rem auto;
@@ -1411,6 +1445,45 @@ a.page-navigation-button:hover .orange {
 }
 .list-child-button > a {
   display: inline;
+}
+
+.form-style-general > div {
+  width: 100%;
+  align-items: center;
+  padding: 0.5rem;
+  border: 2px solid rgb(255, 51, 54);
+  border-radius: 8px;
+}
+
+.form-style-connexion {
+  width: 30%;
+  margin: 3rem auto;
+  gap: 1.5rem;
+}
+
+.connexion-information {
+  width: 100%;
+}
+
+.main-page {
+  color: rgb(108, 116, 124);
+}
+.main-page h1 {
+  font-size: 2.5rem;
+  color: rgb(84.2586206897, 90.5, 96.7413793103);
+  margin-bottom: 1rem;
+}
+.main-page p {
+  font-size: 1.2rem;
+}
+.main-page p a {
+  text-decoration: none;
+  color: rgb(84.2586206897, 90.5, 96.7413793103);
+  font-weight: 600;
+  transition: 0.3s;
+}
+.main-page p a:hover {
+  color: rgb(252.4631578947, 119.2789473684, 16.5368421053);
 }
 
 body {

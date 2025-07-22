@@ -550,5 +550,27 @@
         }
   }
 
+.to-be-removed {
+    opacity: 0.5;
+    background: #eee !important;
+    filter: grayscale(0.7);
+    position: relative;
+
+    .form-button--cancel {
+        opacity: 1 ;
+        filter: none ;
+        background: $orange;
+        color: $white ;
+        font-weight: bold;
+        border: 2px solid $orange;
+        z-index: 1;
+        position: relative;
+        transition: none;
+        pointer-events: auto;
+    }
+}
+
+
+
 
 

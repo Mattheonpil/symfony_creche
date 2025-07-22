@@ -420,34 +420,157 @@ final class InscriptionController extends AbstractController
     #[Route('/ajouter-enfant-utilisateur', name: 'app_add_child_to_user')]
     public function addChildToUser(
         Request $request,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        UserChildRepository $userChildRepository,
+        \App\Repository\RecoveryChildRepository $recoveryChildRepository
     ): Response {
-        $form = $this->createForm(AddChildToUserForm::class);
+        $formData = [];
+        $user = null;
+        $relation = null;
+        $legalRecoveryChildren = [];
+        $simpleRecoveryChildren = [];
+        $userChildren = [];
+        $mainUserChild = null;
+        // Récupérer l'id du user depuis GET (changement user) ou POST (soumission finale)
+        $userId = $request->query->get('user') ?? ($request->request->get('add_child_to_user')['user'] ?? null);
+        if ($userId) {
+            $user = $entityManager->getRepository(\App\Entity\User::class)->find($userId);
+            if ($user) {
+                $formData['user'] = $user; // pré-remplit le select
+                // Récupérer tous les UserChild pour la fiche parent
+                $userChildren = $userChildRepository->findBy(['user' => $user], ['id' => 'ASC']);
+                // Prendre le premier UserChild pour la logique de relation et de récupération des responsables/accompagnateurs
+                $mainUserChild = $userChildren[0] ?? null;
+                if ($mainUserChild) {
+                    $firstChild = $mainUserChild->getChild();
+                    $legalRecoveryChildren = $recoveryChildRepository->findBy(['child' => $firstChild, 'is_responsable' => true]);
+                    $simpleRecoveryChildren = $recoveryChildRepository->findBy(['child' => $firstChild, 'is_responsable' => false]);
+                }
+            }
+        }
+
+        // Récupérer les IDs à exclure (depuis le champ hidden)
+        $excludedRaw = $request->request->get('excluded_responsables', '');
+        if (is_string($excludedRaw) && $excludedRaw !== '') {
+            $excludedIds = array_filter(explode(',', $excludedRaw), function($v) { return is_numeric($v) && $v !== ''; });
+        } else {
+            $excludedIds = [];
+        }
+
+        $form = $this->createForm(AddChildToUserForm::class, $formData);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $user = $data['user'];
             $child = $data['child'];
+            // Récupération robuste de l'entité User (et Child) depuis la base si besoin
+            if ($user instanceof \App\Entity\User) {
+                $userId = $user->getId();
+            } else {
+                $userId = $user;
+            }
+            $user = $userId ? $entityManager->getRepository(\App\Entity\User::class)->find($userId) : null;
 
-            // Lier l'enfant à l'utilisateur
+            if (!$child instanceof \App\Entity\Child) {
+                $child = $child ? $entityManager->getRepository(\App\Entity\Child::class)->find($child) : null;
+            }
+
+            // Copier la relation du mainUserChild
+            $relation = $mainUserChild ? $mainUserChild->getRelation() : null;
+
+            // S'assurer que $user et $child sont bien des entités persistées
+            // if ($user && !$user instanceof \App\Entity\User) { // This block is now redundant due to the new_code
+            //     $user = $entityManager->getRepository(\App\Entity\User::class)->find($user);
+            // }
+            // if ($child && !$child instanceof \App\Entity\Child) { // This block is now redundant due to the new_code
+            //     $child = $entityManager->getRepository(\App\Entity\Child::class)->find($child);
+            // }
+
+            // Persister le child AVANT tout persist sur UserChild ou RecoveryChild
             $entityManager->persist($child);
 
             $userChild = new \App\Entity\UserChild();
             $userChild->setUser($user);
             $userChild->setChild($child);
-            // Optionnel: $userChild->setRelation('Parent'); // ou autre
+            $userChild->setRelation($relation);
 
             $entityManager->persist($userChild);
+
+            // Création du planning pour l'enfant (déjà présent)
+            $childForm = $form->get('child');
+            $dateDebut = $childForm->get('date_debut')->getData();
+            $dateFin = $childForm->get('date_fin')->getData();
+
+            $horaires = [
+                'lundi_a' => $childForm->get('lundi_a')->getData(),
+                'lundi_d' => $childForm->get('lundi_d')->getData(),
+                'mardi_a' => $childForm->get('mardi_a')->getData(),
+                'mardi_d' => $childForm->get('mardi_d')->getData(),
+                'mercredi_a' => $childForm->get('mercredi_a')->getData(),
+                'mercredi_d' => $childForm->get('mercredi_d')->getData(),
+                'jeudi_a' => $childForm->get('jeudi_a')->getData(),
+                'jeudi_d' => $childForm->get('jeudi_d')->getData(),
+                'vendredi_a' => $childForm->get('vendredi_a')->getData(),
+                'vendredi_d' => $childForm->get('vendredi_d')->getData(),
+            ];
+
+            $this->createCalendarEntries($child, $horaires, $dateDebut, $dateFin, $entityManager);
+
+            // Associer les responsables légaux du premier enfant (sauf exclus)
+            if ($mainUserChild && $mainUserChild->getChild()) {
+                $firstChild = $mainUserChild->getChild();
+                $legalRecoveryChildren = $recoveryChildRepository->findBy(['child' => $firstChild, 'is_responsable' => true]);
+                foreach ($legalRecoveryChildren as $rc) {
+                    if (in_array($rc->getId(), $excludedIds)) {
+                        continue; // On saute ceux à exclure
+                    }
+                    $newRecoveryChild = new \App\Entity\RecoveryChild();
+                    $newRecoveryChild->setChild($child); // $child = nouvel enfant
+                    $newRecoveryChild->setRecovery($rc->getRecovery());
+                    $newRecoveryChild->setRelation($rc->getRelation());
+                    $newRecoveryChild->setIsResponsable(true);
+                    $entityManager->persist($newRecoveryChild);
+                }
+
+                // Associer les accompagnateurs autorisés du premier enfant (sauf exclus)
+                $simpleRecoveryChildren = $recoveryChildRepository->findBy(['child' => $firstChild, 'is_responsable' => false]);
+                foreach ($simpleRecoveryChildren as $rc) {
+                    if (in_array($rc->getId(), $excludedIds)) {
+                        continue;
+                    }
+                    $newRecoveryChild = new \App\Entity\RecoveryChild();
+                    $newRecoveryChild->setChild($child);
+                    $newRecoveryChild->setRecovery($rc->getRecovery());
+                    $newRecoveryChild->setRelation($rc->getRelation());
+                    $newRecoveryChild->setIsResponsable(false);
+                    $entityManager->persist($newRecoveryChild);
+                }
+            }
+
             $entityManager->flush();
 
-            $this->addFlash('success', 'Enfant ajouté à l\'utilisateur !');
-            // Rediriger vers la fiche utilisateur ou autre
-            return $this->redirectToRoute('app_user_show', ['id' => $user->getId()]);
+            // Rafraîchir la liste des enfants de l'utilisateur après ajout
+            $userChildren = $userChildRepository->findBy(['user' => $user], ['id' => 'ASC']);
+
+            $this->addFlash('success', "Enfant ajouté à l'utilisateur et planning créé !");
+            if ($child && $child->getId()) {
+                return $this->redirectToRoute('app_child_profile', ['id' => $child->getId()]);
+            } elseif ($user && $user->getId()) {
+                return $this->redirectToRoute('app_user_show', ['id' => $user->getId()]);
+            } else {
+                $this->addFlash('error', 'Utilisateur ou enfant introuvable après la création.');
+                return $this->redirectToRoute('app_user_index');
+            }
         }
 
         return $this->render('administration/edit/add_child_to_user.html.twig', [
             'form' => $form->createView(),
+            'legalRecoveryChildren' => $legalRecoveryChildren,
+            'simpleRecoveryChildren' => $simpleRecoveryChildren,
+            'user' => $user,
+            'userChildren' => $userChildren,
+            'mainUserChild' => $mainUserChild,
         ]);
     }
 
@@ -466,6 +589,52 @@ final class InscriptionController extends AbstractController
             'user' => $user,
             'userChildren' => $userChildren,
         ]);
+    }
+
+    #[Route('/add-responsable-to-child/{recoveryChildId}', name: 'app_add_responsable_to_child', methods: ['POST'])]
+    public function addResponsableToChild(
+        int $recoveryChildId,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        \App\Repository\RecoveryChildRepository $recoveryChildRepository,
+        \App\Repository\ChildRepository $childRepository
+    ): Response {
+        $childId = $request->request->get('child_id');
+        $child = $childRepository->find($childId);
+        $existingRecoveryChild = $recoveryChildRepository->find($recoveryChildId);
+        if ($child && $existingRecoveryChild) {
+            $newRecoveryChild = new \App\Entity\RecoveryChild();
+            $newRecoveryChild->setChild($child);
+            $newRecoveryChild->setRecovery($existingRecoveryChild->getRecovery());
+            $newRecoveryChild->setRelation($existingRecoveryChild->getRelation());
+            $newRecoveryChild->setIsResponsable(true);
+            $entityManager->persist($newRecoveryChild);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('app_add_child_to_user');
+    }
+
+    #[Route('/add-accompagnateur-to-child/{recoveryChildId}', name: 'app_add_accompagnateur_to_child', methods: ['POST'])]
+    public function addAccompagnateurToChild(
+        int $recoveryChildId,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        \App\Repository\RecoveryChildRepository $recoveryChildRepository,
+        \App\Repository\ChildRepository $childRepository
+    ): Response {
+        $childId = $request->request->get('child_id');
+        $child = $childRepository->find($childId);
+        $existingRecoveryChild = $recoveryChildRepository->find($recoveryChildId);
+        if ($child && $existingRecoveryChild) {
+            $newRecoveryChild = new \App\Entity\RecoveryChild();
+            $newRecoveryChild->setChild($child);
+            $newRecoveryChild->setRecovery($existingRecoveryChild->getRecovery());
+            $newRecoveryChild->setRelation($existingRecoveryChild->getRelation());
+            $newRecoveryChild->setIsResponsable(false);
+            $entityManager->persist($newRecoveryChild);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('app_add_child_to_user');
     }
 
     private function createCalendarEntries(

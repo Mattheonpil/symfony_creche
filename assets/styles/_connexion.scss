@@ -1,0 +1,42 @@
+// ----Connexion-Page-----------
+
+.form-style-general > div {
+width: 100%;
+align-items: center;
+padding: 0.5rem;
+border: 2px solid $red;
+border-radius: 8px;
+}
+
+.form-style-connexion {
+    width: 30%;
+    margin: 3rem auto;
+    gap :1.5rem;
+}
+
+.connexion-information {
+    width: 100%;
+}
+
+// ----Main-Page-----------------
+
+.main-page {
+    color: $primary;
+    h1 {
+        font-size: 2.5rem;
+        color: darken($primary, 10%);
+        margin-bottom: 1rem;
+    }
+    p {
+        font-size: 1.2rem;
+        a {
+            text-decoration: none;
+            color: darken($primary, 10%);
+            font-weight: 600;
+            transition: 0.3s;
+            &:hover {
+                color: darken($orange, 10%);
+            }
+        }
+    }
+}
