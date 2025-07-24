@@ -628,9 +628,10 @@
   display: flex;
   align-items: center;
   margin-left: auto;
+  gap: 1rem;
 }
 
-.sign_button > a {
+.button-l {
   display: inline-block;
   min-width: 110px;
   margin: 0 5px;
@@ -640,7 +641,7 @@
   border: 1px solid rgb(108, 116, 124);
   border-radius: 8px;
 }
-.sign_button > a:hover {
+.button-l:hover {
   border: 1px solid rgb(253, 148, 67);
   transition: 0.4s ease-out;
 }
@@ -652,6 +653,19 @@
   color: rgb(108, 116, 124);
   width: 2rem;
   height: 2rem;
+}
+
+.user-info {
+  color: rgb(108, 116, 124);
+}
+.user-info :first-child {
+  color: rgb(253, 148, 67);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.user-role {
+  font-weight: 600;
 }
 
 .esquive-navbar {
@@ -1299,7 +1313,7 @@ a.page-navigation-button:hover .orange {
   display: flex;
   flex-direction: column;
   max-width: 1200px;
-  margin: 3rem auto;
+  margin: 1rem auto;
   justify-content: left;
   border-radius: 8px;
 }
@@ -1441,18 +1455,10 @@ a.page-navigation-button:hover .orange {
 
 .list-child-button {
   width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 3rem auto;
 }
 .list-child-button > a {
   display: inline;
-}
-
-.form-style-general > div {
-  width: 100%;
-  align-items: center;
-  padding: 0.5rem;
-  border: 2px solid rgb(255, 51, 54);
-  border-radius: 8px;
 }
 
 .form-style-connexion {

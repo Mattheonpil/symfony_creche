@@ -23,7 +23,7 @@
       {% endfor %}
     </div>
     {% for item in items %}
-      <div class="list-row" data-href="{{ path('app_child_profile', { id: attribute(item, 'id') }) }}">
+      <div class="list-row" data-href="{{ path('app_inscription_show', { childId: attribute(item, 'id'), 'mode': 'edit' } ) }}">
         {% for col in columns %}
           <div>
             {% set value = attribute(item, col.field) %}

@@ -80,9 +80,10 @@
     display: flex;
     align-items: center;
     margin-left: auto;
+    gap: 1rem;
 }
 
-.sign_button > a {
+.button-l {
     display: inline-block;
     min-width: 110px;
     margin: 0 5px;
@@ -104,6 +105,17 @@
         height: 2rem;
         
     }
+}
+.user-info {
+    color: $primary;
+     & :first-child {
+        color: $orange;
+        font-size: 1.1rem;
+        font-weight: 500;
+    } 
+}
+.user-role {
+    font-weight: 600;
 }
 
 

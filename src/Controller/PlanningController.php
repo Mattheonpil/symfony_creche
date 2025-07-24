@@ -267,6 +267,21 @@ final class PlanningController extends AbstractController
         CalendarRepository $calendarRepository,
         PlanningRepository $planningRepository
     ): Response {
+        // Vérification pour le parent : accès uniquement à ses propres enfants
+        if ($this->isGranted('ROLE_PARENT')) {
+            $user = $this->getUser();
+            $isParent = false;
+            foreach ($child->getUserChildren() as $userChild) {
+                if ($userChild->getUser() && $userChild->getUser()->getId() === $user->getId()) {
+                    $isParent = true;
+                    break;
+                }
+            }
+            if (!$isParent) {
+                throw $this->createAccessDeniedException('Vous ne pouvez accéder qu\'au planning de vos propres enfants.');
+            }
+        }
+
         // Récupération du mois/année depuis la query string, sinon mois courant
         $month = (int) $request->query->get('month', date('m'));
         $year = (int) $request->query->get('year', date('Y'));

@@ -21,7 +21,7 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         $targetPath = match (true) {
             in_array('ROLE_ADMIN', $roles) => 'app_administration',
             in_array('ROLE_PARENT', $roles) => 'app_user_index',
-            in_array('ROLE_STAFF', $roles) => 'app_user_index',
+            in_array('ROLE_STAFF', $roles) => 'app_planning_day',
             default => 'app_user_index',
         };
 

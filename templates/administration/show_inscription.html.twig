@@ -5,7 +5,13 @@
 
 {% block body %}
     <div class="recap-wrapper">
-        <h1>Récapitulatif de l'inscription</h1>
+        <h1>
+            {% if mode == 'edit' %}
+                Modifier la fiche de {{ child.firstName }} {{ child.name }}
+            {% else %}
+                Récapitulatif de l'inscription
+            {% endif %}
+        </h1>
 
         {# Encarts responsables #}
         <div class="recap-section recap-section--user">
@@ -119,7 +125,11 @@
         </div>
 
         <div class="button-group">
-            <a href="{{ path('app_administration') }}" class="form-button form-button--submit">Terminer l'inscription</a>
+            {% if mode == 'edit' %}
+                <a href="{{ path('app_administration') }}" class="form-button form-button--submit">Appliquer les modifications</a>
+            {% else %}
+                <a href="{{ path('app_administration') }}" class="form-button form-button--submit">Terminer l'inscription</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

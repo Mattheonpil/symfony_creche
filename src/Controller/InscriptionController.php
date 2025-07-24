@@ -114,7 +114,10 @@ final class InscriptionController extends AbstractController
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Inscription réussie !');
-                return $this->redirectToRoute('app_inscription_show', ['childId' => $child->getId()]);
+                return $this->redirectToRoute('app_inscription_show', [
+                    'childId' => $child->getId(),
+                    'mode' => 'recap'
+                ]);
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Une erreur est survenue : ' . $e->getMessage());
             }
@@ -130,7 +133,8 @@ final class InscriptionController extends AbstractController
         int $childId,
         ChildRepository $childRepository,
         UserChildRepository $userChildRepository,
-        RecoveryChildRepository $recoveryChildRepository
+        RecoveryChildRepository $recoveryChildRepository,
+        Request $request
     ): Response {
         $child = $childRepository->find($childId);
         if (!$child) {
@@ -150,11 +154,14 @@ final class InscriptionController extends AbstractController
             return !$rc->isResponsable();
         }));
 
+        $mode = $request->query->get('mode', 'recap');
+
         return $this->render('administration/show_inscription.html.twig', [
             'child' => $child,
             'userChildren' => $userChildren,
             'legalRecoveryChildren' => $legalRecoveryChildren,
             'recoveryChildren' => $otherRecoveryChildren,
+            'mode' => $mode,
         ]);
     }
 
@@ -180,7 +187,8 @@ final class InscriptionController extends AbstractController
                 $entityManager->flush();
                 $this->addFlash('success', 'Informations du responsable mises à jour');
                 return $this->redirectToRoute('app_inscription_show', [
-                    'childId' => $child->getId()
+                    'childId' => $child->getId(),
+                    'mode' => 'edit'
                 ]);
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Erreur lors de la mise à jour');
