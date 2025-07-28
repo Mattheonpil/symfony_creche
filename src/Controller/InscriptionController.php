@@ -312,23 +312,28 @@ final class InscriptionController extends AbstractController
         if (!$child) {
             throw $this->createNotFoundException('Enfant non trouvé');
         }
-        $recoveryChild = new \App\Entity\RecoveryChild();
+        
+        $recoveryChild = new RecoveryChild();
         $recoveryChild->setChild($child);
-        $form = $this->createForm(\App\Form\RecoveryChildForm::class, $recoveryChild, [
+        $recoveryChild->setIsResponsable(true);
+        
+        $form = $this->createForm(RecoveryChildForm::class, $recoveryChild, [
             'show_is_responsable' => false
         ]);
+
         $form->handleRequest($request);
-        $recoveryChild->setIsResponsable(true);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $recovery = $recoveryChild->getRecovery();
-            $entityManager->persist($recovery);
+            $entityManager->persist($recoveryChild->getRecovery());
             $entityManager->flush();
-            $recoveryChild->setRecovery($recovery);
+            
             $entityManager->persist($recoveryChild);
             $entityManager->flush();
-            $this->addFlash('success', 'Responsable légal ajouté.');
+
+            $this->addFlash('success', 'Responsable légal ajouté avec succès');
             return $this->redirectToRoute('app_inscription_show', ['childId' => $childId]);
         }
+
         return $this->render('administration/edit/add_responsable.html.twig', [
             'form' => $form->createView(),
             'child' => $child
@@ -346,23 +351,28 @@ final class InscriptionController extends AbstractController
         if (!$child) {
             throw $this->createNotFoundException('Enfant non trouvé');
         }
-        $recoveryChild = new \App\Entity\RecoveryChild();
+        
+        $recoveryChild = new RecoveryChild();
         $recoveryChild->setChild($child);
-        $form = $this->createForm(\App\Form\RecoveryChildForm::class, $recoveryChild, [
+        $recoveryChild->setIsResponsable(false);
+        
+        $form = $this->createForm(RecoveryChildForm::class, $recoveryChild, [
             'show_is_responsable' => false
         ]);
+
         $form->handleRequest($request);
-        $recoveryChild->setIsResponsable(false);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $recovery = $recoveryChild->getRecovery();
-            $entityManager->persist($recovery);
+            $entityManager->persist($recoveryChild->getRecovery());
             $entityManager->flush();
-            $recoveryChild->setRecovery($recovery);
+            
             $entityManager->persist($recoveryChild);
             $entityManager->flush();
-            $this->addFlash('success', 'Accompagnateur autorisé ajouté.');
+
+            $this->addFlash('success', 'Accompagnateur ajouté avec succès');
             return $this->redirectToRoute('app_inscription_show', ['childId' => $childId]);
         }
+
         return $this->render('administration/edit/add_accompagnateur.html.twig', [
             'form' => $form->createView(),
             'child' => $child
@@ -604,22 +614,39 @@ final class InscriptionController extends AbstractController
         int $recoveryChildId,
         Request $request,
         EntityManagerInterface $entityManager,
-        \App\Repository\RecoveryChildRepository $recoveryChildRepository,
-        \App\Repository\ChildRepository $childRepository
+        RecoveryChildRepository $recoveryChildRepository,
+        ChildRepository $childRepository
     ): Response {
+        // Vérification du token CSRF
+        if (!$this->isCsrfTokenValid('add_responsable_' . $recoveryChildId, $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Token CSRF invalide');
+        }
+
         $childId = $request->request->get('child_id');
         $child = $childRepository->find($childId);
         $existingRecoveryChild = $recoveryChildRepository->find($recoveryChildId);
-        if ($child && $existingRecoveryChild) {
+
+        if (!$child || !$existingRecoveryChild) {
+            $this->addFlash('error', 'Enfant ou responsable non trouvé');
+            return $this->redirectToRoute('app_inscription_show', ['childId' => $childId]);
+        }
+
+        try {
             $newRecoveryChild = new \App\Entity\RecoveryChild();
             $newRecoveryChild->setChild($child);
             $newRecoveryChild->setRecovery($existingRecoveryChild->getRecovery());
             $newRecoveryChild->setRelation($existingRecoveryChild->getRelation());
             $newRecoveryChild->setIsResponsable(true);
+            
             $entityManager->persist($newRecoveryChild);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Responsable légal ajouté avec succès');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Une erreur est survenue lors de l\'ajout du responsable');
         }
-        return $this->redirectToRoute('app_add_child_to_user');
+
+        return $this->redirectToRoute('app_inscription_show', ['childId' => $childId]);
     }
 
     #[Route('/add-accompagnateur-to-child/{recoveryChildId}', name: 'app_add_accompagnateur_to_child', methods: ['POST'])]
@@ -627,22 +654,39 @@ final class InscriptionController extends AbstractController
         int $recoveryChildId,
         Request $request,
         EntityManagerInterface $entityManager,
-        \App\Repository\RecoveryChildRepository $recoveryChildRepository,
-        \App\Repository\ChildRepository $childRepository
+        RecoveryChildRepository $recoveryChildRepository,
+        ChildRepository $childRepository
     ): Response {
+        // Vérification du token CSRF
+        if (!$this->isCsrfTokenValid('add_accompagnateur_' . $recoveryChildId, $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Token CSRF invalide');
+        }
+
         $childId = $request->request->get('child_id');
         $child = $childRepository->find($childId);
         $existingRecoveryChild = $recoveryChildRepository->find($recoveryChildId);
-        if ($child && $existingRecoveryChild) {
+
+        if (!$child || !$existingRecoveryChild) {
+            $this->addFlash('error', 'Enfant ou accompagnateur non trouvé');
+            return $this->redirectToRoute('app_inscription_show', ['childId' => $childId]);
+        }
+
+        try {
             $newRecoveryChild = new \App\Entity\RecoveryChild();
             $newRecoveryChild->setChild($child);
             $newRecoveryChild->setRecovery($existingRecoveryChild->getRecovery());
             $newRecoveryChild->setRelation($existingRecoveryChild->getRelation());
             $newRecoveryChild->setIsResponsable(false);
+            
             $entityManager->persist($newRecoveryChild);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Accompagnateur ajouté avec succès');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Une erreur est survenue lors de l\'ajout de l\'accompagnateur');
         }
-        return $this->redirectToRoute('app_add_child_to_user');
+
+        return $this->redirectToRoute('app_inscription_show', ['childId' => $childId]);
     }
 
     private function createCalendarEntries(

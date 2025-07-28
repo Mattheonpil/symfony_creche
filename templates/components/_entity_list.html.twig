@@ -23,7 +23,20 @@
       {% endfor %}
     </div>
     {% for item in items %}
-      <div class="list-row" data-href="{{ path('app_inscription_show', { childId: attribute(item, 'id'), 'mode': 'edit' } ) }}">
+      <div class="list-row" 
+           data-href="{{ path(row_link, 
+         route_params is defined 
+             ? { (row_link_param): attribute(item, 'id')}|merge(route_params) 
+             : { (row_link_param): attribute(item, 'id')}
+     ) }}"
+           {% if data_attributes is defined %}
+             {% for attr_name, attr_field in data_attributes %}
+               {% set attr_value = attribute(item, attr_field) %}
+               {% if attr_value is not null %}
+                 data-{{ attr_name }}="{{ attr_value.timestamp is defined ? attr_value|date('Y-m-d') : attr_value }}"
+               {% endif %}
+             {% endfor %}
+           {% endif %}>
         {% for col in columns %}
           <div>
             {% set value = attribute(item, col.field) %}
@@ -43,4 +56,4 @@
       </div>
     {% endfor %}
   </div>
-</div> 
+</div>

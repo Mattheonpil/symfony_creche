@@ -58,6 +58,7 @@ final class ChildController extends AbstractController
     ): Response {
         $userChild = $userChildRepository->findOneBy(['child' => $child]);
         $recoveryChild = $recoveryChildRepository->findOneBy(['child' => $child]);
+        $recoveryChildren = $recoveryChildRepository->findBy(['child' => $child]);
 
         return $this->render('child/show.html.twig', [
             'child' => $child,
@@ -65,6 +66,8 @@ final class ChildController extends AbstractController
             'userChild' => $userChild,
             'recovery' => $recoveryChild?->getRecovery(),
             'recoveryChild' => $recoveryChild,
+            'recoveryChildren' => $recoveryChildren,
+            'use_recovery_groups' => false
         ]);
     }
 

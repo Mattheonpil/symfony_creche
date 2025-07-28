@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
+
 {% block title %}Fiche de l'enfant{% endblock %}
+
 {% block body %}
     {% include 'child/_profile_content.html.twig' with {
         user: user,
@@ -13,6 +15,6 @@
         show_edit_child: false,
         show_end_button: false,
         title: "Fiche de l'enfant",
-        use_recovery_groups: true
+        use_recovery_groups: false 
     } %}
-{% endblock %} 
+{% endblock %}

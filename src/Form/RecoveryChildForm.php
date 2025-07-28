@@ -20,6 +20,7 @@ class RecoveryChildForm extends AbstractType
                 'required' => false,
             ]);
         }
+        
         $builder
             ->add('relation', ChoiceType::class, [
                 'label' => 'Lien avec l\'enfant',
@@ -41,6 +42,9 @@ class RecoveryChildForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => RecoveryChild::class,
             'show_is_responsable' => true,
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'csrf_token_id' => 'recovery_child_form'
         ]);
     }
-} 
+}

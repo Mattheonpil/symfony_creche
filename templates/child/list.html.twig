@@ -3,6 +3,15 @@
 {% block title %}Listing des enfants{% endblock %}
 
 {% block body %}
+  <div class="list-header-controls">
+    <div class="toggle-switch">
+      <span>Inscrits</span>
+      <input type="checkbox" id="subscription-toggle" data-filter="subscription">
+      <label for="subscription-toggle"></label>
+      <span>Désinscrits</span>
+    </div>
+  </div>
+
   {% set columns = [
     { label: 'Prénom', field: 'firstName', sortable: true, type: 'alpha' },
     { label: 'Nom', field: 'name', sortable: true, type: 'alpha' },
@@ -10,16 +19,31 @@
     { label: 'Genre', field: 'genre', sortable: true, type: 'genre' },
     { label: "Date d'inscription", field: 'registrationDate', sortable: true, type: 'date' }
   ] %}
+  
+  {% set data_attributes = {
+    'unsubscription-date': 'unsubscriptionDate'
+  } %}
+
   {% include 'components/_entity_list.html.twig' with {
     title: 'Liste des enfants',
     title_class: 'list-title',
     columns: columns,
     items: children,
-    row_link: 'app_child_show',
-    row_link_param: 'id',
+    row_link: 'app_inscription_show',
+    row_link_param: 'childId',
     empty_message: "Pas d'enfant trouvé",
-    class: 'list-child-grid'
+    class: 'list-child-grid',
+    data_attributes: {
+        'unsubscription-date': 'unsubscriptionDate'
+    },
+    route_params: {
+        'mode': 'edit'
+    }
   } %}
-  
-  <div class="list-child-button"><a class="button-group form-button form-button--add " href="{{ path('app_inscription') }}">Créer un nouvel enfant</a></div>
+
+  <div class="list-child-button">
+    <a class="button-group form-button form-button--add" href="{{ path('app_inscription') }}">
+      Créer un nouvel enfant
+    </a>
+  </div>
 {% endblock %}

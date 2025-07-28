@@ -47,14 +47,53 @@ export function setupEntityListSorting() {
     });
   });
 
-  // Rendre chaque ligne cliquable
-  rows.forEach(row => {
-    const href = row.dataset.href;
-    if (href) {
-      row.addEventListener('click', () => {
-        window.location = href;
-      });
-      row.style.cursor = 'pointer';
+  // Fonction séparée pour gérer les clics sur les lignes
+  const setupRowClicks = () => {
+    rows.forEach(row => {
+      const href = row.dataset.href;
+      if (href) {
+        // Supprime l'ancien écouteur s'il existe
+        row.removeEventListener('click', rowClickHandler);
+        // Ajoute le nouvel écouteur
+        row.addEventListener('click', rowClickHandler);
+        row.style.cursor = 'pointer';
+      }
+    });
+  };
+
+  // Gestionnaire d'événement de clic séparé
+  const rowClickHandler = function(e) {
+    if (!e.target.classList.contains('sort-btn')) {
+      window.location.href = this.dataset.href;
     }
-  });
-} 
+  };
+
+  // Filtrage par inscription
+  const subscriptionToggle = document.querySelector('[data-filter="subscription"]');
+  if (subscriptionToggle) {
+    const filterRows = () => {
+      const showUnsubscribed = subscriptionToggle.checked;
+      
+      rows.forEach(row => {
+        const unsubscriptionDate = row.dataset.unsubscriptionDate;
+        const isUnsubscribed = unsubscriptionDate ? new Date(unsubscriptionDate) < new Date() : false;
+        
+        if (showUnsubscribed) {
+          row.style.display = isUnsubscribed ? 'grid' : 'none';
+        } else {
+          row.style.display = !isUnsubscribed ? 'grid' : 'none';
+        }
+      });
+
+      // Réapplique les écouteurs de clic après le filtrage
+      setupRowClicks();
+    };
+
+    subscriptionToggle.addEventListener('change', filterRows);
+    // Initial filter and click setup
+    filterRows();
+  }
+
+  // Initial click setup
+  setupRowClicks();
+}

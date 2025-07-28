@@ -1524,6 +1524,17 @@ a.page-navigation-button:hover .orange {
   display: inline;
 }
 
+.list-header-controls {
+  width: 1200px;
+  margin: 3rem auto 1rem auto;
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem;
+  background: rgb(247.7631578947, 248.75, 249.7368421053);
+  border-radius: 8px;
+  border: 3px solid rgb(0, 74, 154);
+}
+
 .form-style-connexion {
   width: 30%;
   margin: 3rem auto;
