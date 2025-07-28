@@ -13,7 +13,13 @@
         <ul class="nav-menu">
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item"><a href="{{ path('app_administration') }}">Accueil</a></li>
-                <li class="nav-item"><a href="{{ path('app_inscription') }}">Inscrire un enfant</a></li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle">Inscrire un enfant</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('app_inscription') }}">Nouvel enfant</a></li>
+                        <li><a href="{{ path('app_add_child_to_user') }}">Ajouter à un parent existant</a></li>
+                    </ul>
+                </li>
                 <li class="nav-item"><a href="{{ path('app_child_list') }}">Liste des enfants</a></li>
                 <li class="nav-item"><a href="{{ path('app_planning_day') }}">Planning du jour</a></li>
             {% endif %}

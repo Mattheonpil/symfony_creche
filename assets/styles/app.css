@@ -596,14 +596,14 @@
   min-width: 60px;
   padding: 0.2rem 1rem;
 }
-.main-menu .nav-menu li a {
+.main-menu .nav-menu li:not(:nth-child(2)) a {
   text-decoration: none;
   color: rgb(108, 116, 124);
   font-size: 1rem;
   font-weight: 500;
   position: relative;
 }
-.main-menu .nav-menu li a:after {
+.main-menu .nav-menu li:not(:nth-child(2)) a:after {
   content: "";
   display: block;
   position: absolute;
@@ -615,8 +615,15 @@
   transform-origin: left;
   transition: transform 0.3s ease-out;
 }
-.main-menu .nav-menu li a:hover::after {
+.main-menu .nav-menu li:not(:nth-child(2)) a:hover::after {
   transform: scaleX(1);
+}
+.main-menu .nav-menu li a {
+  text-decoration: none;
+  color: rgb(108, 116, 124);
+  font-size: 1rem;
+  font-weight: 500;
+  position: relative;
 }
 
 .hamburger {
@@ -668,6 +675,62 @@
   font-weight: 600;
 }
 
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 83%;
+  left: 1rem;
+  padding: 0.5rem 0;
+  background: white;
+  border-radius: 8px;
+  min-width: 200px;
+  z-index: 1000;
+  margin-top: 0.2rem;
+  border: 2px solid transparent;
+  animation: border-anim 0.5s ease-in forwards;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+
+@keyframes border-anim {
+  0% {
+    border-color: transparent;
+  }
+  35% {
+    border-color: transparent;
+    border-top-color: rgb(253, 148, 67);
+  }
+  50% {
+    border-color: transparent;
+    border-top-color: rgb(253, 148, 67);
+    border-right-color: rgb(253, 148, 67);
+  }
+  75% {
+    border-color: transparent;
+    border-top-color: rgb(253, 148, 67);
+    border-right-color: rgb(253, 148, 67);
+    border-bottom-color: rgb(253, 148, 67);
+  }
+  100% {
+    border-color: rgb(253, 148, 67);
+  }
+}
 .esquive-navbar {
   position: relative;
 }

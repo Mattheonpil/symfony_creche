@@ -32,7 +32,25 @@
         {% block javascripts %}
             {{ importmap('app') }}
             <script>
+                // Fonction d'initialisation des lignes cliquables
+                function initClickableRows() {
+                    const rows = document.querySelectorAll('.list-row');
+                    rows.forEach(row => {
+                        const href = row.dataset.href;
+                        if (href) {
+                            row.addEventListener('click', (e) => {
+                                if (!e.target.classList.contains('sort-btn')) {
+                                    window.location.href = href;
+                                }
+                            });
+                            row.style.cursor = 'pointer';
+                        }
+                    });
+                }
+
+                // Écoute du chargement initial
                 document.addEventListener('DOMContentLoaded', function() {
+                    // Code navbar existant
                     const navbar = document.querySelector('.main-nav');
                     const mainContent = document.querySelector('.main-content-wrapper');
 
@@ -40,7 +58,12 @@
                         const navbarHeight = navbar.offsetHeight;
                         mainContent.style.paddingTop = navbarHeight + 'px';
                     }
+
+                    initClickableRows();
                 });
+
+                // Écoute des navigations Turbo
+                document.addEventListener('turbo:render', initClickableRows);
             </script>
         {% endblock %}
     </body>

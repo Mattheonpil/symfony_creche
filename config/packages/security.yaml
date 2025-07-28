@@ -38,8 +38,9 @@ security:
         # - { path: ^/administration/partagee, roles: [ROLE_ADMIN, ROLE_STAFF] }
         - { path: ^/administration, roles: ROLE_ADMIN }
         - { path: ^/inscription, roles: ROLE_ADMIN }
+        - { path: ^/planning/day, roles: [ROLE_ADMIN, ROLE_STAFF] }
         - { path: ^/planning/child, roles: [ROLE_ADMIN, ROLE_STAFF, ROLE_PARENT] }
-        - { path: ^/planning, roles: ROLE_ADMIN }
+        - { path: ^/planning, roles: [ROLE_ADMIN, ROLE_STAFF] }
 
 when@test:
     security:
